@@ -25,7 +25,7 @@ public class Home extends javax.swing.JFrame {
                     
                     /* Set AM PM to text */
                     String am_pm_text;
-                    if(cal.get(Calendar.AM_PM) == 2){
+                    if(cal.get(Calendar.AM_PM) == 0){
                         am_pm_text = "AM";
                     }else{
                         am_pm_text = "PM";
@@ -94,13 +94,13 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(62, 62, 62)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(75, 75, 75)
+                        .addGap(81, 81, 81)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(82, 82, 82)
+                        .addGap(86, 86, 86)
                         .addComponent(jLabel4)
-                        .addGap(66, 66, 66)
+                        .addGap(65, 65, 65)
                         .addComponent(jLabel5)
-                        .addGap(38, 38, 38))))
+                        .addGap(29, 29, 29))))
             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(

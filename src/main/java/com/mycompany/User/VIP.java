@@ -13,6 +13,7 @@ import lombok.Builder;
 public class VIP extends Customer implements Diskon{
     protected String nama;
     protected Integer poin;
+    protected Boolean isActive;
     
     @Builder
     public VIP(Integer id, String nama, Integer poin){
@@ -33,9 +34,13 @@ public class VIP extends Customer implements Diskon{
         this.poin = pointtemp;
     }
     
+    public void deactivate(){
+        this.isActive = false;
+    }
+    
     /* Tester Class */
     public static void main(String[] args){
-        Customer c = new Member(3,"Skakmat", 0);
+        Customer c = new Member(3, "0833444555","Skakmat", 0);
         /* Casting */
         Member m = (Member) c;
         

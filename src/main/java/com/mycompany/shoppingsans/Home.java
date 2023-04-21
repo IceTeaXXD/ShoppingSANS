@@ -102,8 +102,12 @@ public class Home extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         tanggal = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         clock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         clock.setText("HH:MM:SS AM");
@@ -125,6 +129,14 @@ public class Home extends javax.swing.JFrame {
 
         tanggal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tanggal.setText("DAY, TGL BULAN TAHUN");
+
+        jMenu1.setText("Home");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Add Member");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,7 +180,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(tanggal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(clock)
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
 
         clock.getAccessibleContext().setAccessibleName("clock");
@@ -219,6 +231,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel tanggal;
     // End of variables declaration//GEN-END:variables
 }

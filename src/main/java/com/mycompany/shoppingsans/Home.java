@@ -38,6 +38,48 @@ public class Home extends javax.swing.JFrame {
                     
                     String time_text = hour_string + ":" + minute_string + ":" + second_string + " " + am_pm_text;                    
                     clock.setText(time_text);
+                    
+                    
+                    
+                    /* Set Tanggal */
+                    String day;
+                    switch (cal.get(Calendar.DAY_OF_WEEK)) {
+                        case Calendar.SUNDAY -> day = "Sunday";
+                        case Calendar.MONDAY -> day = "Monday";
+                        case Calendar.TUESDAY -> day = "Tuesday";
+                        case Calendar.WEDNESDAY -> day = "Wednesday";
+                        case Calendar.THURSDAY -> day = "Thursday";
+                        case Calendar.FRIDAY -> day = "Friday";
+                        case Calendar.SATURDAY -> day = "Saturday";
+                        default -> {day = "";}
+                    }
+                    
+                    String tgl;
+                    Integer __tanggal = cal.get(Calendar.DATE);
+                    tgl = __tanggal.toString();
+                    
+                    String month;
+                    switch(cal.get(Calendar.MONTH)){
+                        case Calendar.JANUARY -> month = "January";
+                        case Calendar.FEBRUARY -> month = "February";
+                        case Calendar.MARCH -> month = "March";
+                        case Calendar.APRIL -> month = "April";
+                        case Calendar.MAY -> month = "May";
+                        case Calendar.JUNE -> month = "June";
+                        case Calendar.JULY -> month = "July";
+                        case Calendar.AUGUST -> month = "August";
+                        case Calendar.SEPTEMBER -> month = "September";
+                        case Calendar.OCTOBER -> month = "October";
+                        case Calendar.NOVEMBER -> month = "November";
+                        case Calendar.DECEMBER -> month = "December";
+                        default -> month = "";
+                    }
+                    
+                    String year;
+                    Integer __year = cal.get(Calendar.YEAR);
+                    year = __year.toString();
+                    
+                    tanggal.setText(day + ", " + tgl + " " + month + " " + year);
                 }
             }
         }.start();
@@ -59,6 +101,7 @@ public class Home extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        tanggal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,10 +123,14 @@ public class Home extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("SHOPPING SANS");
 
+        tanggal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tanggal.setText("DAY, TGL BULAN TAHUN");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,8 +147,10 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addGap(65, 65, 65)
                         .addComponent(jLabel5)
-                        .addGap(29, 29, 29))))
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,9 +164,11 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addGap(8, 8, 8)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(7, 7, 7)
+                .addComponent(tanggal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(clock)
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addContainerGap(289, Short.MAX_VALUE))
         );
 
         clock.getAccessibleContext().setAccessibleName("clock");
@@ -168,5 +219,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel tanggal;
     // End of variables declaration//GEN-END:variables
 }

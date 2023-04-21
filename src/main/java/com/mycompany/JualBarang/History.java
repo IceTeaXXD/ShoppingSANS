@@ -18,10 +18,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class History {
     private Integer id;
+    private String datetime;
     private HashMap<Barang, Integer> pembelian;
 
     public History(Integer id) {
         this.id = id;
+        this.datetime = new Date().toString();
         this.pembelian = new HashMap<>();
     }
 
@@ -48,7 +50,8 @@ public class History {
     }
 
     public void printHistory() {
-        System.out.println("ID History: " + id);
+        System.out.println("ID Customer: " + id);
+        System.out.println("Tanggal: " + datetime);
         System.out.println("Barang yang dibeli: ");
         for (Map.Entry<Barang, Integer> entry : pembelian.entrySet()) {
             System.out.println("Nama Barang: " + entry.getKey().getNamaBarang());

@@ -1,4 +1,12 @@
+com\mycompany\User\Member$MemberBuilder.class
+com\mycompany\User\Member.class
 com\mycompany\shoppingsans\Home$1.class
+com\mycompany\User\Customer.class
+com\mycompany\User\Diskon.class
+com\mycompany\User\VIP$VIPBuilder.class
+com\mycompany\JualBarang\Barang.class
+com\mycompany\JualBarang\InventoryBarang.class
 com\mycompany\shoppingsans\Home.class
 com\mycompany\shoppingsans\Home$2.class
 com\mycompany\shoppingsans\ShoppingSans.class
+com\mycompany\User\VIP.class

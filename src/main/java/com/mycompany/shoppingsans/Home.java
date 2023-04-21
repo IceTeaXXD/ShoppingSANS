@@ -44,14 +44,14 @@ public class Home extends javax.swing.JFrame {
                     /* Set Tanggal */
                     String day;
                     switch (cal.get(Calendar.DAY_OF_WEEK)) {
-                        case Calendar.SUNDAY -> day = "Sunday";
-                        case Calendar.MONDAY -> day = "Monday";
-                        case Calendar.TUESDAY -> day = "Tuesday";
-                        case Calendar.WEDNESDAY -> day = "Wednesday";
-                        case Calendar.THURSDAY -> day = "Thursday";
-                        case Calendar.FRIDAY -> day = "Friday";
-                        case Calendar.SATURDAY -> day = "Saturday";
-                        default -> {day = "";}
+                        case Calendar.SUNDAY: day = "Sunday"; break;
+                        case Calendar.MONDAY: day = "Monday"; break;
+                        case Calendar.TUESDAY: day = "Tuesday"; break;
+                        case Calendar.WEDNESDAY: day = "Wednesday"; break;
+                        case Calendar.THURSDAY: day = "Thursday"; break;
+                        case Calendar.FRIDAY: day = "Friday"; break;
+                        case Calendar.SATURDAY: day = "Saturday"; break;
+                        default: day = ""; break;
                     }
                     
                     String tgl;
@@ -60,19 +60,19 @@ public class Home extends javax.swing.JFrame {
                     
                     String month;
                     switch(cal.get(Calendar.MONTH)){
-                        case Calendar.JANUARY -> month = "January";
-                        case Calendar.FEBRUARY -> month = "February";
-                        case Calendar.MARCH -> month = "March";
-                        case Calendar.APRIL -> month = "April";
-                        case Calendar.MAY -> month = "May";
-                        case Calendar.JUNE -> month = "June";
-                        case Calendar.JULY -> month = "July";
-                        case Calendar.AUGUST -> month = "August";
-                        case Calendar.SEPTEMBER -> month = "September";
-                        case Calendar.OCTOBER -> month = "October";
-                        case Calendar.NOVEMBER -> month = "November";
-                        case Calendar.DECEMBER -> month = "December";
-                        default -> month = "";
+                        case Calendar.JANUARY : month = "January"; break;
+                        case Calendar.FEBRUARY : month = "February"; break;
+                        case Calendar.MARCH : month = "March"; break;
+                        case Calendar.APRIL : month = "April"; break;
+                        case Calendar.MAY : month = "May"; break;
+                        case Calendar.JUNE : month = "June"; break;
+                        case Calendar.JULY : month = "July"; break;
+                        case Calendar.AUGUST : month = "August"; break;
+                        case Calendar.SEPTEMBER : month = "September"; break;
+                        case Calendar.OCTOBER : month = "October"; break;
+                        case Calendar.NOVEMBER : month = "November"; break;
+                        case Calendar.DECEMBER : month = "December"; break;
+                        default : month = ""; break;
                     }
                     
                     String year;

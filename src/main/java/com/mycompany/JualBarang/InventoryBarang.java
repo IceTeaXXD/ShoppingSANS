@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 public class InventoryBarang{
-    private ArrayList <Barang> Inventory;
+    private final ArrayList <Barang> Inventory;
 
     public InventoryBarang(){
         Inventory = new ArrayList<>();

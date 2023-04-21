@@ -16,13 +16,17 @@ import lombok.Setter;
 @Setter
 public class Member extends Customer implements Diskon {
     protected String nama;
+    protected String notelp;
     protected Integer poin;
+    protected Boolean isActive;
     
     @Builder
-    public Member(Integer id, String nama, Integer poin){
+    public Member(Integer id, String nama, String notelp, Integer poin){
         super(id);
         this.nama = nama;
+        this.notelp = notelp;
         this.poin = poin;
+        this.isActive = true;
     }
     
     @Override
@@ -37,9 +41,13 @@ public class Member extends Customer implements Diskon {
         this.poin = pointtemp;
     }
     
+    public void deactivate(){
+        this.isActive = false;
+    }
+    
     /* Tester Class */
     public static void main(String[] args){
-        Customer c = new Member(3,"Skakmat", 0);
+        Customer c = new Member(3, "0822333444", "Skakmat", 0);
         /* Casting */
         Member m = (Member) c;
         

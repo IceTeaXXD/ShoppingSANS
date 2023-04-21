@@ -5,16 +5,22 @@ import java.util.ArrayList;
 /**
  *
  * @author Azmi Hasna Zahrani - 13521006
+ * @author Matthew Mahendra - 13521007
+ * {@summary Container untuk barang-barang yang tersedia. Menyimpan objek Barang}
  */
 
-public class InventoryBarang<T>{
-    private ArrayList <T> Inventory;
+public class InventoryBarang{
+    private ArrayList <Barang> Inventory;
 
     public InventoryBarang(){
         Inventory = new ArrayList<>();
     }
-    
-    public void addBarang(T barang, int index){
+
+    public void addBarang(Barang barang){
+        Inventory.add(barang);
+    }
+
+    public void addBarang(Barang barang, int index){
         Inventory.add(index, barang);
     }
 
@@ -32,7 +38,7 @@ public class InventoryBarang<T>{
         Inventory.remove(index);
     }
 
-    public void updateBarang(T barang, int index){
+    public void updateBarang(Barang barang, int index){
         Inventory.set(index, barang);
     }
 }

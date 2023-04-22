@@ -31,16 +31,18 @@ public class Main extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        HomeButton = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        AddMember = new javax.swing.JMenuItem();
+        UpdateCustomer = new javax.swing.JMenuItem();
+        HistoryTransaksi = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        ManajemenBarang = new javax.swing.JMenuItem();
+        Laporan = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        JualBarang = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        Settings = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -48,68 +50,91 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.setText("Home");
 
-        jMenuItem1.setText("Home Page");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        HomeButton.setText("Home Page");
+        HomeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                HomeButtonActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(HomeButton);
 
         jMenuBar1.add(jMenu1);
+        jMenu1.getAccessibleContext().setAccessibleDescription("");
 
         jMenu2.setText("Member Area");
 
-        jMenuItem2.setText("Add Member");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        AddMember.setText("Add Member");
+        AddMember.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                AddMemberActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        jMenu2.add(AddMember);
 
-        jMenuItem3.setText("Update Customer");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        UpdateCustomer.setText("Update Customer");
+        UpdateCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                UpdateCustomerActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        jMenu2.add(UpdateCustomer);
 
-        jMenuItem4.setText("History Transaksi");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        HistoryTransaksi.setText("History Transaksi");
+        HistoryTransaksi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                HistoryTransaksiActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        jMenu2.add(HistoryTransaksi);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Penjualan");
-
-        jMenuItem5.setText("Manajemen Barang");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        jMenu3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                jMenu3ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem5);
 
-        jMenuItem6.setText("Laporan");
-        jMenu3.add(jMenuItem6);
+        ManajemenBarang.setText("Manajemen Barang");
+        ManajemenBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ManajemenBarangActionPerformed(evt);
+            }
+        });
+        jMenu3.add(ManajemenBarang);
+
+        Laporan.setText("Laporan");
+        Laporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LaporanActionPerformed(evt);
+            }
+        });
+        jMenu3.add(Laporan);
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Settings");
+        jMenu5.setText("Jual Barang");
 
-        jMenuItem7.setText("Settings");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        JualBarang.setText("Jual Barang");
+        JualBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                JualBarangActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem7);
+        jMenu5.add(JualBarang);
+
+        jMenuBar1.add(jMenu5);
+
+        jMenu4.setText("Settings");
+
+        Settings.setText("Settings");
+        Settings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SettingsActionPerformed(evt);
+            }
+        });
+        jMenu4.add(Settings);
 
         jMenuBar1.add(jMenu4);
 
@@ -135,34 +160,47 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void HomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeButtonActionPerformed
         // TODO add your handling code here:
         jTabbedPane1.add("Home", new Home());
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_HomeButtonActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void AddMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddMemberActionPerformed
         // TODO add your handling code here:
         jTabbedPane1.add("Add New Member", new AddMember());
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_AddMemberActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void UpdateCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateCustomerActionPerformed
         // TODO add your handling code here:
         jTabbedPane1.add("Update Customer", new UpdateCustomer());
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_UpdateCustomerActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void HistoryTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HistoryTransaksiActionPerformed
         // TODO add your handling code here:
         jTabbedPane1.add("History Transaksi", new HistoryTransaksi());
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_HistoryTransaksiActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void ManajemenBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManajemenBarangActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_ManajemenBarangActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void SettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SettingsActionPerformed
         // TODO add your handling code here:
         jTabbedPane1.add("Settings", new Settings());
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_SettingsActionPerformed
+
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void LaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaporanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LaporanActionPerformed
+
+    private void JualBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JualBarangActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane1.add("Jual Barang", new JualBarang());
+    }//GEN-LAST:event_JualBarangActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,18 +238,20 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AddMember;
+    private javax.swing.JMenuItem HistoryTransaksi;
+    private javax.swing.JMenuItem HomeButton;
+    private javax.swing.JMenuItem JualBarang;
+    private javax.swing.JMenuItem Laporan;
+    private javax.swing.JMenuItem ManajemenBarang;
+    private javax.swing.JMenuItem Settings;
+    private javax.swing.JMenuItem UpdateCustomer;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

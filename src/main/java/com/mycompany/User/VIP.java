@@ -8,18 +8,21 @@ import lombok.Builder;
 
 /**
  *
- * @author Matthew
+ * @author Matthew Mahendra - 13521007
  */
 public class VIP extends Customer implements Diskon{
     protected String nama;
+    protected String notelp;
     protected Integer poin;
     protected Boolean isActive;
     
     @Builder
-    public VIP(Integer id, String nama, Integer poin){
+    public VIP(Integer id, String nama, String notelp, Integer poin){
         super(id);
         this.nama = nama;
+        this.notelp = notelp;
         this.poin = poin;
+        this.isActive = true;
     }
     
     @Override

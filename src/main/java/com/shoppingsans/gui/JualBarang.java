@@ -2,6 +2,9 @@ package com.shoppingsans.gui;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+
+import com.shoppingsans.JualBarang.ImageRenderer;
 
 public class JualBarang extends javax.swing.JPanel {
 
@@ -13,18 +16,23 @@ public class JualBarang extends javax.swing.JPanel {
         
         // Create data for the table
         Object[][] data = {
-            {1, "Gula", 15000},
-            {1, "Garam", 5000},
-            {1, "Kopi", 10000},
-            {1, "Teh", 3000}
+            {1, "JR", 15000, "images/jason.png"},
+            {1, "Mahentot", 5000, "images/mahentot.png"},
+            {1, "Mahentot", 10000, "images/mahentot2.png"},
+            {1, "Pasangannya VHA", 3000, "images/v.png"}
         };
+        
 
         // Create column names for the table
-        String[] columnNames = {"Qty", "Nama Barang", "Harga"};
+        String[] columnNames = {"Qty", "Nama Barang", "Harga", "Image"};
 
         // Create a new instance of JTable
         JTable table = new JTable(data, columnNames);
         
+        table.getColumnModel().getColumn(3).setCellRenderer(new ImageRenderer());
+        // make size of 100x100
+        table.setRowHeight(100);
+
         // Create a new instance of JScrollPane and add the table to it
         JScrollPane scrollPane = new JScrollPane(table);
 

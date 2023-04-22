@@ -138,7 +138,7 @@ public class UpdateCustomer extends javax.swing.JPanel {
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(413, Short.MAX_VALUE))
+                .addContainerGap(415, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -1,4 +1,4 @@
-package com.mycompany.JualBarang;
+package com.shoppingsans.JualBarang;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.mycompany.JualBarang;
+package com.shoppingsans.JualBarang;
 
 import java.util.ArrayList;
 

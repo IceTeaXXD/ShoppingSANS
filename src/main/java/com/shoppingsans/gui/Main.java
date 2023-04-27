@@ -48,6 +48,12 @@ public class Main extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setSize(new java.awt.Dimension(1280, 720));
 
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MousePressed(evt);
+            }
+        });
+
         jMenu1.setText("Home");
 
         HomeButton.setText("Home Page");
@@ -201,6 +207,15 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTabbedPane1.add("Jual Barang", new JualBarang());
     }//GEN-LAST:event_JualBarangActionPerformed
+
+    private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
+        // TODO add your handling code here:
+        int index = jTabbedPane1.getSelectedIndex();
+        
+        if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3){
+            jTabbedPane1.remove(index);
+        }
+    }//GEN-LAST:event_jTabbedPane1MousePressed
 
     /**
      * @param args the command line arguments

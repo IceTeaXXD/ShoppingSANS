@@ -4,6 +4,8 @@
  */
 package com.shoppingsans.gui;
 
+import java.awt.Component;
+
 /**
  *
  * @author Matthew
@@ -16,7 +18,12 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         Home h = new Home();
-        jTabbedPane1.add("Home", h);
+        addTab("Home", h);
+    }
+    
+    public final void addTab(String title, Component page){
+        jTabbedPane1.addTab(title, page);
+        jTabbedPane1.setTabComponentAt(jTabbedPane1.getTabCount()-1, new CloseButton(jTabbedPane1));
     }
 
     /**
@@ -47,12 +54,6 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setSize(new java.awt.Dimension(1280, 720));
-
-        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTabbedPane1MousePressed(evt);
-            }
-        });
 
         jMenu1.setText("Home");
 
@@ -168,22 +169,22 @@ public class Main extends javax.swing.JFrame {
 
     private void HomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeButtonActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.add("Home", new Home());
+        addTab("Home", new Home());
     }//GEN-LAST:event_HomeButtonActionPerformed
 
     private void AddMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddMemberActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.add("Add New Member", new AddMember());
+        addTab("Add New Member", new AddMember());
     }//GEN-LAST:event_AddMemberActionPerformed
 
     private void UpdateCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateCustomerActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.add("Update Customer", new UpdateCustomer());
+        addTab("Update Customer", new UpdateCustomer());
     }//GEN-LAST:event_UpdateCustomerActionPerformed
 
     private void HistoryTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HistoryTransaksiActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.add("History Transaksi", new HistoryTransaksi());
+        addTab("History Transaksi", new HistoryTransaksi());
     }//GEN-LAST:event_HistoryTransaksiActionPerformed
 
     private void ManajemenBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManajemenBarangActionPerformed
@@ -192,7 +193,7 @@ public class Main extends javax.swing.JFrame {
 
     private void SettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SettingsActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.add("Settings", new Settings());
+        addTab("Settings", new Settings());
     }//GEN-LAST:event_SettingsActionPerformed
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
@@ -205,17 +206,8 @@ public class Main extends javax.swing.JFrame {
 
     private void JualBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JualBarangActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.add("Jual Barang", new JualBarang());
+        jTabbedPane1.addTab("Jual Barang", new JualBarang());
     }//GEN-LAST:event_JualBarangActionPerformed
-
-    private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
-        // TODO add your handling code here:
-        int index = jTabbedPane1.getSelectedIndex();
-        
-        if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3){
-            jTabbedPane1.remove(index);
-        }
-    }//GEN-LAST:event_jTabbedPane1MousePressed
 
     /**
      * @param args the command line arguments

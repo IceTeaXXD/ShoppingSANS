@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<order><item><quantity>2</quantity><price>10.99</price><name>Widget A</name></item><item><quantity>1</quantity><price>7.99</price><name>Widget B</name></item><total>29.97</total></order>

@@ -1,5 +1,7 @@
 package com.shoppingsans.JualBarang;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.ArrayList;
 
 /**
@@ -9,6 +11,9 @@ import java.util.ArrayList;
  * {@summary Container untuk barang-barang yang tersedia. Menyimpan objek Barang}
  */
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class InventoryBarang{
     private final ArrayList <Barang> Inventory;
 
@@ -40,5 +45,9 @@ public class InventoryBarang{
 
     public void updateBarang(Barang barang, int index){
         Inventory.set(index, barang);
+    }
+
+    public Barang[] getBarang() {
+        return Inventory.toArray(new Barang[0]);
     }
 }

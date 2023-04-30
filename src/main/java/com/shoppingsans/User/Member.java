@@ -4,6 +4,8 @@
  */
 package com.shoppingsans.User;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,12 +16,39 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@XmlRootElement(name = "Member")
 public class Member extends Customer implements Diskon {
     protected String nama;
     protected String notelp;
     protected Integer poin;
     protected Boolean isActive;
-    
+    public Member() {
+        super();
+        this.nama = "XX";
+        this.notelp = "XX";
+        this.poin = 0;
+        this.isActive = true;
+    }
+    @XmlElement(name = "id")
+    public void setID(Integer id){
+        this.id = id;
+    }
+    @XmlElement(name = "nama")
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+    @XmlElement(name = "notelp")
+    public void setNotelp(String notelp) {
+        this.notelp = notelp;
+    }
+    @XmlElement(name = "poin")
+    public void setPoin(Integer poin) {
+        this.poin = poin;
+    }
+    @XmlElement(name = "isActive")
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
     @Builder
     public Member(Integer id, String nama, String notelp, Integer poin){
         super(id);

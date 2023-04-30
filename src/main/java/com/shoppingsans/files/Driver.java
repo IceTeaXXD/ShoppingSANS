@@ -10,8 +10,8 @@ package com.shoppingsans.files;
 public class Driver {
     public static void main(String[] args) {
         XMLtoJSON xj = new XMLtoJSON();
-        // JSONtoXML jx = new JSONtoXML();
-        xj.convert("./src/main/java/com/shoppingsans/files/Config.xml", "Config.json");
-        // jx.convert("./src/main/java/com/shoppingsans/files/tesJSON.json", "tesOutputXML.xml");
+        JSONtoXML jx = new JSONtoXML();
+        xj.convert("./src/main/java/com/shoppingsans/files/tesXML.xml", "tesOutputJSON.json");
+        jx.convert("./src/main/java/com/shoppingsans/files/tesJSON.json", "tesOutputXML.xml");
     }
 }

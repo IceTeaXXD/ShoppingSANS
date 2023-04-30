@@ -17,8 +17,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Bill extends FixedBill{
-    public Bill(Integer id) {
-        super(id);
+    public Bill(Integer id, Integer userID) {
+        super(id, userID);
     }
     
     public void addBarang(Barang barang, Integer jumlah) {

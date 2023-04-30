@@ -51,6 +51,7 @@ public class Plugin1 extends javax.swing.JFrame {
         line_panel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         bar_panel.setBackground(new java.awt.Color(153, 153, 153));
         bar_panel.setLayout(new java.awt.BorderLayout());
@@ -144,7 +145,7 @@ public class Plugin1 extends javax.swing.JFrame {
         dataset.setValue(s4, "", "Data 4");
         
         // Bar Chart
-        JFreeChart chart = ChartFactory.createBarChart("", "", "", dataset, PlotOrientation.HORIZONTAL, false, false, false);
+        JFreeChart chart = ChartFactory.createBarChart("", "", "", dataset, PlotOrientation.VERTICAL, false, false, false);
         CategoryPlot catPlot = chart.getCategoryPlot();
         catPlot.setRangeGridlinePaint(Color.BLACK);
 

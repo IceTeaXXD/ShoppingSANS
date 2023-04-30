@@ -217,12 +217,12 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 190, 150));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 190, -1));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/penjualan.png"))); // NOI18N
         jButton6.setBorder(null);
@@ -259,6 +259,9 @@ public class Main extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton5MouseEntered(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton5MousePressed(evt);
+            }
         });
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/laporan.png"))); // NOI18N
@@ -266,6 +269,9 @@ public class Main extends javax.swing.JFrame {
         jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton7MouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton7MousePressed(evt);
             }
         });
 
@@ -446,6 +452,16 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         addTab("Settings", new Settings());
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MousePressed
+        // TODO add your handling code here:
+//        addTab("Laporan", new Laporan());
+    }//GEN-LAST:event_jButton7MousePressed
+
+    private void jButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MousePressed
+        // TODO add your handling code here:
+//        addTab("Manajemen Barang", new ManajemenBarang());
+    }//GEN-LAST:event_jButton5MousePressed
 
     /**
      * @param args the command line arguments

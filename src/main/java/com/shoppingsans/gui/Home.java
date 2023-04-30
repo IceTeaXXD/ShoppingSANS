@@ -99,17 +99,26 @@ public class Home extends javax.swing.JPanel {
         clock = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("SHOPPING SANS");
+        setBackground(new java.awt.Color(45, 43, 74));
 
+        jLabel6.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(242, 198, 111));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("WELCOME TO SHOPPING SANS");
+
+        tanggal.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        tanggal.setForeground(new java.awt.Color(255, 255, 255));
         tanggal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tanggal.setText("DAY, TGL BULAN TAHUN");
 
+        clock.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        clock.setForeground(new java.awt.Color(255, 255, 255));
         clock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         clock.setText("HH:MM:SS AM");
         clock.setToolTipText("");
 
+        jLabel5.setFont(new java.awt.Font("Myanmar Text", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Bintang H.J.                                                   Henry A.S.R.                                                   Matthew M.                                                   Azmi H.Z.                                                   A.Nadil          ");
 
@@ -121,7 +130,7 @@ public class Home extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1368, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -138,7 +147,7 @@ public class Home extends javax.swing.JPanel {
                 .addComponent(tanggal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(clock)
-                .addContainerGap(558, Short.MAX_VALUE))
+                .addContainerGap(510, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

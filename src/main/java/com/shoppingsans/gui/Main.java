@@ -388,11 +388,6 @@ public class Main extends javax.swing.JFrame {
         jPanel1.setVisible(true);
     }//GEN-LAST:event_jButton3MouseEntered
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        addTab("Update Customer", new UpdateCustomer());
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
         // TODO add your handling code here:
         jPanel1.setVisible(true);
@@ -455,13 +450,18 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MousePressed
         // TODO add your handling code here:
-//        addTab("Laporan", new Laporan());
+        //        addTab("Laporan", new Laporan());
     }//GEN-LAST:event_jButton7MousePressed
 
     private void jButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MousePressed
         // TODO add your handling code here:
-//        addTab("Manajemen Barang", new ManajemenBarang());
+        //        addTab("Manajemen Barang", new ManajemenBarang());
     }//GEN-LAST:event_jButton5MousePressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        addTab("Update Customer", new UpdateCustomer());
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

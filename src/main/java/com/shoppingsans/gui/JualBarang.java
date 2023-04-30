@@ -45,6 +45,11 @@ public class JualBarang extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(45, 43, 74));
+
+        jLabel1.setBackground(new java.awt.Color(45, 43, 74));
+        jLabel1.setFont(new java.awt.Font("Myanmar Text", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(242, 198, 111));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Jual Barang");
         jLabel1.setToolTipText("");
@@ -59,7 +64,7 @@ public class JualBarang extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 686, Short.MAX_VALUE))
+                .addGap(0, 669, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

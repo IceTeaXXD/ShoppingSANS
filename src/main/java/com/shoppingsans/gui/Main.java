@@ -5,6 +5,8 @@
 package com.shoppingsans.gui;
 
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -341,6 +343,11 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setText("ShoppingSans");
         jLabel1.setName("logo"); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 220, 80));
+        jLabel1.addMouseListener(new MouseAdapter(){
+            public void mouseClicked (MouseEvent evt){
+                addTab("Home", new Home());
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/group.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 700, 220, -1));

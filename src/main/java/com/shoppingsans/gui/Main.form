@@ -368,6 +368,9 @@
         <Property name="text" type="java.lang.String" value="ShoppingSans"/>
         <Property name="name" type="java.lang.String" value="logo" noResource="true"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jLabel1.addMouseListener(new MouseAdapter(){&#xa;    public void mouseClicked (MouseEvent evt){&#xa;        addTab(&quot;Home&quot;, new Home());&#xa;    }&#xa;});"/>
+      </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="20" y="80" width="220" height="80"/>

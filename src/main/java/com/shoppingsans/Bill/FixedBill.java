@@ -22,11 +22,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FixedBill {
     @NonNull protected Integer id;
+    @NonNull protected Integer idUser;
     @NonNull protected String datetime;
     protected HashMap<Barang, Integer> pembelian;
     
-    public FixedBill(Integer id) {
+    public FixedBill(Integer id, Integer idUser) {
         this.id = id;
+        this.idUser = idUser;
         this.datetime = new Date().toString();
         this.pembelian = new HashMap<>();
     }

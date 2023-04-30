@@ -5,11 +5,16 @@
 package com.shoppingsans.Chart;
 
 import org.jfree.chart.JFreeChart;
+import java.util.*;
+import java.io.File;
+import java.net.*;
 
 /**
  *
  * @author ahmad
  */
 public class Base {
-    
+    public void run(){
+        System.out.println("running");
+    }
 }

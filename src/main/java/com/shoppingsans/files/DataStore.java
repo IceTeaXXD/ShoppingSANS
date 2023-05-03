@@ -6,6 +6,8 @@ import com.shoppingsans.JualBarang.InventoryBarang;
 import java.util.*;
 import com.shoppingsans.User.Customer;
 import com.shoppingsans.User.Member;
+import com.shoppingsans.User.User;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,40 +44,23 @@ class DataStore {
             System.out.println(listCustomer.get(i).getId());
         }
     }
-
-    public Customer testCust(String path) throws FileNotFoundException {
-        Customer x = new Customer(0);
+    public void readUser(String path) throws FileNotFoundException {
         File fileXML = new File(path);
-        Scanner xml = new Scanner(fileXML);
-        String temp;
-        while(xml.hasNextLine()){
-            temp = xml.nextLine();
-            String cust = temp;
-            temp = xml.nextLine();
-            while (!temp.replaceAll("\\s+","").equals("</Customer>")){
-                cust += temp;
-                System.out.println(temp);
-                temp = xml.nextLine();
-            }
-            cust += temp;
-            System.out.println(cust);
-            JAXBContext jaxbContext;
-            try
-            {
-                jaxbContext = JAXBContext.newInstance(Customer.class);        
-                Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                Customer customer = (Customer) jaxbUnmarshaller.unmarshal(new StringReader(cust));
-                this.listCustomer.add(customer);
-                return customer;
-            }
-            catch (JAXBException e) 
-            {
-                e.printStackTrace();
-            }
-        }
-        return x;
-    }
+        try
+        {       
+            JAXBContext jaxbContext = JAXBContext.newInstance(User.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            User user = (User) unmarshaller.unmarshal(fileXML);
+            listCustomer.addAll(user.getCustomers());
+            listCustomer.addAll(user.getMembers());
 
+        }
+        catch (JAXBException e) 
+        {
+            e.printStackTrace();
+        }
+    
+    }
     public void readXML(String path) throws FileNotFoundException {
         String temp;
         File fileXML = new File(path);
@@ -174,7 +159,7 @@ class DataStore {
         DataStore ds = new DataStore();
         try {
             // Customer cst = ds.testCust("./src/main/java/com/shoppingsans/files/customer.xml");
-            ds.readXML("./src/main/java/com/shoppingsans/files/Config.xml");
+            ds.readUser("./src/main/java/com/shoppingsans/files/customer.xml");
             System.out.println("CEK");
             // System.out.println(cst.getId());
         } catch (FileNotFoundException e) {

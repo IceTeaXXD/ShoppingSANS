@@ -16,7 +16,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@XmlRootElement(name = "Member")
 public class Member extends Customer implements Diskon {
     protected String nama;
     protected String notelp;

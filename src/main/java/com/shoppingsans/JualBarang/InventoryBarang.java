@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author Azmi Hasna Zahrani - 13521006
@@ -14,13 +17,18 @@ import java.util.ArrayList;
 @Getter
 @Setter
 @AllArgsConstructor
+@XmlRootElement(name = "InventoryBarang")
 public class InventoryBarang{
+    @XmlElement(name = "Barang")
     private final ArrayList <Barang> Inventory;
 
     public InventoryBarang(){
         Inventory = new ArrayList<>();
     }
 
+    public int getSize(){
+        return Inventory.size();
+    }
     public void addBarang(Barang barang){
         Inventory.add(barang);
     }
@@ -31,7 +39,7 @@ public class InventoryBarang{
 
     public void readInventory(){
         for (int i = 0; i < Inventory.size(); i++){
-            System.out.println(Inventory.get(i));
+            System.out.println(Inventory.get(i).getNamaBarang());
         }
     }
 

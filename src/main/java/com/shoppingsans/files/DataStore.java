@@ -44,6 +44,11 @@ class DataStore {
             System.out.println(listCustomer.get(i).getId());
         }
     }
+    public void displayListBarang()
+    {
+        System.out.println("List Barang : ");
+        listBarang.readInventory();
+    }
     public void readUser(String path) throws FileNotFoundException {
         File fileXML = new File(path);
         try
@@ -54,6 +59,24 @@ class DataStore {
             listCustomer.addAll(user.getCustomers());
             listCustomer.addAll(user.getMembers());
 
+        }
+        catch (JAXBException e) 
+        {
+            e.printStackTrace();
+        }
+    
+    }
+
+    public void readInventory(String path) throws FileNotFoundException {
+        File fileXML = new File(path);
+        try
+        {       
+            JAXBContext jaxbContext = JAXBContext.newInstance(InventoryBarang.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            InventoryBarang inventoryBarang = (InventoryBarang) unmarshaller.unmarshal(fileXML);
+            System.out.println(inventoryBarang.getSize());
+            this.listBarang = inventoryBarang;
+            System.out.println(listBarang.getSize());
         }
         catch (JAXBException e) 
         {
@@ -160,6 +183,7 @@ class DataStore {
         try {
             // Customer cst = ds.testCust("./src/main/java/com/shoppingsans/files/customer.xml");
             ds.readUser("./src/main/java/com/shoppingsans/files/customer.xml");
+            ds.readInventory("./src/main/java/com/shoppingsans/files/inventory.xml");
             System.out.println("CEK");
             // System.out.println(cst.getId());
         } catch (FileNotFoundException e) {
@@ -167,6 +191,7 @@ class DataStore {
             e.printStackTrace();
         }
         ds.displayListCustomer();
+        ds.displayListBarang();
     }
     
 

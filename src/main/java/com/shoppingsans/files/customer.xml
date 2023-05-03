@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Customer>
-    <id>1</id>
-</Customer>
+<User>
+	<Customer>
+		<id>1</id>
+    </Customer>
+	<Customer>
+		<id>2</id>
+	</Customer>
+	<Member>
+		<id>3</id>
+		<nama>Mahentot</nama>
+		<notelp>0822334455</notelp>
+		<poin>100</poin>
+		<isActive>true</isActive>
+	</Member>
+	<Member>
+		<id>4</id>
+		<nama>Hentot</nama>
+		<notelp>0833445566</notelp>
+		<poin>100</poin>
+		<isActive>true</isActive>
+	</Member>
+</User>

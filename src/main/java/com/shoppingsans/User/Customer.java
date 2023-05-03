@@ -20,7 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@XmlRootElement(name = "Customer")
 public class Customer{
 
     protected Integer id;

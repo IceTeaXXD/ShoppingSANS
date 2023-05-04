@@ -19,4 +19,13 @@ public class Barang {
     private int hargaBeli;
     private String kategori;
     private String gambar;
+
+    public Barang(){
+        namaBarang = "";
+        hargaBarang = 0;
+        stokBarang = 0;
+        hargaBeli = 0;
+        kategori = "";
+        gambar = "";
+    }
 }

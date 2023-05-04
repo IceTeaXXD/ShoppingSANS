@@ -4,19 +4,36 @@
  */
 package com.shoppingsans.User;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  *
  * @author Matthew Mahendra - 13521007
  */
-public class VIP extends Customer implements Diskon{
+@Setter
+@Getter
+@NoArgsConstructor
+//@XmlRootElement(name = "VIP")
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonTypeName("VIP")
+public class VIP extends Customer implements Diskon, Serializable{
+    @XmlElement(name = "nama")
     protected String nama;
+    @XmlElement(name = "notelp")
     protected String notelp;
+    @XmlElement(name = "poin")
     protected Integer poin;
+    @XmlElement(name="isActive")
     protected Boolean isActive;
     
-    @Builder
     public VIP(Integer id, String nama, String notelp, Integer poin){
         super(id);
         this.nama = nama;

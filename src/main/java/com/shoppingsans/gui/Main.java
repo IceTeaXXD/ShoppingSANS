@@ -13,6 +13,7 @@ import java.util.GregorianCalendar;
 /**
  *
  * @author Matthew
+ * @author Azmi
  */
 public class Main extends javax.swing.JFrame {
 
@@ -265,15 +266,28 @@ public class Main extends javax.swing.JFrame {
                 jButton5MousePressed(evt);
             }
         });
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/laporan.png"))); // NOI18N
         jButton7.setBorder(null);
         jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton7MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton7MouseEntered(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jButton7MousePressed(evt);
+            }
+        });
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
             }
         });
 
@@ -469,6 +483,20 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         addTab("Update Customer", new UpdateCustomer());
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7MouseClicked
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        addTab("Laporan", new Laporan());
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        addTab("Manajemen Barang", new ManajemenBarang());
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

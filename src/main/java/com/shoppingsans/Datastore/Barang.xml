@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <InventoryBarang>
     <Barang>
-        <namaBarang>MAHA</namaBarang>
+        <namaBarang>MAHE</namaBarang>
         <hargaBarang>10</hargaBarang>
         <stokBarang>10</stokBarang>
         <hargaBeli>2</hargaBeli>
@@ -10,10 +10,10 @@
     </Barang>
     <Barang>
         <namaBarang>MAHE</namaBarang>
-        <hargaBarang>10</hargaBarang>
-        <stokBarang>10</stokBarang>
-        <hargaBeli>2</hargaBeli>
-        <kategori>ASD</kategori>
-        <gambar>ASDSAD.jpg</gambar>
+        <hargaBarang>100</hargaBarang>
+        <stokBarang>100</stokBarang>
+        <hargaBeli>0</hargaBeli>
+        <kategori>tes kategori</kategori>
+        <gambar>gambar.jpg</gambar>
     </Barang>
 </InventoryBarang>

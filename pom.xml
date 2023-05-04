@@ -110,6 +110,15 @@
                 <directory>src/main/java/com/shoppingsans/JualBarang/images</directory>
                 <targetPath>com/shoppingsans/JualBarang/images</targetPath>
             </resource>
+            <resource>
+                <directory>src/main/java/com/shoppingsans/Datastore</directory>
+                <includes>
+                    <include>**/*.json</include>
+                    <include>**/*.OBJ</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <targetPath>com/shoppingsans/Datastore</targetPath>
+            </resource>
         </resources>
     </build>
 </project>

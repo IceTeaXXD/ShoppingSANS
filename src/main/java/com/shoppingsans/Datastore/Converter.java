@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.shoppingsans.files;
+package com.shoppingsans.Datastore;
 
 import java.io.FileNotFoundException;
 import javax.xml.bind.JAXBException;

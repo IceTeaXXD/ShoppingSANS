@@ -1,7 +1,7 @@
 {
   "inventory" : [ {
     "type" : "Barang",
-    "namaBarang" : "MAHA",
+    "namaBarang" : "MAHE",
     "hargaBarang" : 10,
     "stokBarang" : 10,
     "hargaBeli" : 2,
@@ -10,10 +10,10 @@
   }, {
     "type" : "Barang",
     "namaBarang" : "MAHE",
-    "hargaBarang" : 10,
-    "stokBarang" : 10,
-    "hargaBeli" : 2,
-    "kategori" : "ASD",
-    "gambar" : "ASDSAD.jpg"
+    "hargaBarang" : 100,
+    "stokBarang" : 100,
+    "hargaBeli" : 0,
+    "kategori" : "tes kategori",
+    "gambar" : "gambar.jpg"
   } ]
 }

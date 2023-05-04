@@ -5,7 +5,7 @@
 package com.shoppingsans.gui;
 
 import com.shoppingsans.JualBarang.Barang;
-import com.shoppingsans.files.DataStore;
+import com.shoppingsans.Datastore.DataStore;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;

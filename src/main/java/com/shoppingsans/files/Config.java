@@ -2,17 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.shoppingsans.User;
+package com.shoppingsans.files;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
-
-import lombok.AllArgsConstructor;
+import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +21,9 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@XmlRootElement(name = "Customer")
+@XmlRootElement(name = "Config")
 @XmlAccessorType(XmlAccessType.FIELD)
+@NoArgsConstructor
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -36,17 +31,9 @@ import lombok.Setter;
         property = "type"
 )
 
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Member.class, name = "Member"),
-    @JsonSubTypes.Type(value = VIP.class, name = "VIP"),
-})
-public class Customer implements Serializable{
-    @XmlElement(name = "id")
-    protected Integer id;
-    
-    /* Tester Class */
-    public static void main(String[] args){
-        Customer c = new Customer(3);
-        System.out.println(c.getId());
-    }
+public class Config {
+    @XmlElement
+    private String appName;
+    @XmlElement
+    private String saveas;
 }

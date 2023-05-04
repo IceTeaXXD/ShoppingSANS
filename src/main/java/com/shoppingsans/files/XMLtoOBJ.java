@@ -4,26 +4,33 @@
  */
 package com.shoppingsans.files;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 /**
  *
  * @author Matthew
  */
-public class JSONtoOBJ implements Converter {
+public class XMLtoOBJ implements Converter {
+    /**
+     * 
+     * @param <T>
+     * @param clazz
+     * @param input
+     * @return
+     * @throws JAXBException 
+     */
+    public <T> T convert(Class<T> clazz, String input) throws JAXBException{
+        JAXBContext context = JAXBContext.newInstance(clazz);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        return clazz.cast(unmarshaller.unmarshal(new File(input)));
+    }
 
     @Override
     public void convert(Object o, String file) throws JAXBException, FileNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    public <T> T convert(Class<T> clazz, String file) throws JAXBException, FileNotFoundException, IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(new File(file), clazz);
-    }
-    
 }

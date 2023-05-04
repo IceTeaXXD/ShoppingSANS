@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<InventoryBarang>
+    <Barang>
+        <namaBarang>Kondom</namaBarang>
+        <hargaBarang>50000</hargaBarang>
+        <stokBarang>100</stokBarang>
+        <hargaBeli>30000</hargaBeli>
+        <kategori>Kesehatan</kategori>
+        <gambar>images/mahentot.jpg</gambar>
+    </Barang>
+    <Barang>
+        <namaBarang>Sikat Gigi</namaBarang>
+        <hargaBarang>30000</hargaBarang>
+        <stokBarang>100</stokBarang>
+        <hargaBeli>30000</hargaBeli>
+        <kategori>Kesehatan</kategori>
+        <gambar>images/mahentot.jpg</gambar>
+    </Barang>
+</InventoryBarang>

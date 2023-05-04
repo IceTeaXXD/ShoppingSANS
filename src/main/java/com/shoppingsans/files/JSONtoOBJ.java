@@ -1,29 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.shoppingsans.files;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import javax.xml.bind.JAXBException;
+import java.nio.file.Files;  
+import java.nio.file.Paths;  
+import org.json.JSONException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-/**
- *
- * @author Matthew
- */
-public class JSONtoOBJ implements Converter {
-
+public class JSONtoOBJ implements Converter{
     @Override
-    public void convert(Object o, String file) throws JAXBException, FileNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void convert(String path, String output) {
+        try{
+            String jsonString;
+            jsonString = new String(Files.readAllBytes((Paths.get(path))));
+            System.out.println(jsonString);
+            Gson gsonBuilder = new GsonBuilder().create();
+            // DataStore Data = gsonBuilder.fromJson(jsonString, DataStore.class);
+        }catch (JSONException e) {  
+            // TODO: handle exception  
+            System.out.println(e.toString());  
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
-    
-    public <T> T convert(Class<T> clazz, String file) throws JAXBException, FileNotFoundException, IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(new File(file), clazz);
+    public static void main(String[] args) {
+        JSONtoOBJ jx = new JSONtoOBJ();
+        jx.convert("./src/main/java/com/shoppingsans/files/Config.json", "blablabla.xml");
     }
-    
 }

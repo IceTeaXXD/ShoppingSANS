@@ -4,36 +4,33 @@
  */
 package com.shoppingsans.files;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
  *
  * @author Matthew
+ * Ini merupakan class template yang bisa diserializable
  */
+/* Kasih tau lombok ini data */
 @Data
-@Getter
-@Setter
-@XmlRootElement(name = "Config")
+/* Kasih tau nama rootnya kalau jadi XML */
+@XmlRootElement(name = "Person")
 @XmlAccessorType(XmlAccessType.FIELD)
-@NoArgsConstructor
-
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type"
-)
-
-public class Config {
-    @XmlElement
-    private String appName;
-    @XmlElement
-    private String saveas;
+@AllArgsConstructor
+@Setter
+public class Person implements Serializable {
+    @XmlElement(name = "age")
+    private int age;
+    @XmlElement(name = "name")
+    private String name;
+    Person(){
+        /* Konstruktor kosong digunakan untuk binding */
+    }
 }

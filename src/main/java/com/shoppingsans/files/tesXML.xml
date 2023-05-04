@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this template
+-->
+
+
+
+<order>
+  <item>
+    <name>Widget A</name>
+    <quantity>2</quantity>
+    <price>10.99</price>
+  </item>
+  <item>
+    <name>Widget B</name>
+    <quantity>1</quantity>
+    <price>7.99</price>
+  </item>
+  <total>29.97</total>
+</order>

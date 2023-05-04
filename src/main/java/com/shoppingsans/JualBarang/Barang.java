@@ -1,15 +1,7 @@
 package com.shoppingsans.JualBarang;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.io.Serializable;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -17,29 +9,23 @@ import lombok.Setter;
  * @author Azmi Hasna Zahrani - 13521006
  */
 
-@Data
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-//@XmlRootElement(name = "Barang")
-@XmlAccessorType(XmlAccessType.FIELD)
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type"
-)
-public class Barang implements Serializable{
-    @XmlElement(name = "namaBarang")
+public class Barang {
     private String namaBarang;
-    @XmlElement(name = "hargaBarang")
     private int hargaBarang;
-    @XmlElement(name = "stokBarang")
     private int stokBarang;
-    @XmlElement(name = "hargaBeli")
     private int hargaBeli;
-    @XmlElement(name = "kategori")
     private String kategori;
-    @XmlElement(name = "gambar")
     private String gambar;
+
+    public Barang(){
+        namaBarang = "";
+        hargaBarang = 0;
+        stokBarang = 0;
+        hargaBeli = 0;
+        kategori = "";
+        gambar = "";
+    }
 }

@@ -4,46 +4,34 @@
  */
 package com.shoppingsans.User;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.io.Serializable;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
  *
  * @author Matthew
  */
-@Data
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@XmlRootElement(name = "Customer")
-@XmlAccessorType(XmlAccessType.FIELD)
+public class Customer{
 
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type"
-)
-
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Member.class, name = "Member"),
-    @JsonSubTypes.Type(value = VIP.class, name = "VIP"),
-})
-public class Customer implements Serializable{
-    @XmlElement(name = "id")
     protected Integer id;
-    
+
+    public Customer() {
+        this.id = -1;
+    }
+
+    @XmlElement(name = "id")
+    public void setId(Integer id) {
+        this.id = id;
+    }
     /* Tester Class */
     public static void main(String[] args){
         Customer c = new Customer(3);

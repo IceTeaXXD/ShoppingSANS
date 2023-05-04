@@ -2,23 +2,29 @@ package com.shoppingsans.User;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.*;
-import javax.xml.bind.annotation.XmlElements;
-import lombok.Getter;
 
 /**
  *
  * @author Bintang Hijriawan - 13521003
  */
 
-@XmlRootElement(name = "Users")
-@Getter
+@XmlRootElement(name = "User")
 public class User {
-    @XmlElements({
-        @XmlElement(name = "Customer", type = Customer.class),
-        @XmlElement(name = "Member", type = Member.class),
-        @XmlElement(name = "VIP", type = VIP.class)
-    })
-    private ArrayList<Customer> customers = new ArrayList<>();
-    
-    public User(){}
+    @XmlElement(name = "Customer")
+    private ArrayList<Customer> customers;
+    @XmlElement(name = "Member")
+    private ArrayList<Member> members;
+
+    public User(){
+        this.customers = new ArrayList<>();
+        this.members = new ArrayList<>();
+    }
+
+    public ArrayList<Customer> getCustomers() {
+        return customers;
+    }
+
+    public ArrayList<Member> getMembers() {
+        return members;
+    }
 }

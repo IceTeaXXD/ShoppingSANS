@@ -1,5 +1,1 @@
-{
-  "type" : "Config",
-  "appName" : "ShoppingSans",
-  "saveas" : "xml"
-}
+{"User":{"Customer":[{"id":1},{"id":2}],"VIP":{"poin":100,"notelp":"0833445566","nama":"Hentot","id":4,"isActive":true},"Member":{"poin":100,"notelp":"0822334455","nama":"Mahentot","id":3,"isActive":true}},"InventoryBarang":{"Barang":[{"kategori":"Makanan","namaBarang":"Daging Jason","hargaBeli":40000,"hargaBarang":100000,"stokBarang":100,"gambar":"image/jason.png"},{"kategori":"Makanan","namaBarang":"Daging","hargaBeli":40000,"hargaBarang":100000,"stokBarang":100,"gambar":"image/jason.png"}]},"History":{"FixedBill":[{"idUser":1,"datetime":"23-03-2023","id":1,"pembelian":{"Value":1,"Key":"Daging Jason"}},{"idUser":3,"datetime":"23-03-2023","id":2,"pembelian":{"Value":200,"Key":"Daging Jason"}}]},"config":{"matauang":"IDR","namaaplikasi":"ShoppingSans"}}

@@ -1,6 +1,7 @@
 package com.shoppingsans.JualBarang;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @XmlRootElement(name = "InventoryBarang")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class InventoryBarang{
+public class InventoryBarang implements Serializable{
     @XmlElement(name = "Barang")
     private ArrayList <Barang> Inventory = new ArrayList<>();
 

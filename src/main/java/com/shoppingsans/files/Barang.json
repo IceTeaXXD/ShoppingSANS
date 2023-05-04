@@ -1,19 +1,19 @@
 {
   "inventory" : [ {
     "type" : "Barang",
-    "namaBarang" : "Kondom",
-    "hargaBarang" : 50000,
-    "stokBarang" : 100,
-    "hargaBeli" : 30000,
-    "kategori" : "Kesehatan",
-    "gambar" : "images/mahentot.jpg"
+    "namaBarang" : "MAHA",
+    "hargaBarang" : 10,
+    "stokBarang" : 10,
+    "hargaBeli" : 2,
+    "kategori" : "ASD",
+    "gambar" : "ASDSAD.jpg"
   }, {
     "type" : "Barang",
-    "namaBarang" : "Sikat Gigi",
-    "hargaBarang" : 30000,
-    "stokBarang" : 100,
-    "hargaBeli" : 30000,
-    "kategori" : "Kesehatan",
-    "gambar" : "images/mahentot.jpg"
+    "namaBarang" : "MAHE",
+    "hargaBarang" : 10,
+    "stokBarang" : 10,
+    "hargaBeli" : 2,
+    "kategori" : "ASD",
+    "gambar" : "ASDSAD.jpg"
   } ]
 }

@@ -28,16 +28,21 @@ public class DataStore {
     private final JSONtoOBJ jo = new JSONtoOBJ();
     private final XMLtoOBJ xo = new XMLtoOBJ();
     private final OBJtoXML ox = new OBJtoXML();
+    private final ObjectToOBJ oobj = new ObjectToOBJ();
+    private final OBJToObject objo = new OBJToObject();
     
-    public DataStore() throws JAXBException, IOException{
+    public DataStore() throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException{
         /* Baca file xml users dan inventory barang */
         config = xo.convert(Config.class, "./src/main/java/com/shoppingsans/files/Config.xml");
         if(config.getSaveas().equals("xml")){
             users = xo.convert(User.class, "./src/main/java/com/shoppingsans/files/Customers.xml");
             inventoryBarang = xo.convert(InventoryBarang.class, "./src/main/java/com/shoppingsans/files/Barang.xml");
-        }else{
+        }else if (config.getSaveas().equals("json")){
             users = jo.convert(User.class, "./src/main/java/com/shoppingsans/files/Customers.json");
             inventoryBarang = jo.convert(InventoryBarang.class, "./src/main/java/com/shoppingsans/files/Barang.json");
+        }else if(config.getSaveas().equals("obj")){
+            users = objo.convert(User.class, "./src/main/java/com/shoppingsans/files/Customers.OBJ");
+            inventoryBarang = objo.convert(InventoryBarang.class, "./src/main/java/com/shoppingsans/files/Barang.OBJ");
         }
     }
     
@@ -45,9 +50,12 @@ public class DataStore {
         if(config.getSaveas().equals("xml")){
             ox.convert(users, "./src/main/java/com/shoppingsans/files/Customers.xml");
             ox.convert(inventoryBarang, "./src/main/java/com/shoppingsans/files/Barang.xml");
-        }else{
+        }else if(config.getSaveas().equals("json")){
             oj.convert(users, "./src/main/java/com/shoppingsans/files/Customers.json");
             oj.convert(inventoryBarang, "./src/main/java/com/shoppingsans/files/Barang.json");
+        }else if(config.getSaveas().equals("obj")){
+            oobj.convert(users, "./src/main/java/com/shoppingsans/files/Customers.OBJ");
+            oobj.convert(inventoryBarang, "./src/main/java/com/shoppingsans/files/Barang.OBJ");
         }
         
         ox.convert(config, "./src/main/java/com/shoppingsans/files/Config.xml");

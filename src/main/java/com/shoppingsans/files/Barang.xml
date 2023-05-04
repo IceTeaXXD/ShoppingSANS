@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <InventoryBarang>
     <Barang>
-        <namaBarang>Kondom</namaBarang>
-        <hargaBarang>50000</hargaBarang>
-        <stokBarang>100</stokBarang>
-        <hargaBeli>30000</hargaBeli>
-        <kategori>Kesehatan</kategori>
-        <gambar>images/mahentot.jpg</gambar>
+        <namaBarang>MAHA</namaBarang>
+        <hargaBarang>10</hargaBarang>
+        <stokBarang>10</stokBarang>
+        <hargaBeli>2</hargaBeli>
+        <kategori>ASD</kategori>
+        <gambar>ASDSAD.jpg</gambar>
     </Barang>
     <Barang>
-        <namaBarang>Sikat Gigi</namaBarang>
-        <hargaBarang>30000</hargaBarang>
-        <stokBarang>100</stokBarang>
-        <hargaBeli>30000</hargaBeli>
-        <kategori>Kesehatan</kategori>
-        <gambar>images/mahentot.jpg</gambar>
+        <namaBarang>MAHE</namaBarang>
+        <hargaBarang>10</hargaBarang>
+        <stokBarang>10</stokBarang>
+        <hargaBeli>2</hargaBeli>
+        <kategori>ASD</kategori>
+        <gambar>ASDSAD.jpg</gambar>
     </Barang>
 </InventoryBarang>

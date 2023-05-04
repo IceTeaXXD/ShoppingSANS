@@ -1,10 +1,6 @@
 {
   "customers" : [ {
-    "type" : "Member",
-    "id" : 6,
-    "nama" : "Bintang",
-    "notelp" : "0811222222",
-    "poin" : 30,
-    "isActive" : true
+    "type" : "Customer",
+    "id" : 5
   } ]
 }

@@ -1,4 +1,5 @@
 package com.shoppingsans.User;
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.*;
@@ -12,7 +13,7 @@ import lombok.Getter;
 
 @XmlRootElement(name = "Users")
 @Getter
-public class User {
+public class User implements Serializable{
     @XmlElements({
         @XmlElement(name = "Customer", type = Customer.class),
         @XmlElement(name = "Member", type = Member.class),

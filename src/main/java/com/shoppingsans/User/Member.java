@@ -4,10 +4,13 @@
  */
 package com.shoppingsans.User;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import lombok.Builder;
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -16,39 +19,20 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class Member extends Customer implements Diskon {
-    protected String nama;
-    protected String notelp;
-    protected Integer poin;
-    protected Boolean isActive;
-    public Member() {
-        super();
-        this.nama = "XX";
-        this.notelp = "XX";
-        this.poin = 0;
-        this.isActive = true;
-    }
-    @XmlElement(name = "id")
-    public void setID(Integer id){
-        this.id = id;
-    }
+@NoArgsConstructor
+//@XmlRootElement(name="Member")
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonTypeName("Member")
+public class Member extends Customer implements Diskon, Serializable {
     @XmlElement(name = "nama")
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
+    protected String nama;
     @XmlElement(name = "notelp")
-    public void setNotelp(String notelp) {
-        this.notelp = notelp;
-    }
+    protected String notelp;
     @XmlElement(name = "poin")
-    public void setPoin(Integer poin) {
-        this.poin = poin;
-    }
+    protected Integer poin;
     @XmlElement(name = "isActive")
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-    @Builder
+    protected Boolean isActive;
+    
     public Member(Integer id, String nama, String notelp, Integer poin){
         super(id);
         this.nama = nama;

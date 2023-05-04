@@ -4,10 +4,13 @@
  */
 package com.shoppingsans.files;
 
+import java.io.FileNotFoundException;
+import javax.xml.bind.JAXBException;
+
 /**
  *
  * @author Matthew Mahendra - 13521007
  */
 public interface Converter {
-    public void convert(String path, String output);
+    public void convert(Object o, String file) throws JAXBException, FileNotFoundException;
 }

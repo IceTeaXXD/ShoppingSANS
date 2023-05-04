@@ -1,11 +1,17 @@
 package com.shoppingsans.JualBarang;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -14,18 +20,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  * {@summary Container untuk barang-barang yang tersedia. Menyimpan objek Barang}
  */
 
+@Data
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @XmlRootElement(name = "InventoryBarang")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class InventoryBarang{
     @XmlElement(name = "Barang")
-    private final ArrayList <Barang> Inventory;
+    private ArrayList <Barang> Inventory = new ArrayList<>();
 
-    public InventoryBarang(){
-        Inventory = new ArrayList<>();
-    }
-
+    @JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+    )
+    
+    @JsonIgnore
     public int getSize(){
         return Inventory.size();
     }
@@ -55,6 +67,7 @@ public class InventoryBarang{
         Inventory.set(index, barang);
     }
 
+    @JsonIgnore
     public Barang[] getBarang() {
         return Inventory.toArray(new Barang[0]);
     }

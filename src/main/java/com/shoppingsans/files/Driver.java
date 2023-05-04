@@ -4,7 +4,9 @@
  */
 package com.shoppingsans.files;
 
+import com.shoppingsans.User.Member;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -12,14 +14,15 @@ import javax.xml.bind.JAXBException;
  * @author Matthew Mahendra - 13521007
  */
 public class Driver {
-    public static void main(String[] args) throws JAXBException, FileNotFoundException {
-        XMLtoJSON xj = new XMLtoJSON();
-        // JSONtoXML jx = new JSONtoXML();
-        OBJtoXML ox = new OBJtoXML();
-        xj.convert("./src/main/java/com/shoppingsans/files/Config.xml", "Config.json");
-        // jx.convert("./src/main/java/com/shoppingsans/files/tesJSON.json", "tesOutputXML.xml");
-        Person p = new Person(19, "Mahen");
-        System.out.println(p.getName());
-        ox.convert(p, "./src/main/java/com/shoppingsans/files/Person.xml");
+    public static void main(String[] args) throws JAXBException, FileNotFoundException, IOException {
+        DataStore ds = new DataStore();
+        
+        Member m = new Member(6, "Bintang", "0811222222", 30);
+        
+        ds.getConfig().setSaveas("json");
+        
+        ds.getUsers().getCustomers().add(m);
+        
+        ds.saveAs();
     }
 }

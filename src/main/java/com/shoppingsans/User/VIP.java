@@ -22,7 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonTypeName("VIP")
-public class VIP extends Customer implements Diskon, Serializable{
+public class VIP extends Customer implements Diskon {
     @XmlElement(name = "nama")
     protected String nama;
     @XmlElement(name = "notelp")

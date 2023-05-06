@@ -1,0 +1,37 @@
+{
+  "listHistory" : [ {
+    "type" : "FixedBill",
+    "id" : 1,
+    "idUser" : 1,
+    "datetime" : "23-03-2023",
+    "pembelian" : {
+      "type" : "Pembelian",
+      "entry" : [ {
+        "type" : "Entry",
+        "key" : "Daging",
+        "value" : 1
+      }, {
+        "type" : "Entry",
+        "key" : "Sayur",
+        "value" : 200
+      } ]
+    }
+  }, {
+    "type" : "FixedBill",
+    "id" : 2,
+    "idUser" : 3,
+    "datetime" : "23-03-2023",
+    "pembelian" : {
+      "type" : "Pembelian",
+      "entry" : [ {
+        "type" : "Entry",
+        "key" : "Daging",
+        "value" : 1
+      }, {
+        "type" : "Entry",
+        "key" : "Sayur",
+        "value" : 200
+      } ]
+    }
+  } ]
+}

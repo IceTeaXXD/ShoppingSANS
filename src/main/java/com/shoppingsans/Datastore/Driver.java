@@ -27,6 +27,7 @@ public class Driver {
         b.setGambar("mouse.jpg");
         b.setIdBarang(ds.getInventoryBarang().getSize() + 1);
         
+        ds.getHistory().printListHistory();
         ds.getInventoryBarang().getInventory().add(b);
         ds.saveAs();
         

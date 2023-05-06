@@ -14,6 +14,9 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import lombok.AllArgsConstructor;
 // import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +31,11 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
 public class FixedBill implements Serializable{
     @NonNull
     protected Integer id;
@@ -40,6 +48,7 @@ public class FixedBill implements Serializable{
 
     // @XmlJavaTypeAdapter(FixedBillAdapter.class)
     // @XmlElement(name = "pembelian")
+    @JsonIgnore
     protected HashMap<String, Integer> mapPembelian;
 
     private Pembelian pembelian;
@@ -71,7 +80,6 @@ public class FixedBill implements Serializable{
         for (Map.Entry<String, Integer> entry : mapPembelian.entrySet()) {
             System.out.println("Nama Barang: " + entry.getKey());
             System.out.println("Jumlah: " + entry.getValue());
-            System.out.println();
         }
 
         System.out.println();

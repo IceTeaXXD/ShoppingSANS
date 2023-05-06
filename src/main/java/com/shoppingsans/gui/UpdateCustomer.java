@@ -22,7 +22,6 @@ public class UpdateCustomer extends javax.swing.JPanel {
     /**
      * Creates new form UpdateCustomer
      */
-    Boolean ada = false;
     DataStore ds;
     public UpdateCustomer() throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException {
         initComponents();
@@ -33,12 +32,11 @@ public class UpdateCustomer extends javax.swing.JPanel {
         for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
             if(ds.getUsers().getCustomers().get(i) instanceof Member || ds.getUsers().getCustomers().get(i) instanceof VIP){
                 jComboBox2.addItem(Integer.toString(ds.getUsers().getCustomers().get(i).getId())); 
-                ada = true;
             }
         }
         
         /* Set other elements */
-        if(ada){
+        if(jComboBox2.getSelectedItem() != null){
             Integer selectedId = Integer.valueOf((String)jComboBox2.getSelectedItem());
 
             for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
@@ -91,7 +89,6 @@ public class UpdateCustomer extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("ID");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Member" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -117,7 +114,6 @@ public class UpdateCustomer extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nama");
 
-        jTextField1.setText("Masukkan Nama Member");
         jTextField1.setToolTipText("");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +125,6 @@ public class UpdateCustomer extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("No. Telp");
 
-        jTextField2.setText("Masukkan No. Telepon");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -211,12 +206,28 @@ public class UpdateCustomer extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
+        if(jComboBox2.getSelectedItem() != null){
+            /* Update the Value */
+            Integer selectedId = Integer.valueOf((String)jComboBox2.getSelectedItem());
+
+            for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+                if(ds.getUsers().getCustomers().get(i).getId().equals(selectedId)){
+                    if(ds.getUsers().getCustomers().get(i) instanceof Member){
+                        jTextField1.setText(((Member) ds.getUsers().getCustomers().get(i)).getNama());
+                        jTextField2.setText(((Member) ds.getUsers().getCustomers().get(i)).getNotelp());
+                        jComboBox1.setSelectedIndex(0);
+                    }else if(ds.getUsers().getCustomers().get(i) instanceof VIP){
+                        jTextField1.setText(((VIP) ds.getUsers().getCustomers().get(i)).getNama());
+                        jTextField2.setText(((VIP) ds.getUsers().getCustomers().get(i)).getNotelp());
+                        jComboBox1.setSelectedIndex(1);
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        if(ada){
+        if(jComboBox2.getSelectedItem() != null){
             Integer selectedId = Integer.valueOf((String)jComboBox2.getSelectedItem());
 
             for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
@@ -246,8 +257,7 @@ public class UpdateCustomer extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if(ada){
+        if(jComboBox2.getSelectedItem() != null){
             Integer selectedId = Integer.valueOf((String)jComboBox2.getSelectedItem());
             for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
                 if(ds.getUsers().getCustomers().get(i).getId().equals(selectedId)){

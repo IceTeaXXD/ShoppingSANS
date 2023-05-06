@@ -43,20 +43,22 @@ public class ManajemenBarang extends javax.swing.JPanel {
                                     .getIdBarang()));
         }
         
-        /* Set other elements */
-        Integer selectedId = Integer.valueOf((String)jComboBox1.getSelectedItem());
-        
-        for(int i = 0; i < ds.getInventoryBarang().getSize(); i++){
-            if(ds.getInventoryBarang().getInventory().get(i).getIdBarang() == selectedId){
-                jTextField1.setText(ds.getInventoryBarang().getInventory().get(i).getNamaBarang());
-                Integer hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBarang();
-                jTextField2.setText(hargaBarang.toString());
-                hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBeli();
-                jTextField3.setText(hargaBarang.toString());
-                jTextField4.setText(ds.getInventoryBarang().getInventory().get(i).getKategori());
-                hargaBarang = ds.getInventoryBarang().getInventory().get(i).getStokBarang();
-                jTextField5.setText(hargaBarang.toString());
-                break;
+        if(jComboBox1.getSelectedItem() != null){
+            /* Set other elements */
+            Integer selectedId = Integer.valueOf((String)jComboBox1.getSelectedItem());
+
+            for(int i = 0; i < ds.getInventoryBarang().getSize(); i++){
+                if(ds.getInventoryBarang().getInventory().get(i).getIdBarang() == selectedId){
+                    jTextField1.setText(ds.getInventoryBarang().getInventory().get(i).getNamaBarang());
+                    Integer hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBarang();
+                    jTextField2.setText(hargaBarang.toString());
+                    hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBeli();
+                    jTextField3.setText(hargaBarang.toString());
+                    jTextField4.setText(ds.getInventoryBarang().getInventory().get(i).getKategori());
+                    hargaBarang = ds.getInventoryBarang().getInventory().get(i).getStokBarang();
+                    jTextField5.setText(hargaBarang.toString());
+                    break;
+                }
             }
         }
     }
@@ -125,15 +127,12 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jLabel4.setText("Gambar");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, 80, 20));
 
-        jTextField1.setText("Masukkan Nama Barang");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
         add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 210, 200, 30));
-
-        jTextField2.setText("Masukkan Harga Jual");
         add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, 200, 30));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/chooseimg.png"))); // NOI18N
@@ -165,16 +164,12 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Harga Beli");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 110, -1));
-
-        jTextField3.setText("Masukkan Harga Beli");
         add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 310, 200, 30));
 
         jLabel6.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Stok Barang");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 410, -1, -1));
-
-        jTextField4.setText("Masukkan Stok Barang");
         add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 360, 200, 30));
 
         jLabel7.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
@@ -193,8 +188,6 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Kategori");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, -1));
-
-        jTextField5.setText("Masukkan Kategori");
         add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 410, 200, 30));
 
         jTextField6.setText("Masukkan Kategori");
@@ -233,43 +226,45 @@ public class ManajemenBarang extends javax.swing.JPanel {
         try {
             // TODO add your handling code here:
             /* Update Barang */
-            /* Loop through and update at the idx */
-            int search = Integer.parseInt((String) jComboBox1.getSelectedItem());
-            for(int i = 0; i < ds.getInventoryBarang().getInventory().size(); i++){
-                if(search == ds.getInventoryBarang().getInventory().get(i).getIdBarang()){
-                    ds.getInventoryBarang()
-                       .getInventory()
-                       .get(i)
-                       .setNamaBarang(jTextField1.getText());
-                    
-                    ds.getInventoryBarang()
-                       .getInventory()
-                       .get(i)
-                       .setHargaBarang(Integer.parseInt(jTextField2.getText()));
-                    
-                    ds.getInventoryBarang()
-                       .getInventory()
-                       .get(i)
-                       .setHargaBarang(Integer.parseInt(jTextField3.getText()));
-                    
-                    ds.getInventoryBarang()
-                       .getInventory()
-                       .get(i)
-                       .setKategori(jTextField4.getText());
-                    
-                    ds.getInventoryBarang()
-                       .getInventory()
-                       .get(i)
-                       .setStokBarang(Integer.parseInt(jTextField5.getText()));
-                    
-                    ds.getInventoryBarang()
-                       .getInventory()
-                       .get(i)
-                       .setGambar(jLabel9.getText());
-                    break;
+            if(jComboBox1.getSelectedItem() != null){
+                /* Loop through and update at the idx */
+                int search = Integer.parseInt((String) jComboBox1.getSelectedItem());
+                for(int i = 0; i < ds.getInventoryBarang().getInventory().size(); i++){
+                    if(search == ds.getInventoryBarang().getInventory().get(i).getIdBarang()){
+                        ds.getInventoryBarang()
+                           .getInventory()
+                           .get(i)
+                           .setNamaBarang(jTextField1.getText());
+
+                        ds.getInventoryBarang()
+                           .getInventory()
+                           .get(i)
+                           .setHargaBarang(Integer.parseInt(jTextField2.getText()));
+
+                        ds.getInventoryBarang()
+                           .getInventory()
+                           .get(i)
+                           .setHargaBarang(Integer.parseInt(jTextField3.getText()));
+
+                        ds.getInventoryBarang()
+                           .getInventory()
+                           .get(i)
+                           .setKategori(jTextField4.getText());
+
+                        ds.getInventoryBarang()
+                           .getInventory()
+                           .get(i)
+                           .setStokBarang(Integer.parseInt(jTextField5.getText()));
+
+                        ds.getInventoryBarang()
+                           .getInventory()
+                           .get(i)
+                           .setGambar(jLabel9.getText());
+                        break;
+                    }
                 }
+                ds.saveAs();
             }
-            ds.saveAs();
         } catch (JAXBException | FileNotFoundException ex) {
             Logger.getLogger(ManajemenBarang.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -278,18 +273,34 @@ public class ManajemenBarang extends javax.swing.JPanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         try {
-            Barang newBarang = new Barang();
-            int newId = ds.getInventoryBarang().getInventory().get(ds.getInventoryBarang().getSize()-1).getIdBarang() + 1;
-            newBarang.setIdBarang(newId);
-            newBarang.setNamaBarang(jTextField1.getText());
-            newBarang.setHargaBarang(Integer.parseInt(jTextField2.getText()));
-            newBarang.setHargaBeli(Integer.parseInt(jTextField3.getText()));
-            newBarang.setKategori(jTextField4.getText());
-            newBarang.setStokBarang(Integer.parseInt(jTextField5.getText()));
-            newBarang.setGambar(jLabel9.getText());
+            if(jComboBox1.getSelectedItem() != null){
+                Barang newBarang = new Barang();
+                int newId = ds.getInventoryBarang().getInventory().get(ds.getInventoryBarang().getSize()-1).getIdBarang() + 1;
+                newBarang.setIdBarang(newId);
+                newBarang.setNamaBarang(jTextField1.getText());
+                newBarang.setHargaBarang(Integer.parseInt(jTextField2.getText()));
+                newBarang.setHargaBeli(Integer.parseInt(jTextField3.getText()));
+                newBarang.setKategori(jTextField4.getText());
+                newBarang.setStokBarang(Integer.parseInt(jTextField5.getText()));
+                newBarang.setGambar(jLabel9.getText());
+
+                ds.getInventoryBarang().addBarang(newBarang);
+                ds.saveAs();
+            }
             
-            ds.getInventoryBarang().addBarang(newBarang);
-            ds.saveAs();
+            if(ds.getInventoryBarang().getInventory().isEmpty()){
+                Barang newBarang = new Barang();
+                newBarang.setIdBarang(1);
+                newBarang.setNamaBarang(jTextField1.getText());
+                newBarang.setHargaBarang(Integer.parseInt(jTextField2.getText()));
+                newBarang.setHargaBeli(Integer.parseInt(jTextField3.getText()));
+                newBarang.setKategori(jTextField4.getText());
+                newBarang.setStokBarang(Integer.parseInt(jTextField5.getText()));
+                newBarang.setGambar(jLabel9.getText());
+
+                ds.getInventoryBarang().addBarang(newBarang);
+                ds.saveAs();
+            }
         } catch (JAXBException | IOException  ex) {
             Logger.getLogger(ManajemenBarang.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -299,15 +310,17 @@ public class ManajemenBarang extends javax.swing.JPanel {
         try {
             // TODO add your handling code here:
             /* Loop through and delete */
-            int search = Integer.parseInt((String) jComboBox1.getSelectedItem());
-            for(int i = 0; i < ds.getInventoryBarang().getInventory().size(); i++){
-                if(search == ds.getInventoryBarang().getInventory().get(i).getIdBarang()){
-                    ds.getInventoryBarang().removeBarang(i);
-                    jComboBox1.remove(i);
-                    break;
+            if(jComboBox1.getSelectedItem() != null){
+                int search = Integer.parseInt((String) jComboBox1.getSelectedItem());
+                for(int i = 0; i < ds.getInventoryBarang().getInventory().size(); i++){
+                    if(search == ds.getInventoryBarang().getInventory().get(i).getIdBarang()){
+                        ds.getInventoryBarang().removeBarang(i);
+                        jComboBox1.remove(i);
+                        break;
+                    }
                 }
+                ds.saveAs();
             }
-            ds.saveAs();
         } catch (JAXBException | IOException  ex) {
             Logger.getLogger(ManajemenBarang.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -316,20 +329,22 @@ public class ManajemenBarang extends javax.swing.JPanel {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:        
         /* Set other elements */
-        Integer selectedId = Integer.valueOf((String)jComboBox1.getSelectedItem());
-        
-        for(int i = 0; i < ds.getInventoryBarang().getSize(); i++){
-            if(ds.getInventoryBarang().getInventory().get(i).getIdBarang() == selectedId){
-                jTextField1.setText(ds.getInventoryBarang().getInventory().get(i).getNamaBarang());
-                Integer hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBarang();
-                jTextField2.setText(hargaBarang.toString());
-                hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBeli();
-                jTextField3.setText(hargaBarang.toString());
-                jTextField4.setText(ds.getInventoryBarang().getInventory().get(i).getKategori());
-                hargaBarang = ds.getInventoryBarang().getInventory().get(i).getStokBarang();
-                jTextField5.setText(hargaBarang.toString());
-                jLabel9.setText(ds.getInventoryBarang().getInventory().get(i).getGambar());
-                break;
+        if(jComboBox1.getSelectedItem() != null){
+            Integer selectedId = Integer.valueOf((String)jComboBox1.getSelectedItem());
+
+            for(int i = 0; i < ds.getInventoryBarang().getSize(); i++){
+                if(ds.getInventoryBarang().getInventory().get(i).getIdBarang() == selectedId){
+                    jTextField1.setText(ds.getInventoryBarang().getInventory().get(i).getNamaBarang());
+                    Integer hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBarang();
+                    jTextField2.setText(hargaBarang.toString());
+                    hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBeli();
+                    jTextField3.setText(hargaBarang.toString());
+                    jTextField4.setText(ds.getInventoryBarang().getInventory().get(i).getKategori());
+                    hargaBarang = ds.getInventoryBarang().getInventory().get(i).getStokBarang();
+                    jTextField5.setText(hargaBarang.toString());
+                    jLabel9.setText(ds.getInventoryBarang().getInventory().get(i).getGambar());
+                    break;
+                }
             }
         }
         

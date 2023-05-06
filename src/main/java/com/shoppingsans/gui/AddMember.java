@@ -20,7 +20,6 @@ import javax.xml.bind.JAXBException;
 public class AddMember extends javax.swing.JPanel {
     
     DataStore ds;
-    Boolean ada = false;
     /**
      * Creates new form AddMember
      * @throws javax.xml.bind.JAXBException
@@ -34,7 +33,6 @@ public class AddMember extends javax.swing.JPanel {
         for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
             if(!(ds.getUsers().getCustomers().get(i) instanceof Member) && !(ds.getUsers().getCustomers().get(i) instanceof VIP)){
                 jComboBox1.addItem(Integer.toString(ds.getUsers().getCustomers().get(i).getId()));   
-                ada = true;
             }
         }
     }
@@ -120,7 +118,7 @@ public class AddMember extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            if(ada){
+            if(jComboBox1.getSelectedItem() != null){
                 /* Create a new Member to */
                 Integer selectedId = Integer.valueOf((String)jComboBox1.getSelectedItem());
 

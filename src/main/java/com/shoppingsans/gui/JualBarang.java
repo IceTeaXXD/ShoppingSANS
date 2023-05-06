@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.Component;
 
 import javax.swing.DefaultCellEditor;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.xml.bind.JAXBException;
@@ -47,36 +49,66 @@ public class JualBarang extends javax.swing.JPanel {
         ArrayList<Barang> barangList = ds.getInventoryBarang().getInventory();
         // // Create data for the table
         ImageIcon leftButtonIcon = createImage("images/mouse.jpg");
-        data = new Object[barangList.size()][7];
+        data = new ArrayList<>();
+        pembeli = new ArrayList<>();
+        
         for (int i = 0; i < barangList.size(); i++) {
             Barang barang = barangList.get(i);
+            ArrayList<Object> listToko = new ArrayList<>();
+            ArrayList<Object> listPembeli = new ArrayList<>();
             // JButton button = new JButton("Buy", leftButtonIcon);
-            data[i][0] = barang.getStokBarang();
-            data[i][1] = barang.getNamaBarang();
-            data[i][2] = barang.getHargaBarang();
-            data[i][3] = barang.getHargaBeli();
-            data[i][4] = barang.getKategori();
-            data[i][5] = "images/" + barang.getGambar();
-            data[i][6] = i;
+            listToko.add(barang.getStokBarang());
+            listToko.add(barang.getNamaBarang());
+            listToko.add(barang.getHargaBarang());
+            listToko.add(barang.getHargaBeli());
+            listToko.add(barang.getKategori());
+            listToko.add("images/" + barang.getGambar());
+            listToko.add(i);
+            data.add(listToko);
+
+            listPembeli.add(0);
+            listPembeli.add(barang.getNamaBarang());
+            listPembeli.add(barang.getHargaBarang());
+            listPembeli.add(barang.getHargaBeli());
+            listPembeli.add(barang.getKategori());
+            listPembeli.add("images/" + barang.getGambar());
+            listPembeli.add(i);
+            pembeli.add(listPembeli);
         }
-        
 
         // Create a new instance of JTable
-        table = new JTable(data, columnNames);
-        
-        table.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-        table.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
-        table.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox()));
-        table.getColumnModel().getColumn(6).setPreferredWidth(100);
-        // make size of 100x100
-        table.setRowHeight(100);
+        tableToko = createTable(convertToArray(data),false);
+        tablePembeli = createTable(convertToArray(pembeli), true);
+      }
 
-        // Create a new instance of JScrollPane and add the table to it
-        JScrollPane scrollPane = new JScrollPane(table);
+    public JTable createTable(Object[][] data, boolean flag)
+    {
+      
 
-        // Set the bounds of the scroll pane and add it to the panel
-        scrollPane.setBounds(10, 50, 480, 480);
-        this.add(scrollPane);
+      JTable retTable = new JTable(data, columnNames);
+      retTable.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+      retTable.getColumnModel().getColumn(6).setPreferredWidth(100);
+
+      retTable.setRowHeight(100);
+
+      JScrollPane scrollPane = new JScrollPane(retTable);
+      // Create a new instance of JScrollPane and add the table to it
+
+      // Set the bounds of the scroll pane and add it to the panel
+      if (flag)
+      {
+        scrollPane = new JScrollPane(retTable);
+        retTable.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
+        retTable.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
+        scrollPane.setBounds(650, 200, 480, 480);        
+      }
+      else{ 
+        scrollPane = new JScrollPane(retTable);
+        retTable.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(1));
+        retTable.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 1));
+        scrollPane.setBounds(100, 100, 480, 480);
+      }
+      this.add(scrollPane);
         this.users = ds.getUsers().getCustomers();
         if (users.size() != 0)
         {
@@ -88,14 +120,28 @@ public class JualBarang extends javax.swing.JPanel {
             }
         }
         this.add(jComboBox1);
+      System.out.println("Table created");
+      return retTable;
     }
+
     private ImageIcon createImage(String string) {
         return new ImageIcon(string);
     }
-    class ButtonRenderer extends JButton implements TableCellRenderer {
 
-        public ButtonRenderer() {
+    private Object[][] convertToArray(ArrayList<ArrayList<Object>> list) {
+        Object[][] arr = new Object[list.size()][list.get(0).size()];
+        for (int i = 0; i < list.size(); i++) {
+          ArrayList<Object> row = list.get(i);
+          arr[i] = row.toArray(new Object[0]);
+        }
+        return arr; 
+    }
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        private int cat;
+
+        public ButtonRenderer(int cat) {
           setOpaque(true);
+          this.cat = cat;
         }
       
         public Component getTableCellRendererComponent(JTable table, Object value,
@@ -107,10 +153,13 @@ public class JualBarang extends javax.swing.JPanel {
             setForeground(table.getForeground());
             setBackground(UIManager.getColor("Button.background"));
           }
+          if (cat==1)
           setText("Buy");
+          else
+          setText("--");
           return this;
         }
-      }
+    }
       
       /**
        * @version 1.0 11/09/98
@@ -118,42 +167,65 @@ public class JualBarang extends javax.swing.JPanel {
       
        class ButtonEditor extends DefaultCellEditor implements TableCellEditor {
         protected JButton button;
-    
+        private int category;
         private String label;
     
         private boolean isPushed;
+      
+        public ButtonEditor(JCheckBox checkBox, int category) {
+          super(checkBox);
+          this.category = category;
+          button = new JButton();
+          button.setOpaque(true);
+          button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+              if (category == 1) {
+                Integer newStock = Integer.parseInt(data.get(Integer.parseInt(label)).get(0).toString()) - 1;
+                if (newStock < 0) {
+                    JOptionPane.showMessageDialog(button, "Barang sudah habis");
+                } else {
+                    data.get(Integer.parseInt(label)).set(0, newStock.toString());
+                    pembeli.get(Integer.parseInt(label)).set(0, Integer.parseInt(pembeli.get(Integer.parseInt(label)).get(0).toString()) + 1);
+                    tableToko.getModel().setValueAt(data.get(Integer.parseInt(label)).get(0), Integer.parseInt(label), 0);
+                    tablePembeli.getModel().setValueAt(pembeli.get(Integer.parseInt(label)).get(0), Integer.parseInt(label), 0);
     
-        public ButtonEditor(JCheckBox checkBox) {
-            super(checkBox);
-            button = new JButton();
-            button.setOpaque(true);
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    Integer newVal = Integer.valueOf(Integer.parseInt(data[Integer.parseInt(label)][0].toString())-1);
-              if (newVal<0) {
-                JOptionPane.showMessageDialog(button, "Barang sudah habis");
-              }
-              else {
-                data[Integer.parseInt(label)][0] = (Integer.valueOf(Integer.parseInt(data[Integer.parseInt(label)][0].toString())-1)).toString();
-                table.setValueAt(data[Integer.parseInt(label)][0], Integer.parseInt(label), 0);
-              }
+                    if (newStock == 0) {
+                        DefaultTableModel model = (DefaultTableModel) tablePembeli.getModel();
+                        model.removeRow(Integer.parseInt(label));
+                    }
                 }
-            });
+              } else if (category == 2) {
+                  data.get(Integer.parseInt(label)).set(0, Integer.parseInt(data.get(Integer.parseInt(label)).get(0).toString()) + 1);
+                  pembeli.get(Integer.parseInt(label)).set(0, Integer.parseInt(pembeli.get(Integer.parseInt(label)).get(0).toString()) - 1);
+                  tableToko.getModel().setValueAt(data.get(Integer.parseInt(label)).get(0), Integer.parseInt(label), 0);
+                  tablePembeli.getModel().setValueAt(pembeli.get(Integer.parseInt(label)).get(0), Integer.parseInt(label), 0);
+      
+                  if (Integer.parseInt(pembeli.get(Integer.parseInt(label)).get(0).toString()) == 0) {
+                      DefaultTableModel model = (DefaultTableModel) tablePembeli.getModel();
+                      model.removeRow(Integer.parseInt(label));
+                  }
+              }
+    
+            }
+          });
         }
     
         public Component getTableCellEditorComponent(JTable table, Object value,
-                boolean isSelected, int row, int column) {
-            if (isSelected) {
-                button.setForeground(table.getSelectionForeground());
-                button.setBackground(table.getSelectionBackground());
-            } else {
-                button.setForeground(table.getForeground());
-                button.setBackground(table.getBackground());
-            }
-            label = (value == null) ? "" : value.toString();
-            button.setText("Buy");
-            isPushed = true;
-            return button;
+            boolean isSelected, int row, int column) {
+          if (isSelected) {
+            button.setForeground(table.getSelectionForeground());
+            button.setBackground(table.getSelectionBackground());
+          } else {
+            button.setForeground(table.getForeground());
+            button.setBackground(table.getBackground());
+          }
+          label = (value == null) ? "" : value.toString();
+          if (category==1)
+          button.setText("Buy");
+          else if (category==2)
+          button.setText("--");
+          isPushed = true;
+          return button;
         }
     
         public Object getCellEditorValue() {
@@ -168,12 +240,14 @@ public class JualBarang extends javax.swing.JPanel {
             isPushed = false;
             return super.stopCellEditing();
         }
-    }
+      
+      }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(45, 43, 74));
@@ -185,12 +259,9 @@ public class JualBarang extends javax.swing.JPanel {
         jLabel1.setText("Jual Barang");
         jLabel1.setToolTipText("");
 
+        jButton2.setText("+");
+
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -199,16 +270,20 @@ public class JualBarang extends javax.swing.JPanel {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 605, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 589, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -217,10 +292,14 @@ public class JualBarang extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private JTable table;
-    private Object[][] data;
+    private JTable tableToko;
+    private JTable tablePembeli; 
+    private ArrayList<ArrayList<Object>> data;
+    private ArrayList<ArrayList<Object>> pembeli;
+    
     private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
     // End of variables declaration//GEN-END:variables
 }

@@ -1,11 +1,21 @@
 package com.shoppingsans.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.Component;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.xml.bind.JAXBException;
 
@@ -27,45 +37,35 @@ public class JualBarang extends javax.swing.JPanel {
         initComponents();
         
         DataStore ds = new DataStore();
-        // Barang b = new Barang();
-        // b.setNamaBarang("Mouse");
-        // b.setHargaBarang(900000);
-        // b.setHargaBeli(50000);
-        // b.setKategori("Elektronik");
-        // b.setStokBarang(10);
-        // b.setGambar("mouse.jpg");
-        // b.setIdBarang(12);
-        
         
         ArrayList<Barang> barangList = ds.getInventoryBarang().getInventory();
         // // Create data for the table
-        Object[][] data = new Object[barangList.size()][6];
+        ImageIcon leftButtonIcon = createImage("images/mouse.jpg");
+        Object[][] data = new Object[barangList.size()][7];
         for (int i = 0; i < barangList.size(); i++) {
             Barang barang = barangList.get(i);
+            // JButton button = new JButton("Buy", leftButtonIcon);
             data[i][0] = barang.getStokBarang();
             data[i][1] = barang.getNamaBarang();
             data[i][2] = barang.getHargaBarang();
             data[i][3] = barang.getHargaBeli();
             data[i][4] = barang.getKategori();
-            // data[i][5] = barang.getGambar();
-            data[i][5] = "images/jason.png";
+            data[i][5] = "images/" + barang.getGambar();
+            data[i][6] = i;
         }
         
-        // Object[][] data = {
-        //     {1, "JR", 15000, "images/jason.png"},
-        //     {1, "Mahentot", 5000, "images/mahentot.png"},
-        //     {1, "Mahentot", 10000, "images/mahentot2.png"},
-        //     {1, "Pasangannya VHA", 3000, "images/v.png"}
-        // };
         
         // Create column names for the table
-        String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image"};
+        String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
         // String[] columnNames = {"Qty", "Nama Barang", "Harga", "Image"};
 
         // Create a new instance of JTable
         JTable table = new JTable(data, columnNames);
         
         table.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+         table.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
+        table.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox()));
+        table.getColumnModel().getColumn(6).setPreferredWidth(100);
         // make size of 100x100
         table.setRowHeight(100);
 
@@ -76,6 +76,81 @@ public class JualBarang extends javax.swing.JPanel {
         scrollPane.setBounds(10, 50, 480, 480);
         this.add(scrollPane);
     }
+    private ImageIcon createImage(String string) {
+        return new ImageIcon(string);
+    }
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+          setOpaque(true);
+        }
+      
+        public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+          if (isSelected) {
+            setForeground(table.getSelectionForeground());
+            setBackground(table.getSelectionBackground());
+          } else {
+            setForeground(table.getForeground());
+            setBackground(UIManager.getColor("Button.background"));
+          }
+          setText("Buy");
+          return this;
+        }
+      }
+      
+      /**
+       * @version 1.0 11/09/98
+       */
+      
+      class ButtonEditor extends DefaultCellEditor implements TableCellEditor {
+        protected JButton button;
+      
+        private String label;
+      
+        private boolean isPushed;
+      
+        public ButtonEditor(JCheckBox checkBox) {
+          super(checkBox);
+          button = new JButton();
+          button.setOpaque(true);
+          button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+              fireEditingStopped();
+            }
+          });
+        }
+      
+        public Component getTableCellEditorComponent(JTable table, Object value,
+            boolean isSelected, int row, int column) {
+          if (isSelected) {
+            button.setForeground(table.getSelectionForeground());
+            button.setBackground(table.getSelectionBackground());
+          } else {
+            button.setForeground(table.getForeground());
+            button.setBackground(table.getBackground());
+          }
+          label = (value == null) ? "" : value.toString();
+          button.setText("Buy");
+          isPushed = true;
+          return button;
+        }
+      
+        public Object getCellEditorValue() {
+          if (isPushed) {
+            JOptionPane.showMessageDialog(button, label + ": Ouch!" + label);
+            System.out.println(label + ": Ouch!");
+          }
+          isPushed = false;
+          return new String(label);
+        }
+      
+        public boolean stopCellEditing() {
+          isPushed = false;
+          return super.stopCellEditing();
+        }
+      
+      }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

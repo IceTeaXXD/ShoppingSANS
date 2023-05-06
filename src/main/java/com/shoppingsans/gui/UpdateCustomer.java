@@ -274,6 +274,9 @@ public class UpdateCustomer extends javax.swing.JPanel {
                                 newVIP.setIsActive(temp.getIsActive());
 
                                 ds.getUsers().getCustomers().set(i, newVIP);
+                            }else{
+                                ((Member)ds.getUsers().getCustomers().get(i)).setNama(jTextField1.getText());
+                                ((Member)ds.getUsers().getCustomers().get(i)).setNotelp(jTextField2.getText());
                             }
                         }else if(ds.getUsers().getCustomers().get(i) instanceof VIP){
                             if(jComboBox1.getSelectedIndex() == 0){
@@ -287,6 +290,9 @@ public class UpdateCustomer extends javax.swing.JPanel {
                                 newMember.setIsActive(temp.getIsActive());
 
                                 ds.getUsers().getCustomers().set(i, newMember);
+                            }else{
+                                ((VIP)ds.getUsers().getCustomers().get(i)).setNama(jTextField1.getText());
+                                ((VIP)ds.getUsers().getCustomers().get(i)).setNotelp(jTextField2.getText());
                             }
                         }
                         ds.saveAs();

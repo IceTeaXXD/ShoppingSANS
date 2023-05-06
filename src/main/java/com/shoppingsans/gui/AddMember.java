@@ -20,6 +20,7 @@ import javax.xml.bind.JAXBException;
 public class AddMember extends javax.swing.JPanel {
     
     DataStore ds;
+    Boolean ada = false;
     /**
      * Creates new form AddMember
      * @throws javax.xml.bind.JAXBException
@@ -33,6 +34,7 @@ public class AddMember extends javax.swing.JPanel {
         for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
             if(!(ds.getUsers().getCustomers().get(i) instanceof Member) && !(ds.getUsers().getCustomers().get(i) instanceof VIP)){
                 jComboBox1.addItem(Integer.toString(ds.getUsers().getCustomers().get(i).getId()));   
+                ada = true;
             }
         }
     }
@@ -118,17 +120,26 @@ public class AddMember extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            /* Create a new Member to */
-            Member newMember = new Member();
-            newMember.setId(ds.getUsers().getCustomers().get(ds.getUsers().getCustomers().size()- 1).getId() + 1);
-            newMember.setNama(jTextField1.getText());
-            newMember.setNotelp(jTextField2.getText());
-            newMember.setIsActive(true);
-            newMember.setPoin(0);
-            
-            /* Submit to DataStore */
-            ds.getUsers().getCustomers().add(newMember);
-            ds.saveAs();
+            if(ada){
+                /* Create a new Member to */
+                Integer selectedId = Integer.valueOf((String)jComboBox1.getSelectedItem());
+
+                for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+                    if(ds.getUsers().getCustomers().get(i).getId().equals(selectedId)){
+                        Member newMember = new Member();
+                        newMember.setId(ds.getUsers().getCustomers().get(i).getId());
+                        newMember.setNama(jTextField1.getText());
+                        newMember.setNotelp(jTextField2.getText());
+                        newMember.setIsActive(true);
+                        newMember.setPoin(0);
+
+                        /* Submit to DataStore */
+                        ds.getUsers().getCustomers().set(i, newMember);
+                        ds.saveAs();
+                        break;
+                    }
+                }
+            }
         } catch (JAXBException | FileNotFoundException ex) {
             Logger.getLogger(AddMember.class.getName()).log(Level.SEVERE, null, ex);
         } 

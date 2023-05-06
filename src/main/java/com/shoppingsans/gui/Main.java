@@ -101,6 +101,7 @@ public class Main extends javax.swing.JFrame {
     public final void addTab(String title, Component page){
         jTabbedPane1.addTab(title, page);
         jTabbedPane1.setTabComponentAt(jTabbedPane1.getTabCount()-1, new CloseButton(jTabbedPane1));
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount()-1);
     }
 
     /**

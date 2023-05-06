@@ -112,9 +112,14 @@ public class JualBarang extends javax.swing.JPanel {
           button.setOpaque(true);
           button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-              
-              data[Integer.parseInt(label)][0] = (Integer.valueOf(Integer.parseInt(data[Integer.parseInt(label)][0].toString())-1)).toString();
-              table.setValueAt(data[Integer.parseInt(label)][0], Integer.parseInt(label), 0);
+              Integer newVal = Integer.valueOf(Integer.parseInt(data[Integer.parseInt(label)][0].toString())-1);
+              if (newVal<0) {
+                JOptionPane.showMessageDialog(button, "Barang sudah habis");
+              }
+              else {
+                data[Integer.parseInt(label)][0] = (Integer.valueOf(Integer.parseInt(data[Integer.parseInt(label)][0].toString())-1)).toString();
+                table.setValueAt(data[Integer.parseInt(label)][0], Integer.parseInt(label), 0);
+              }
             }
           });
         }
@@ -137,7 +142,6 @@ public class JualBarang extends javax.swing.JPanel {
         public Object getCellEditorValue() {
           if (isPushed) {
             
-            JOptionPane.showMessageDialog(button, (Integer.valueOf(Integer.parseInt(data[Integer.parseInt(label)][0].toString())-1)).toString() + ": Ouch!" + label);
           }
           isPushed = false;
           return new String(label);

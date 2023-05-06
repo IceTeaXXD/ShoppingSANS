@@ -36,6 +36,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        addMember1 = new com.shoppingsans.gui.AddMember();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -46,6 +47,12 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(45, 43, 74));
         setPreferredSize(new java.awt.Dimension(1268, 685));
@@ -56,7 +63,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Manajemen Barang");
         jLabel1.setPreferredSize(new java.awt.Dimension(1268, 685));
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 370, 100));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, 370, 100));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/delete.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -69,17 +76,17 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nama Barang");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 140, 60));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, 140, 60));
 
         jLabel3.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Harga Barang");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 320, 160, 30));
+        jLabel3.setText("Harga Jual");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 160, 30));
 
         jLabel4.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Gambar");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, 80, 20));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 420, 80, 20));
 
         jTextField1.setText("Masukkan Nama Barang");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -87,10 +94,10 @@ public class ManajemenBarang extends javax.swing.JPanel {
                 jTextField1ActionPerformed(evt);
             }
         });
-        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 250, 200, 30));
+        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 210, 200, 30));
 
-        jTextField2.setText("Masukkan Harga Barang");
-        add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 320, 200, 30));
+        jTextField2.setText("Masukkan Harga Jual");
+        add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, 200, 30));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/chooseimg.png"))); // NOI18N
         jButton2.setOpaque(true);
@@ -99,7 +106,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
                 jButton2ActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 390, 130, 40));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 410, 130, 40));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/update.png"))); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +123,40 @@ public class ManajemenBarang extends javax.swing.JPanel {
             }
         });
         add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 520, 130, 40));
+
+        jLabel5.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Harga Beli");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 110, -1));
+
+        jTextField3.setText("Masukkan Harga Beli");
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 310, 200, 30));
+
+        jLabel6.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Kategori");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, -1));
+
+        jTextField4.setText("Masukkan Kategori");
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 360, 200, 30));
+
+        jLabel7.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Id Barang");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, -1, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, 200, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -176,17 +217,23 @@ public class ManajemenBarang extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.shoppingsans.gui.AddMember addMember1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

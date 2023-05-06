@@ -4,6 +4,8 @@
  */
 package com.shoppingsans.gui;
 import com.shoppingsans.Datastore.DataStore;
+import com.shoppingsans.Plugins.JarClassLoader;
+
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -14,7 +16,7 @@ import java.util.logging.Logger;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import javax.xml.bind.JAXBException;
-import com.shoppingsans.Chart.*;
+import com.shoppingsans.Plugins.*;
 
 
 /**
@@ -182,12 +184,9 @@ public class Settings extends javax.swing.JPanel {
             String path = dialog.getDirectory() + filename;
             System.out.println("You chose to open this file: " + path);
             jcl = new JarClassLoader(path);
-            // System.out.println(path);
             String name = filename.substring(0, filename.lastIndexOf("."));
-            // System.out.println(name);
-            // jcl.loadClass(name);
             Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
-            frame.addTab("Chart", jcl.loadClassObject("ChartPanelCustom"));
+            frame.addTab(name, jcl.loadClassObject(name));
         }
     }
 

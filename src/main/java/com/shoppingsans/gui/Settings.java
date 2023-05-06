@@ -4,6 +4,8 @@
  */
 package com.shoppingsans.gui;
 import com.shoppingsans.Datastore.DataStore;
+import com.shoppingsans.Plugins.JarClassLoader;
+
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -14,9 +16,7 @@ import java.util.logging.Logger;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import javax.xml.bind.JAXBException;
-import com.shoppingsans.Chart.*;
-import java.io.FileNotFoundException;
-import javax.swing.JOptionPane;
+import com.shoppingsans.Plugins.*;
 
 
 /**
@@ -192,19 +192,12 @@ public class Settings extends javax.swing.JPanel {
         // get the selected file and create a JarClassLoader
         String filename = dialog.getFile();
         if (filename != null) {
-            try {
-                String path = dialog.getDirectory() + filename;
-                System.out.println("You chose to open this file: " + path);
-                jcl = new JarClassLoader(path);
-                // System.out.println(path);
-                String name = filename.substring(0, filename.lastIndexOf("."));
-                // System.out.println(name);
-                // jcl.loadClass(name);
-                Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
-                frame.addTab("Chart", jcl.loadClassObject("ChartPanelCustom"));
-            } catch (Exception ex) {
-                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            String path = dialog.getDirectory() + filename;
+            System.out.println("You chose to open this file: " + path);
+            jcl = new JarClassLoader(path);
+            String name = filename.substring(0, filename.lastIndexOf("."));
+            Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
+            frame.addTab(name, jcl.loadClassObject(name));
         }
     }
 

@@ -5,12 +5,16 @@
 package com.shoppingsans.gui;
 import com.shoppingsans.Datastore.DataStore;
 import javax.swing.JFileChooser;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.FileDialog;
+import java.awt.Frame;
 import javax.xml.bind.JAXBException;
+import com.shoppingsans.Chart.*;
 
 
 /**
@@ -18,7 +22,7 @@ import javax.xml.bind.JAXBException;
  * @author ahmad
  */
 public class Settings extends javax.swing.JPanel {
-
+    JarClassLoader jcl;
     /**
      * Creates new form Settings
      */
@@ -69,7 +73,12 @@ public class Settings extends javax.swing.JPanel {
         jButton1.setText("Upload Plugin");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+                    jButton1ActionPerformed(evt);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -159,19 +168,28 @@ public class Settings extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // open up a file chooser (a dialog for the user to browse files to open), make sure it's only .jar
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("JAR Files", "jar");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getName());
-            File file = chooser.getSelectedFile();
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws Exception {
+        // create a file dialog for opening .jar files
+        FileDialog dialog = new FileDialog((Frame) null, "Open JAR file", FileDialog.LOAD);
+        dialog.setFilenameFilter((dir, name) -> name.toLowerCase().endsWith(".jar"));
+    
+        // show the dialog and wait for the user to select a file
+        dialog.setVisible(true);
+    
+        // get the selected file and create a JarClassLoader
+        String filename = dialog.getFile();
+        if (filename != null) {
+            String path = dialog.getDirectory() + filename;
+            System.out.println("You chose to open this file: " + path);
+            jcl = new JarClassLoader(path);
+            // System.out.println(path);
+            String name = filename.substring(0, filename.lastIndexOf("."));
+            // System.out.println(name);
+            // jcl.loadClass(name);
+            Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
+            frame.addTab("Chart", jcl.loadClassObject("ChartPanelCustom"));
         }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         // TODO add your handling code here:

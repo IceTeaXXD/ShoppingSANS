@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <InventoryBarang>
     <Barang>
-        <namaBarang>MAHE</namaBarang>
-        <hargaBarang>10</hargaBarang>
+        <idBarang>1</idBarang>
+        <namaBarang>Mouse</namaBarang>
+        <hargaBarang>900000</hargaBarang>
         <stokBarang>10</stokBarang>
-        <hargaBeli>2</hargaBeli>
-        <kategori>ASD</kategori>
-        <gambar>ASDSAD.jpg</gambar>
-    </Barang>
-    <Barang>
-        <namaBarang>MAHE</namaBarang>
-        <hargaBarang>100</hargaBarang>
-        <stokBarang>100</stokBarang>
-        <hargaBeli>0</hargaBeli>
-        <kategori>tes kategori</kategori>
-        <gambar>gambar.jpg</gambar>
+        <hargaBeli>50000</hargaBeli>
+        <kategori>Elektronik</kategori>
+        <gambar>mouse.jpg</gambar>
     </Barang>
 </InventoryBarang>

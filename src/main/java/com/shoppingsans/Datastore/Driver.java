@@ -17,31 +17,23 @@ import javax.xml.bind.JAXBException;
 public class Driver {
     public static void main(String[] args) throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException {
         DataStore ds = new DataStore();
-        
-        ds.getConfig().setSaveas("json");
-        
-        System.out.println(ds.getUsers().getCustomers().size());
-        
-//        Customer i = new Customer(5);
-        
-//        ds.getUsers().getCustomers().add(i);
 
         Barang b = new Barang();
-        b.setNamaBarang("MAHE");
-        b.setHargaBarang(10);
-        b.setHargaBeli(2);
-        b.setKategori("ASD");
+        b.setNamaBarang("Mouse");
+        b.setHargaBarang(900000);
+        b.setHargaBeli(50000);
+        b.setKategori("Elektronik");
         b.setStokBarang(10);
-        b.setGambar("ASDSAD.jpg");
+        b.setGambar("mouse.jpg");
+        b.setIdBarang(ds.getInventoryBarang().getSize() + 1);
         
-//        ds.getInventoryBarang().addBarang(b);
+        ds.getInventoryBarang().getInventory().add(b);
+        ds.saveAs();
         
-        for(Customer c : ds.getUsers().getCustomers()){
-            System.out.println(c.toString());
-        }
+        ds.getConfig().setSaveas("json");
+        ds.saveAs();
         
-        
-          
+        ds.getConfig().setSaveas("obj");
         ds.saveAs();
     }
 }

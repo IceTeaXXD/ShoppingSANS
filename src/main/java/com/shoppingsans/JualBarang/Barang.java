@@ -28,6 +28,8 @@ import lombok.Setter;
         property = "type"
 )
 public class Barang implements Serializable{
+    @XmlElement(name = "idBarang")
+    private int idBarang;
     @XmlElement(name = "namaBarang")
     private String namaBarang;
     @XmlElement(name = "hargaBarang")

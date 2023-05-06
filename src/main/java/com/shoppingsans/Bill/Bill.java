@@ -4,7 +4,6 @@
  */
 package com.shoppingsans.Bill;
 
-import com.shoppingsans.JualBarang.Barang;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,24 +20,24 @@ public class Bill extends FixedBill{
         super(id, userID);
     }
     
-    public void addBarang(Barang barang, Integer jumlah) {
-        if (pembelian.containsKey(barang)) {
-            Integer temp = pembelian.get(barang);
+    public void addBarang(String barang, Integer jumlah) {
+        if (mapPembelian.containsKey(barang)) {
+            Integer temp = mapPembelian.get(barang);
             temp += jumlah;
-            pembelian.put(barang, temp);
+            mapPembelian.put(barang, temp);
         } else {
-            pembelian.put(barang, jumlah);
+            mapPembelian.put(barang, jumlah);
         }
     }
 
-    public void removeBarang(Barang barang, Integer jumlah) {
-        if (pembelian.containsKey(barang)) {
-            Integer temp = pembelian.get(barang);
+    public void removeBarang(String barang, Integer jumlah) {
+        if (mapPembelian.containsKey(barang)) {
+            Integer temp = mapPembelian.get(barang);
             temp -= jumlah;
             if (temp == 0) {
-                pembelian.remove(barang);
+                mapPembelian.remove(barang);
             } else {
-                pembelian.put(barang, temp);
+                mapPembelian.put(barang, temp);
             }
         }
     }

@@ -4,6 +4,7 @@
  */
 package com.shoppingsans.Datastore;
 
+import com.shoppingsans.JualBarang.History;
 import com.shoppingsans.JualBarang.InventoryBarang;
 import com.shoppingsans.User.User;
 
@@ -23,6 +24,7 @@ public class DataStore {
     private Config config;
     private User users;
     private InventoryBarang inventoryBarang;
+    private History history;
     
     /* Converters */
     private final JSONAdapter ja = new JSONAdapter();
@@ -35,12 +37,16 @@ public class DataStore {
         if(config.getSaveas().equals("xml")){
             users = xa.load(User.class, "./src/main/java/com/shoppingsans/Datastore/Customers.xml");
             inventoryBarang = xa.load(InventoryBarang.class, "./src/main/java/com/shoppingsans/Datastore/Barang.xml");
+            history = xa.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.xml");
+            history.createMapFixedBill();
         }else if (config.getSaveas().equals("json")){
             users = ja.load(User.class, "./src/main/java/com/shoppingsans/Datastore/Customers.json");
             inventoryBarang = ja.load(InventoryBarang.class, "./src/main/java/com/shoppingsans/Datastore/Barang.json");
+            // history = ja.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.json");
         }else if(config.getSaveas().equals("obj")){
             users = oa.load(User.class, "./src/main/java/com/shoppingsans/Datastore/Customers.OBJ");
             inventoryBarang = oa.load(InventoryBarang.class, "./src/main/java/com/shoppingsans/Datastore/Barang.OBJ");
+            // history = oa.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.OBJ");
         }
     }
     

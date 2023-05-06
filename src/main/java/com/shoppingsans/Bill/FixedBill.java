@@ -13,6 +13,8 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -49,6 +51,7 @@ public class FixedBill implements Serializable{
     // @XmlJavaTypeAdapter(FixedBillAdapter.class)
     // @XmlElement(name = "pembelian")
     @JsonIgnore
+    @XmlTransient
     protected HashMap<String, Integer> mapPembelian;
 
     private Pembelian pembelian;

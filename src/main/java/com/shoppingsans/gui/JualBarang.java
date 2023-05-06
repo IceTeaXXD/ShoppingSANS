@@ -11,6 +11,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,6 +24,8 @@ import com.shoppingsans.Datastore.DataStore;
 import com.shoppingsans.JualBarang.Barang;
 import com.shoppingsans.JualBarang.ImageRenderer;
 import com.shoppingsans.JualBarang.InventoryBarang;
+import com.shoppingsans.User.Customer;
+import com.shoppingsans.User.User;
 
 public class JualBarang extends javax.swing.JPanel {
 
@@ -33,10 +36,13 @@ public class JualBarang extends javax.swing.JPanel {
      * @throws ClassNotFoundException
      * @throws FileNotFoundException
      */
+    protected DataStore ds;
+    protected ArrayList<Customer> users;
+    private int selectedUser;
     public JualBarang() throws FileNotFoundException, ClassNotFoundException, JAXBException, IOException {
         initComponents();
         
-        DataStore ds = new DataStore();
+        this.ds = new DataStore();
         
         ArrayList<Barang> barangList = ds.getInventoryBarang().getInventory();
         // // Create data for the table
@@ -75,6 +81,17 @@ public class JualBarang extends javax.swing.JPanel {
         // Set the bounds of the scroll pane and add it to the panel
         scrollPane.setBounds(10, 50, 480, 480);
         this.add(scrollPane);
+        this.users = ds.getUsers().getCustomers();
+        if (users.size() != 0)
+        {
+            //clear item in combobox
+            jComboBox1.removeAllItems();
+            for (int i = 0 ; i < users.size() ; i++)
+            {
+                jComboBox1.addItem(users.get(i).getId().toString());
+            }
+        }
+        this.add(jComboBox1);
     }
     private ImageIcon createImage(String string) {
         return new ImageIcon(string);
@@ -103,58 +120,59 @@ public class JualBarang extends javax.swing.JPanel {
        * @version 1.0 11/09/98
        */
       
-      class ButtonEditor extends DefaultCellEditor implements TableCellEditor {
+       class ButtonEditor extends DefaultCellEditor implements TableCellEditor {
         protected JButton button;
-      
+    
         private String label;
-      
+    
         private boolean isPushed;
-      
+    
         public ButtonEditor(JCheckBox checkBox) {
-          super(checkBox);
-          button = new JButton();
-          button.setOpaque(true);
-          button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              fireEditingStopped();
-            }
-          });
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
         }
-      
+    
         public Component getTableCellEditorComponent(JTable table, Object value,
-            boolean isSelected, int row, int column) {
-          if (isSelected) {
-            button.setForeground(table.getSelectionForeground());
-            button.setBackground(table.getSelectionBackground());
-          } else {
-            button.setForeground(table.getForeground());
-            button.setBackground(table.getBackground());
-          }
-          label = (value == null) ? "" : value.toString();
-          button.setText("Buy");
-          isPushed = true;
-          return button;
+                boolean isSelected, int row, int column) {
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            label = (value == null) ? "" : value.toString();
+            button.setText("Buy");
+            isPushed = true;
+            return button;
         }
-      
+    
         public Object getCellEditorValue() {
-          if (isPushed) {
-            JOptionPane.showMessageDialog(button, label + ": Ouch!" + label);
-            System.out.println(label + ": Ouch!");
-          }
-          isPushed = false;
-          return new String(label);
+            if (isPushed) {
+                JOptionPane.showMessageDialog(button, label + ": Ouch!" + label);
+                System.out.println(label + ": Ouch!");
+            }
+            isPushed = false;
+            return new String(label);
         }
-      
+    
         public boolean stopCellEditing() {
-          isPushed = false;
-          return super.stopCellEditing();
+            isPushed = false;
+            return super.stopCellEditing();
         }
-      
-      }
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(45, 43, 74));
 
@@ -165,21 +183,39 @@ public class JualBarang extends javax.swing.JPanel {
         jLabel1.setText("Jual Barang");
         jLabel1.setToolTipText("");
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(85, 85, 85))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 669, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 605, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

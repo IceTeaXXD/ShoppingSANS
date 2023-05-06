@@ -213,34 +213,39 @@ public class JualBarang extends javax.swing.JPanel {
                 {
                     if (data.get(i).get(0).toString().equals(label))
                     {
-                        newStock = Integer.parseInt(data.get(i).get(1).toString()) - 1;
-                        idx = 0;
-                        break;
+                      newStock = Integer.parseInt(data.get(i).get(1).toString()) - 1;
+                      idx = 0;
+                      break;
                     }
                 }
                 System.out.println("======> " + data.get(idx).get(1).toString());
                 // Integer newStock = Integer.parseInt(data.get(Integer.parseInt(label)).get(1).toString()) - 1;
                 if (newStock < 0) {
-                    JOptionPane.showMessageDialog(button, "Barang sudah habis");
+                  JOptionPane.showMessageDialog(button, "Barang sudah habis");
                 } else {
                     data.get(idx).set(1, newStock.toString());
                     pembeli.get(idx).set(1, Integer.parseInt(pembeli.get(idx).get(1).toString()) + 1);
+                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
                     for (int i = 0 ; i< tablePembeli.getRowCount() ; i++)
                     {
-                        if (tablePembeli.getModel().getValueAt(i, 0).toString().equals(label))
-                        {
-                            tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
-                            break;
-                        }
+                      System.out.println(tablePembeli.getModel().getValueAt(i, 0).toString());
+                      if (tablePembeli.getModel().getValueAt(i, 6).toString().equals(label))
+                      {
+                        tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
+                        System.out.println("diganti " + pembeli.get(idx).get(1).toString());
+                        break;
+                      }
                     }
+                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
 
                     for (int i = 0 ; i< tableToko.getRowCount() ; i++)
                     {
-                        if (tableToko.getModel().getValueAt(i, 0).toString().equals(label))
-                        {
-                            tableToko.getModel().setValueAt(data.get(idx).get(1), i, 0);
-                            break;
-                        }
+                      if (tableToko.getModel().getValueAt(i, 6).toString().equals(label))
+                      {
+                        tableToko.getModel().setValueAt(data.get(idx).get(1), i, 0);
+                        System.out.println("diganti" + data.get(idx).get(1).toString());
+                        break;
+                      }
                     }
                     // tableToko.getModel().setValueAt(data.get(Integer.parseInt(label)).get(1), Integer.parseInt(label), 0);
                     // ini yang salah
@@ -253,10 +258,10 @@ public class JualBarang extends javax.swing.JPanel {
                   {
                       if (data.get(i).get(0).toString().equals(label))
                       {
-                          data.get(i).set(1, Integer.parseInt(data.get(i).get(1).toString()) + 1);
-                          pembeli.get(i).set(1, Integer.parseInt(pembeli.get(i).get(1).toString()) - 1);
-                          idx = i;
-                          break;
+                        data.get(i).set(1, Integer.parseInt(data.get(i).get(1).toString()) + 1);
+                        pembeli.get(i).set(1, Integer.parseInt(pembeli.get(i).get(1).toString()) - 1);
+                        idx = i;
+                        break;
                       }
                   }
                   System.out.println("PEMBELI ");
@@ -267,23 +272,22 @@ public class JualBarang extends javax.swing.JPanel {
                   // search data dg indeks = label di dalam tabel
                   for (int i = 0 ; i< tablePembeli.getRowCount() ; i++)
                   {
-                      if (tablePembeli.getModel().getValueAt(i, 0).toString().equals(label))
-                      {
-                          tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
-                          break;
-                      }
+                    if (tablePembeli.getModel().getValueAt(i, 6).toString().equals(label))
+                    {
+                      tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
+                      break;
+                    }
                   }
 
                   for (int i = 0 ; i< tableToko.getRowCount() ; i++)
                   {
-                      if (tableToko.getModel().getValueAt(i, 0).toString().equals(label))
-                      {
-                          tableToko.getModel().setValueAt(data.get(idx).get(1), i, 0);
-                          break;
-                      }
+                    if (tableToko.getModel().getValueAt(i, 6).toString().equals(label))
+                    {
+                      tableToko.getModel().setValueAt(data.get(idx).get(1), i, 0);
+                      break;
+                    }
                   }
                   if (Integer.parseInt(pembeli.get(Integer.parseInt(label)).get(1).toString()) == 0) {
-                    System.out.println("FHSDJHFDJKAHFJKDHFDJAHFJKDAHJKFDAJKHFDAJKFHDH");
                     DefaultTableModel model = createTableModel(tablePembeli);
                     System.out.println("label " + label);
                     model.removeRow(Integer.parseInt(label));

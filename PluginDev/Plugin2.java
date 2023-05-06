@@ -11,7 +11,7 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
 public class Plugin2 extends JPanel {
-
+    private String windowname = "Pie Chart";
     private javax.swing.JTextField data1;
     private javax.swing.JTextField data2;
     private javax.swing.JTextField data3;

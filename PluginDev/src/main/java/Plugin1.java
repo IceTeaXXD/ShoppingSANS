@@ -14,7 +14,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class Plugin1 extends JPanel {
-
+    private String windowname = "Bar and Line Chart";
     private JTextField data1;
     private JTextField data2;
     private JTextField data3;

@@ -7,6 +7,7 @@ package com.shoppingsans.gui;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -336,7 +337,12 @@ public class Main extends javax.swing.JFrame {
         jButton8.setBorder(null);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                try {
+                    jButton8ActionPerformed(evt);
+                } catch (ClassNotFoundException | JAXBException | IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         });
         getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 210, 50));
@@ -464,7 +470,7 @@ public class Main extends javax.swing.JFrame {
         jPanel3.setVisible(false);
     }//GEN-LAST:event_jPanel3MouseExited
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) throws FileNotFoundException, ClassNotFoundException, JAXBException, IOException {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         addTab("Jual Barang", new JualBarang());
     }//GEN-LAST:event_jButton8ActionPerformed

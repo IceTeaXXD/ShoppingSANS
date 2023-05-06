@@ -6,6 +6,8 @@ package com.shoppingsans.Datastore;
 
 import com.shoppingsans.JualBarang.Barang;
 import com.shoppingsans.User.Customer;
+import com.shoppingsans.gui.JualBarang;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.xml.bind.JAXBException;
@@ -27,7 +29,7 @@ public class Driver {
         b.setGambar("mouse.jpg");
         b.setIdBarang(ds.getInventoryBarang().getSize() + 1);
         
-        ds.getHistory().printListHistory();
+        
         ds.getInventoryBarang().getInventory().add(b);
         ds.saveAs();
         

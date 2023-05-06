@@ -4,13 +4,18 @@
  */
 package com.shoppingsans.gui;
 import com.shoppingsans.Datastore.DataStore;
+import com.shoppingsans.Plugins.JarClassLoader;
+
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
+import javax.swing.SwingUtilities;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.FileDialog;
+import java.awt.Frame;
 import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -18,12 +23,29 @@ import javax.xml.bind.JAXBException;
  * @author ahmad
  */
 public class Settings extends javax.swing.JPanel {
-
+    JarClassLoader jcl;
     /**
      * Creates new form Settings
      */
-    public Settings() {
+    DataStore ds;
+    public Settings() throws JAXBException, IOException, ClassNotFoundException {
         initComponents();
+        ds = new DataStore();
+        
+        switch (ds.getConfig().getSaveas()) {
+            case "xml":
+                jComboBox2.setSelectedIndex(1);
+                break;
+            case "json":
+                jComboBox2.setSelectedIndex(0);
+                break;
+            case "obj":
+                jComboBox2.setSelectedIndex(2);
+                break;
+            default:
+                jComboBox2.setSelectedIndex(3);
+                break;
+        }
     }
 
     /**
@@ -43,6 +65,7 @@ public class Settings extends javax.swing.JPanel {
         jComboBox3 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(45, 43, 74));
         setPreferredSize(new java.awt.Dimension(1268, 685));
@@ -58,11 +81,6 @@ public class Settings extends javax.swing.JPanel {
         jLabel5.setText("Tipe Data Penyimpanan");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "JSON", "XML", "OBJ", "SQL" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
 
         jButton1.setBackground(new java.awt.Color(242, 198, 111));
         jButton1.setFont(new java.awt.Font("Myanmar Text", 1, 14)); // NOI18N
@@ -78,11 +96,6 @@ public class Settings extends javax.swing.JPanel {
         jLabel6.setText("Pilih Plugin Untuk Dihapus");
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Plugin 1", "Plugin 2", "Plugin 3", "Plugin 4", " ", " " }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
-            }
-        });
 
         jButton2.setBackground(new java.awt.Color(242, 198, 111));
         jButton2.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
@@ -99,6 +112,15 @@ public class Settings extends javax.swing.JPanel {
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setBackground(new java.awt.Color(242, 198, 111));
+        jButton4.setFont(new java.awt.Font("Myanmar Text", 1, 14)); // NOI18N
+        jButton4.setText("Change Path");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -130,8 +152,10 @@ public class Settings extends javax.swing.JPanel {
                         .addGap(0, 401, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(450, 450, 450)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(452, 452, 452)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -151,45 +175,44 @@ public class Settings extends javax.swing.JPanel {
                     .addComponent(jButton3))
                 .addGap(51, 51, 51)
                 .addComponent(jButton1)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jButton4)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // open up a file chooser (a dialog for the user to browse files to open), make sure it's only .jar
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("JAR Files", "jar");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getName());
-            File file = chooser.getSelectedFile();
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // create a file dialog for opening .jar files
+        FileDialog dialog = new FileDialog((Frame) null, "Open JAR file", FileDialog.LOAD);
+        dialog.setFilenameFilter((dir, name) -> name.toLowerCase().endsWith(".jar"));
+    
+        // show the dialog and wait for the user to select a file
+        dialog.setVisible(true);
+    
+        // get the selected file and create a JarClassLoader
+        String filename = dialog.getFile();
+        if (filename != null) {
+            try {
+                String path = dialog.getDirectory() + filename;
+                System.out.println("You chose to open this file: " + path);
+                jcl = new JarClassLoader(path);
+                String name = filename.substring(0, filename.lastIndexOf("."));
+                Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
+                frame.addTab(name, jcl.loadClassObject(name));
+            } catch (Exception ex) {
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
-            DataStore ds = new DataStore();
             String temp = (String) jComboBox2.getSelectedItem();
             temp = temp.toLowerCase();
             ds.getConfig().setSaveas(temp);
             ds.saveAs();
-        } catch (JAXBException ex) {
-            Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (JAXBException | IOException ex) {
             Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -199,11 +222,37 @@ public class Settings extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        // Show the file chooser dialog
+        int result = fileChooser.showOpenDialog(this);
+
+        // Check if the user clicked the "Open" button
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                // Get the selected file path
+                String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
+                
+                // Display the selected file path in a message dialog
+                JOptionPane.showMessageDialog(this, "Selected folder: " + path);
+                
+                ds.getConfig().setPath(path);
+                ds.saveAs();
+            } catch (JAXBException | FileNotFoundException ex) {
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;

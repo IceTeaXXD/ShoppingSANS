@@ -411,8 +411,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseEntered
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        addTab("Add New Member", new AddMember());
+        try {
+            // TODO add your handling code here:
+            addTab("Add New Member", new AddMember());
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered

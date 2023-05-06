@@ -6,7 +6,6 @@ package com.shoppingsans.User;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.xml.bind.annotation.XmlElement;
-import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import lombok.Getter;

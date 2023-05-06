@@ -4,9 +4,15 @@
  */
 package com.shoppingsans.gui;
 
+import com.shoppingsans.JualBarang.Barang;
+import com.shoppingsans.Datastore.DataStore;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -60,6 +66,11 @@ public class ManajemenBarang extends javax.swing.JPanel {
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, 370, 100));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/delete.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 520, 130, 40));
 
         jLabel2.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
@@ -106,6 +117,11 @@ public class ManajemenBarang extends javax.swing.JPanel {
         add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 520, 130, 40));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/create.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 520, 130, 40));
 
         jLabel5.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
@@ -164,14 +180,42 @@ public class ManajemenBarang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+        DataStore ds;
+        try {
+            ds = new DataStore();
+            
+            Barang newBarang = new Barang();
+            newBarang.setNamaBarang(jTextField1.getText());
+            newBarang.setHargaBarang(Integer.parseInt(jTextField2.getText()));
+            newBarang.setKategori("tes kategori");
+            newBarang.setStokBarang(100);
+            newBarang.setGambar("gambar.jpg");
+            
+            ds.getInventoryBarang().addBarang(newBarang);
+            ds.saveAs();
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(ManajemenBarang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            /* Loop through and delete */
+            DataStore ds = new DataStore();
+            for(int i = 0; i < ds.getInventoryBarang().getInventory().size(); i++){
+                if(ds.getInventoryBarang().getInventory().get(i).getNamaBarang().equals(jTextField1.getText())){
+                    ds.getInventoryBarang().removeBarang(i);
+                    break;
+                }
+            }
+            ds.saveAs();
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(ManajemenBarang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.shoppingsans.gui.AddMember addMember1;

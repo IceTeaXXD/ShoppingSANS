@@ -1,0 +1,12 @@
+{
+  "inventory" : [ {
+    "type" : "Barang",
+    "idBarang" : 1,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  } ]
+}

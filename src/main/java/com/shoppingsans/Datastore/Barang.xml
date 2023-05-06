@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<InventoryBarang>
+    <Barang>
+        <idBarang>1</idBarang>
+        <namaBarang>Mouse</namaBarang>
+        <hargaBarang>900000</hargaBarang>
+        <stokBarang>10</stokBarang>
+        <hargaBeli>50000</hargaBeli>
+        <kategori>Elektronik</kategori>
+        <gambar>mouse.jpg</gambar>
+    </Barang>
+</InventoryBarang>

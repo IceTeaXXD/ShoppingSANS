@@ -1,0 +1,9 @@
+{
+  "customers" : [ {
+    "type" : "Customer",
+    "id" : 5
+  }, {
+    "type" : "Customer",
+    "id" : 7
+  } ]
+}

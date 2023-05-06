@@ -9,7 +9,6 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,10 +20,9 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-//@XmlRootElement(name = "VIP")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonTypeName("VIP")
-public class VIP extends Customer implements Diskon, Serializable{
+public class VIP extends Customer implements Diskon {
     @XmlElement(name = "nama")
     protected String nama;
     @XmlElement(name = "notelp")

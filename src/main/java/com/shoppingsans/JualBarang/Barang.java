@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -22,7 +21,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@XmlRootElement(name = "Barang")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -30,6 +28,8 @@ import lombok.Setter;
         property = "type"
 )
 public class Barang implements Serializable{
+    @XmlElement(name = "idBarang")
+    private int idBarang;
     @XmlElement(name = "namaBarang")
     private String namaBarang;
     @XmlElement(name = "hargaBarang")

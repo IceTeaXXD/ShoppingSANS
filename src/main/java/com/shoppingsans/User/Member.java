@@ -23,7 +23,7 @@ import lombok.Setter;
 //@XmlRootElement(name="Member")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonTypeName("Member")
-public class Member extends Customer implements Diskon, Serializable {
+public class Member extends Customer implements Diskon {
     @XmlElement(name = "nama")
     protected String nama;
     @XmlElement(name = "notelp")

@@ -47,7 +47,7 @@ public class JualBarang extends javax.swing.JPanel {
         ArrayList<Barang> barangList = ds.getInventoryBarang().getInventory();
         // // Create data for the table
         ImageIcon leftButtonIcon = createImage("images/mouse.jpg");
-        Object[][] data = new Object[barangList.size()][7];
+        data = new Object[barangList.size()][7];
         for (int i = 0; i < barangList.size(); i++) {
             Barang barang = barangList.get(i);
             // JButton button = new JButton("Buy", leftButtonIcon);
@@ -60,16 +60,12 @@ public class JualBarang extends javax.swing.JPanel {
             data[i][6] = i;
         }
         
-        
-        // Create column names for the table
-        String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
-        // String[] columnNames = {"Qty", "Nama Barang", "Harga", "Image"};
 
         // Create a new instance of JTable
-        JTable table = new JTable(data, columnNames);
+        table = new JTable(data, columnNames);
         
         table.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-         table.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
+        table.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
         table.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox()));
         table.getColumnModel().getColumn(6).setPreferredWidth(100);
         // make size of 100x100
@@ -133,7 +129,14 @@ public class JualBarang extends javax.swing.JPanel {
             button.setOpaque(true);
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    fireEditingStopped();
+                    Integer newVal = Integer.valueOf(Integer.parseInt(data[Integer.parseInt(label)][0].toString())-1);
+              if (newVal<0) {
+                JOptionPane.showMessageDialog(button, "Barang sudah habis");
+              }
+              else {
+                data[Integer.parseInt(label)][0] = (Integer.valueOf(Integer.parseInt(data[Integer.parseInt(label)][0].toString())-1)).toString();
+                table.setValueAt(data[Integer.parseInt(label)][0], Integer.parseInt(label), 0);
+              }
                 }
             });
         }
@@ -155,8 +158,7 @@ public class JualBarang extends javax.swing.JPanel {
     
         public Object getCellEditorValue() {
             if (isPushed) {
-                JOptionPane.showMessageDialog(button, label + ": Ouch!" + label);
-                System.out.println(label + ": Ouch!");
+                    
             }
             isPushed = false;
             return new String(label);
@@ -217,5 +219,8 @@ public class JualBarang extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private JTable table;
+    private Object[][] data;
+    private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
     // End of variables declaration//GEN-END:variables
 }

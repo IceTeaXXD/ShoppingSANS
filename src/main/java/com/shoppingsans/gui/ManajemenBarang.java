@@ -9,6 +9,8 @@ import com.shoppingsans.Datastore.DataStore;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -86,6 +88,8 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(45, 43, 74));
         setPreferredSize(new java.awt.Dimension(1268, 685));
@@ -192,6 +196,14 @@ public class ManajemenBarang extends javax.swing.JPanel {
 
         jTextField5.setText("Masukkan Kategori");
         add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 410, 200, 30));
+
+        jTextField6.setText("Masukkan Kategori");
+        add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 410, 200, 30));
+
+        jLabel9.setFont(new java.awt.Font("Myanmar Text", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("No image selected");
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 470, 180, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -205,9 +217,15 @@ public class ManajemenBarang extends javax.swing.JPanel {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getName());
             File file = chooser.getSelectedFile();
+            File destFolder = new File("./target/classes/com/shoppingsans/JualBarang/images");
+            try{
+                File destFile = new File(destFolder, file.getName());
+                Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                jLabel9.setText(file.getName());
+            } catch (IOException ex) {
+                Logger.getLogger(ManajemenBarang.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -243,6 +261,11 @@ public class ManajemenBarang extends javax.swing.JPanel {
                        .getInventory()
                        .get(i)
                        .setStokBarang(Integer.parseInt(jTextField5.getText()));
+                    
+                    ds.getInventoryBarang()
+                       .getInventory()
+                       .get(i)
+                       .setGambar(jLabel9.getText());
                     break;
                 }
             }
@@ -263,7 +286,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
             newBarang.setHargaBeli(Integer.parseInt(jTextField3.getText()));
             newBarang.setKategori(jTextField4.getText());
             newBarang.setStokBarang(Integer.parseInt(jTextField5.getText()));
-            newBarang.setGambar("gambar.jpg");
+            newBarang.setGambar(jLabel9.getText());
             
             ds.getInventoryBarang().addBarang(newBarang);
             ds.saveAs();
@@ -305,6 +328,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
                 jTextField4.setText(ds.getInventoryBarang().getInventory().get(i).getKategori());
                 hargaBarang = ds.getInventoryBarang().getInventory().get(i).getStokBarang();
                 jTextField5.setText(hargaBarang.toString());
+                jLabel9.setText(ds.getInventoryBarang().getInventory().get(i).getGambar());
                 break;
             }
         }
@@ -325,10 +349,12 @@ public class ManajemenBarang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

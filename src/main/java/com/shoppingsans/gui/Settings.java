@@ -16,6 +16,8 @@ import java.awt.Frame;
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
+import java.awt.Component;
+import java.lang.reflect.*;
 
 
 /**
@@ -198,7 +200,11 @@ public class Settings extends javax.swing.JPanel {
                 jcl = new JarClassLoader(path);
                 String name = filename.substring(0, filename.lastIndexOf("."));
                 Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
-                frame.addTab(name, jcl.loadClassObject(name));
+                Component obj = jcl.loadClassObject(name);
+                Field windowname = obj.getClass().getDeclaredField("windowname");
+                windowname.setAccessible(true);
+                String window = (String) windowname.get(obj);
+                frame.addTab(window, obj);
             } catch (Exception ex) {
                 Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -505,8 +505,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        addTab("Manajemen Barang", new ManajemenBarang());
+        try {
+            // TODO add your handling code here:
+            addTab("Manajemen Barang", new ManajemenBarang());
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**

@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
+
 // @Data
 // @AllArgsConstructor
 // @NoArgsConstructor
@@ -23,10 +25,17 @@ import lombok.Data;
 import java.util.List;
 import javax.xml.bind.annotation.*;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Pembelian {
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+public class Pembelian implements Serializable{
     private List<Entry> entry;
 }

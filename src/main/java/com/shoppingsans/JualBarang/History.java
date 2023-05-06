@@ -4,6 +4,8 @@
  */
 package com.shoppingsans.JualBarang;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.shoppingsans.Bill.Entry;
 import com.shoppingsans.Bill.FixedBill;
 
@@ -25,6 +27,10 @@ import lombok.Setter;
  *
  * @author Ahmad Nadil - 13521024
  */
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @XmlRootElement (name = "History")
 @XmlAccessorType(XmlAccessType.FIELD)
 
@@ -32,10 +38,17 @@ public class History implements Serializable{
     @XmlElement (name = "FixedBill")
     private ArrayList<FixedBill> listHistory;
 
-    public History() {
-        this.listHistory = new ArrayList<>();
-    }
+    @JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+    )
 
+    // public History() {
+    //     this.listHistory = new ArrayList<>();
+    // }
+
+    @JsonIgnore
     public int getSize() {
         // System.out.println(listHistory.get(0).getEntries().size());
         return listHistory.size();
@@ -57,10 +70,6 @@ public class History implements Serializable{
         for (FixedBill bill : listHistory) {
             bill.printItems();
         }
-    }
-
-    public ArrayList<FixedBill> getListHistory() {
-        return listHistory;
     }
 }
 

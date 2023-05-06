@@ -42,11 +42,13 @@ public class DataStore {
         }else if (config.getSaveas().equals("json")){
             users = ja.load(User.class, "./src/main/java/com/shoppingsans/Datastore/Customers.json");
             inventoryBarang = ja.load(InventoryBarang.class, "./src/main/java/com/shoppingsans/Datastore/Barang.json");
-            // history = ja.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.json");
+            history = ja.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.json");
+            history.createMapFixedBill();
         }else if(config.getSaveas().equals("obj")){
             users = oa.load(User.class, "./src/main/java/com/shoppingsans/Datastore/Customers.OBJ");
             inventoryBarang = oa.load(InventoryBarang.class, "./src/main/java/com/shoppingsans/Datastore/Barang.OBJ");
-            // history = oa.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.OBJ");
+            history = oa.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.OBJ");
+            history.createMapFixedBill();
         }
     }
     
@@ -54,12 +56,15 @@ public class DataStore {
         if(config.getSaveas().equals("xml")){
             xa.convert(users, "./src/main/java/com/shoppingsans/Datastore/Customers.xml");
             xa.convert(inventoryBarang, "./src/main/java/com/shoppingsans/Datastore/Barang.xml");
+            xa.convert(history, "./src/main/java/com/shoppingsans/Datastore/History.xml");
         }else if(config.getSaveas().equals("json")){
             ja.convert(users, "./src/main/java/com/shoppingsans/Datastore/Customers.json");
             ja.convert(inventoryBarang, "./src/main/java/com/shoppingsans/Datastore/Barang.json");
+            ja.convert(history, "./src/main/java/com/shoppingsans/Datastore/History.json");
         }else if(config.getSaveas().equals("obj")){
             oa.convert(users, "./src/main/java/com/shoppingsans/Datastore/Customers.OBJ");
             oa.convert(inventoryBarang, "./src/main/java/com/shoppingsans/Datastore/Barang.OBJ");
+            oa.convert(history, "./src/main/java/com/shoppingsans/Datastore/History.OBJ");
         }
         
         xa.convert(config, "./src/main/java/com/shoppingsans/Datastore/Config.xml");

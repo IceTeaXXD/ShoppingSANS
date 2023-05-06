@@ -7,6 +7,7 @@ package com.shoppingsans.gui;
 import com.shoppingsans.JualBarang.Barang;
 import com.shoppingsans.Datastore.DataStore;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,12 +20,43 @@ import javax.xml.bind.JAXBException;
  * @author Azmi Hasna Zahrani
  */
 public class ManajemenBarang extends javax.swing.JPanel {
-
+    private DataStore ds;
     /**
      * Creates new form ManajemenBarang
+     * @throws javax.xml.bind.JAXBException
+     * @throws java.io.IOException
+     * @throws java.io.FileNotFoundException
+     * @throws java.lang.ClassNotFoundException
      */
-    public ManajemenBarang() {
+    public ManajemenBarang() throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException {
         initComponents();
+        ds = new DataStore();
+        
+        /* Initialize the Combo Box */
+        for(int i = 0; i < ds.getInventoryBarang().getSize(); i++){
+            jComboBox1.addItem(Integer.toString(
+                                ds.getInventoryBarang()
+                                    .getInventory()
+                                    .get(i)
+                                    .getIdBarang()));
+        }
+        
+        /* Set other elements */
+        Integer selectedId = Integer.valueOf((String)jComboBox1.getSelectedItem());
+        
+        for(int i = 0; i < ds.getInventoryBarang().getSize(); i++){
+            if(ds.getInventoryBarang().getInventory().get(i).getIdBarang() == selectedId){
+                jTextField1.setText(ds.getInventoryBarang().getInventory().get(i).getNamaBarang());
+                Integer hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBarang();
+                jTextField2.setText(hargaBarang.toString());
+                hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBeli();
+                jTextField3.setText(hargaBarang.toString());
+                jTextField4.setText(ds.getInventoryBarang().getInventory().get(i).getKategori());
+                hargaBarang = ds.getInventoryBarang().getInventory().get(i).getStokBarang();
+                jTextField5.setText(hargaBarang.toString());
+                break;
+            }
+        }
     }
 
     /**
@@ -53,6 +85,8 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jTextField4 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(45, 43, 74));
         setPreferredSize(new java.awt.Dimension(1268, 685));
@@ -71,7 +105,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 520, 130, 40));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 560, 130, 40));
 
         jLabel2.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -86,7 +120,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Gambar");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 420, 80, 20));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, 80, 20));
 
         jTextField1.setText("Masukkan Nama Barang");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +140,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
                 jButton2ActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 410, 130, 40));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 460, 130, 40));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/update.png"))); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +148,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
                 jButton3ActionPerformed(evt);
             }
         });
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 520, 130, 40));
+        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 560, 130, 40));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/create.png"))); // NOI18N
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +156,7 @@ public class ManajemenBarang extends javax.swing.JPanel {
                 jButton4ActionPerformed(evt);
             }
         });
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 520, 130, 40));
+        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 560, 130, 40));
 
         jLabel5.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -130,24 +164,14 @@ public class ManajemenBarang extends javax.swing.JPanel {
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 110, -1));
 
         jTextField3.setText("Masukkan Harga Beli");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
         add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 310, 200, 30));
 
         jLabel6.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Kategori");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, -1));
+        jLabel6.setText("Stok Barang");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 410, -1, -1));
 
-        jTextField4.setText("Masukkan Kategori");
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
+        jTextField4.setText("Masukkan Stok Barang");
         add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 360, 200, 30));
 
         jLabel7.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
@@ -155,8 +179,20 @@ public class ManajemenBarang extends javax.swing.JPanel {
         jLabel7.setText("Id Barang");
         add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
         add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, 200, 30));
+
+        jLabel8.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Kategori");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, -1));
+
+        jTextField5.setText("Masukkan Kategori");
+        add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 410, 200, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -177,25 +213,62 @@ public class ManajemenBarang extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            /* Update Barang */
+            /* Loop through and update at the idx */
+            int search = Integer.parseInt((String) jComboBox1.getSelectedItem());
+            for(int i = 0; i < ds.getInventoryBarang().getInventory().size(); i++){
+                if(search == ds.getInventoryBarang().getInventory().get(i).getIdBarang()){
+                    ds.getInventoryBarang()
+                       .getInventory()
+                       .get(i)
+                       .setNamaBarang(jTextField1.getText());
+                    
+                    ds.getInventoryBarang()
+                       .getInventory()
+                       .get(i)
+                       .setHargaBarang(Integer.parseInt(jTextField2.getText()));
+                    
+                    ds.getInventoryBarang()
+                       .getInventory()
+                       .get(i)
+                       .setHargaBarang(Integer.parseInt(jTextField3.getText()));
+                    
+                    ds.getInventoryBarang()
+                       .getInventory()
+                       .get(i)
+                       .setKategori(jTextField4.getText());
+                    
+                    ds.getInventoryBarang()
+                       .getInventory()
+                       .get(i)
+                       .setStokBarang(Integer.parseInt(jTextField5.getText()));
+                    break;
+                }
+            }
+            ds.saveAs();
+        } catch (JAXBException | FileNotFoundException ex) {
+            Logger.getLogger(ManajemenBarang.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        DataStore ds;
         try {
-            ds = new DataStore();
-            
             Barang newBarang = new Barang();
+            int newId = ds.getInventoryBarang().getInventory().get(ds.getInventoryBarang().getSize()-1).getIdBarang() + 1;
+            newBarang.setIdBarang(newId);
             newBarang.setNamaBarang(jTextField1.getText());
             newBarang.setHargaBarang(Integer.parseInt(jTextField2.getText()));
-            newBarang.setKategori("tes kategori");
-            newBarang.setStokBarang(100);
+            newBarang.setHargaBeli(Integer.parseInt(jTextField3.getText()));
+            newBarang.setKategori(jTextField4.getText());
+            newBarang.setStokBarang(Integer.parseInt(jTextField5.getText()));
             newBarang.setGambar("gambar.jpg");
             
             ds.getInventoryBarang().addBarang(newBarang);
             ds.saveAs();
-        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+        } catch (JAXBException | IOException  ex) {
             Logger.getLogger(ManajemenBarang.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -204,18 +277,40 @@ public class ManajemenBarang extends javax.swing.JPanel {
         try {
             // TODO add your handling code here:
             /* Loop through and delete */
-            DataStore ds = new DataStore();
+            int search = Integer.parseInt((String) jComboBox1.getSelectedItem());
             for(int i = 0; i < ds.getInventoryBarang().getInventory().size(); i++){
-                if(ds.getInventoryBarang().getInventory().get(i).getNamaBarang().equals(jTextField1.getText())){
+                if(search == ds.getInventoryBarang().getInventory().get(i).getIdBarang()){
                     ds.getInventoryBarang().removeBarang(i);
+                    jComboBox1.remove(i);
                     break;
                 }
             }
             ds.saveAs();
-        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+        } catch (JAXBException | IOException  ex) {
             Logger.getLogger(ManajemenBarang.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:        
+        /* Set other elements */
+        Integer selectedId = Integer.valueOf((String)jComboBox1.getSelectedItem());
+        
+        for(int i = 0; i < ds.getInventoryBarang().getSize(); i++){
+            if(ds.getInventoryBarang().getInventory().get(i).getIdBarang() == selectedId){
+                jTextField1.setText(ds.getInventoryBarang().getInventory().get(i).getNamaBarang());
+                Integer hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBarang();
+                jTextField2.setText(hargaBarang.toString());
+                hargaBarang = ds.getInventoryBarang().getInventory().get(i).getHargaBeli();
+                jTextField3.setText(hargaBarang.toString());
+                jTextField4.setText(ds.getInventoryBarang().getInventory().get(i).getKategori());
+                hargaBarang = ds.getInventoryBarang().getInventory().get(i).getStokBarang();
+                jTextField5.setText(hargaBarang.toString());
+                break;
+            }
+        }
+        
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.shoppingsans.gui.AddMember addMember1;
@@ -231,9 +326,11 @@ public class ManajemenBarang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

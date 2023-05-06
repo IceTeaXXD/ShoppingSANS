@@ -4,17 +4,37 @@
  */
 package com.shoppingsans.gui;
 
+import com.shoppingsans.Datastore.DataStore;
+import com.shoppingsans.User.Member;
+import com.shoppingsans.User.VIP;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
+
 /**
  *
  * @author Matthew
  */
 public class AddMember extends javax.swing.JPanel {
-
+    
+    DataStore ds;
     /**
      * Creates new form AddMember
+     * @throws javax.xml.bind.JAXBException
+     * @throws java.io.FileNotFoundException
+     * @throws java.lang.ClassNotFoundException
      */
-    public AddMember() {
+    public AddMember() throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException {
         initComponents();
+        ds = new DataStore();
+        /* Initialize the Combo Box */
+        for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+            if(!(ds.getUsers().getCustomers().get(i) instanceof Member) && !(ds.getUsers().getCustomers().get(i) instanceof VIP)){
+                jComboBox1.addItem(Integer.toString(ds.getUsers().getCustomers().get(i).getId()));   
+            }
+        }
     }
 
     /**
@@ -88,7 +108,6 @@ public class AddMember extends javax.swing.JPanel {
         jLabel4.setText("Id Customer");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -98,7 +117,30 @@ public class AddMember extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            if(jComboBox1.getSelectedItem() != null){
+                /* Create a new Member to */
+                Integer selectedId = Integer.valueOf((String)jComboBox1.getSelectedItem());
+
+                for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+                    if(ds.getUsers().getCustomers().get(i).getId().equals(selectedId)){
+                        Member newMember = new Member();
+                        newMember.setId(ds.getUsers().getCustomers().get(i).getId());
+                        newMember.setNama(jTextField1.getText());
+                        newMember.setNotelp(jTextField2.getText());
+                        newMember.setIsActive(true);
+                        newMember.setPoin(0);
+
+                        /* Submit to DataStore */
+                        ds.getUsers().getCustomers().set(i, newMember);
+                        ds.saveAs();
+                        break;
+                    }
+                }
+            }
+        } catch (JAXBException | FileNotFoundException ex) {
+            Logger.getLogger(AddMember.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

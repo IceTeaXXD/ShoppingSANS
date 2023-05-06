@@ -7,6 +7,7 @@ package com.shoppingsans.gui;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -101,6 +102,7 @@ public class Main extends javax.swing.JFrame {
     public final void addTab(String title, Component page){
         jTabbedPane1.addTab(title, page);
         jTabbedPane1.setTabComponentAt(jTabbedPane1.getTabCount()-1, new CloseButton(jTabbedPane1));
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount()-1);
     }
 
     /**
@@ -335,7 +337,12 @@ public class Main extends javax.swing.JFrame {
         jButton8.setBorder(null);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                try {
+                    jButton8ActionPerformed(evt);
+                } catch (ClassNotFoundException | JAXBException | IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         });
         getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 210, 50));
@@ -404,8 +411,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseEntered
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        addTab("Add New Member", new AddMember());
+        try {
+            // TODO add your handling code here:
+            addTab("Add New Member", new AddMember());
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
@@ -424,8 +435,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4MouseEntered
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        addTab("History Transaksi", new HistoryTransaksi());
+        try {
+            // TODO add your handling code here:
+            addTab("History Transaksi", new HistoryTransaksi());
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
@@ -463,7 +478,7 @@ public class Main extends javax.swing.JFrame {
         jPanel3.setVisible(false);
     }//GEN-LAST:event_jPanel3MouseExited
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) throws FileNotFoundException, ClassNotFoundException, JAXBException, IOException {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         addTab("Jual Barang", new JualBarang());
     }//GEN-LAST:event_jButton8ActionPerformed
@@ -484,8 +499,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5MousePressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        addTab("Update Customer", new UpdateCustomer());
+        try {
+            // TODO add your handling code here:
+            addTab("Update Customer", new UpdateCustomer());
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
@@ -498,8 +517,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        addTab("Manajemen Barang", new ManajemenBarang());
+        try {
+            // TODO add your handling code here:
+            addTab("Manajemen Barang", new ManajemenBarang());
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**

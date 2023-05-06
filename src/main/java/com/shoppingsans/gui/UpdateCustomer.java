@@ -4,6 +4,15 @@
  */
 package com.shoppingsans.gui;
 
+import com.shoppingsans.Datastore.DataStore;
+import com.shoppingsans.User.Member;
+import com.shoppingsans.User.VIP;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
+
 /**
  *
  * @author Matthew
@@ -13,8 +22,37 @@ public class UpdateCustomer extends javax.swing.JPanel {
     /**
      * Creates new form UpdateCustomer
      */
-    public UpdateCustomer() {
+    DataStore ds;
+    public UpdateCustomer() throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException {
         initComponents();
+        ds = new DataStore();
+        
+        /* Set the ComboBox */
+        /* Initialize the Combo Box */
+        for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+            if(ds.getUsers().getCustomers().get(i) instanceof Member || ds.getUsers().getCustomers().get(i) instanceof VIP){
+                jComboBox2.addItem(Integer.toString(ds.getUsers().getCustomers().get(i).getId())); 
+            }
+        }
+        
+        /* Set other elements */
+        if(jComboBox2.getSelectedItem() != null){
+            Integer selectedId = Integer.valueOf((String)jComboBox2.getSelectedItem());
+
+            for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+                if(ds.getUsers().getCustomers().get(i).getId().equals(selectedId)){
+                    if(ds.getUsers().getCustomers().get(i) instanceof Member){
+                        jTextField1.setText(((Member) ds.getUsers().getCustomers().get(i)).getNama());
+                        jTextField2.setText(((Member) ds.getUsers().getCustomers().get(i)).getNotelp());
+                        jComboBox1.setSelectedIndex(0);
+                    }else if(ds.getUsers().getCustomers().get(i) instanceof VIP){
+                        jTextField1.setText(((VIP) ds.getUsers().getCustomers().get(i)).getNama());
+                        jTextField2.setText(((VIP) ds.getUsers().getCustomers().get(i)).getNotelp());
+                        jComboBox1.setSelectedIndex(1);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -51,7 +89,6 @@ public class UpdateCustomer extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("ID");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -77,7 +114,6 @@ public class UpdateCustomer extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nama");
 
-        jTextField1.setText("Masukkan Nama Member");
         jTextField1.setToolTipText("");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +125,6 @@ public class UpdateCustomer extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("No. Telp");
 
-        jTextField2.setText("Masukkan No. Telepon");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -99,6 +134,11 @@ public class UpdateCustomer extends javax.swing.JPanel {
         jButton1.setBackground(new java.awt.Color(242, 198, 111));
         jButton1.setFont(new java.awt.Font("Myanmar Text", 1, 12)); // NOI18N
         jButton1.setText("Update Customer");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -166,11 +206,46 @@ public class UpdateCustomer extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
+        if(jComboBox2.getSelectedItem() != null){
+            /* Update the Value */
+            Integer selectedId = Integer.valueOf((String)jComboBox2.getSelectedItem());
+
+            for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+                if(ds.getUsers().getCustomers().get(i).getId().equals(selectedId)){
+                    if(ds.getUsers().getCustomers().get(i) instanceof Member){
+                        jTextField1.setText(((Member) ds.getUsers().getCustomers().get(i)).getNama());
+                        jTextField2.setText(((Member) ds.getUsers().getCustomers().get(i)).getNotelp());
+                        jComboBox1.setSelectedIndex(0);
+                    }else if(ds.getUsers().getCustomers().get(i) instanceof VIP){
+                        jTextField1.setText(((VIP) ds.getUsers().getCustomers().get(i)).getNama());
+                        jTextField2.setText(((VIP) ds.getUsers().getCustomers().get(i)).getNotelp());
+                        jComboBox1.setSelectedIndex(1);
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        if(jComboBox2.getSelectedItem() != null){
+            Integer selectedId = Integer.valueOf((String)jComboBox2.getSelectedItem());
+
+            for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+                if(ds.getUsers().getCustomers().get(i).getId().equals(selectedId)){
+                    try {
+                        if(ds.getUsers().getCustomers().get(i) instanceof Member){
+                            ((Member)ds.getUsers().getCustomers().get(i)).setIsActive(false);
+                        }else if(ds.getUsers().getCustomers().get(i) instanceof VIP){
+                            ((VIP)ds.getUsers().getCustomers().get(i)).setIsActive(false);
+                        }
+                        ds.saveAs();
+                        break;
+                    } catch (JAXBException | FileNotFoundException ex) {
+                        Logger.getLogger(UpdateCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -180,6 +255,55 @@ public class UpdateCustomer extends javax.swing.JPanel {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(jComboBox2.getSelectedItem() != null){
+            Integer selectedId = Integer.valueOf((String)jComboBox2.getSelectedItem());
+            for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+                if(ds.getUsers().getCustomers().get(i).getId().equals(selectedId)){
+                    try {
+                        if(ds.getUsers().getCustomers().get(i) instanceof Member){
+                            if(jComboBox1.getSelectedIndex() == 1){
+                                /* Mau jadi VIP */
+                                Member temp = (Member) ds.getUsers().getCustomers().get(i);
+                                VIP newVIP = new VIP();
+                                newVIP.setId(temp.getId());
+                                newVIP.setNama(temp.getNama());
+                                newVIP.setNotelp(temp.getNotelp());
+                                newVIP.setPoin(temp.getPoin());
+                                newVIP.setIsActive(temp.getIsActive());
+
+                                ds.getUsers().getCustomers().set(i, newVIP);
+                            }else{
+                                ((Member)ds.getUsers().getCustomers().get(i)).setNama(jTextField1.getText());
+                                ((Member)ds.getUsers().getCustomers().get(i)).setNotelp(jTextField2.getText());
+                            }
+                        }else if(ds.getUsers().getCustomers().get(i) instanceof VIP){
+                            if(jComboBox1.getSelectedIndex() == 0){
+                                /* Mau jadi Member */
+                                VIP temp = (VIP) ds.getUsers().getCustomers().get(i);
+                                Member newMember = new Member();
+                                newMember.setId(temp.getId());
+                                newMember.setNama(temp.getNama());
+                                newMember.setNotelp(temp.getNotelp());
+                                newMember.setPoin(temp.getPoin());
+                                newMember.setIsActive(temp.getIsActive());
+
+                                ds.getUsers().getCustomers().set(i, newMember);
+                            }else{
+                                ((VIP)ds.getUsers().getCustomers().get(i)).setNama(jTextField1.getText());
+                                ((VIP)ds.getUsers().getCustomers().get(i)).setNotelp(jTextField2.getText());
+                            }
+                        }
+                        ds.saveAs();
+                        break;
+                    } catch (JAXBException | FileNotFoundException ex) {
+                        Logger.getLogger(UpdateCustomer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

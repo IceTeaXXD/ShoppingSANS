@@ -12,6 +12,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,6 +26,8 @@ import com.shoppingsans.Datastore.DataStore;
 import com.shoppingsans.JualBarang.Barang;
 import com.shoppingsans.JualBarang.ImageRenderer;
 import com.shoppingsans.JualBarang.InventoryBarang;
+import com.shoppingsans.User.Customer;
+import com.shoppingsans.User.User;
 
 public class JualBarang extends javax.swing.JPanel {
 
@@ -35,11 +38,13 @@ public class JualBarang extends javax.swing.JPanel {
      * @throws ClassNotFoundException
      * @throws FileNotFoundException
      */
+    protected DataStore ds;
+    protected ArrayList<Customer> users;
+    private int selectedUser;
     public JualBarang() throws FileNotFoundException, ClassNotFoundException, JAXBException, IOException {
         initComponents();
-  
-
-        DataStore ds = new DataStore();
+        
+        this.ds = new DataStore();
         
         ArrayList<Barang> barangList = ds.getInventoryBarang().getInventory();
         // // Create data for the table
@@ -104,6 +109,17 @@ public class JualBarang extends javax.swing.JPanel {
         scrollPane.setBounds(100, 100, 480, 480);
       }
       this.add(scrollPane);
+        this.users = ds.getUsers().getCustomers();
+        if (users.size() != 0)
+        {
+            //clear item in combobox
+            jComboBox1.removeAllItems();
+            for (int i = 0 ; i < users.size() ; i++)
+            {
+                jComboBox1.addItem(users.get(i).getId().toString());
+            }
+        }
+        this.add(jComboBox1);
       System.out.println("Table created");
       return retTable;
     }
@@ -149,11 +165,11 @@ public class JualBarang extends javax.swing.JPanel {
        * @version 1.0 11/09/98
        */
       
-      class ButtonEditor extends DefaultCellEditor implements TableCellEditor {
+       class ButtonEditor extends DefaultCellEditor implements TableCellEditor {
         protected JButton button;
         private int category;
         private String label;
-      
+    
         private boolean isPushed;
       
         public ButtonEditor(JCheckBox checkBox, int category) {
@@ -193,7 +209,7 @@ public class JualBarang extends javax.swing.JPanel {
             }
           });
         }
-      
+    
         public Component getTableCellEditorComponent(JTable table, Object value,
             boolean isSelected, int row, int column) {
           if (isSelected) {
@@ -211,18 +227,18 @@ public class JualBarang extends javax.swing.JPanel {
           isPushed = true;
           return button;
         }
-      
+    
         public Object getCellEditorValue() {
-          if (isPushed) {
-            
-          }
-          isPushed = false;
-          return new String(label);
+            if (isPushed) {
+                    
+            }
+            isPushed = false;
+            return new String(label);
         }
-      
+    
         public boolean stopCellEditing() {
-          isPushed = false;
-          return super.stopCellEditing();
+            isPushed = false;
+            return super.stopCellEditing();
         }
       
       }
@@ -270,6 +286,10 @@ public class JualBarang extends javax.swing.JPanel {
                 .addGap(0, 589, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;

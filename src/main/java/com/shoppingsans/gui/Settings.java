@@ -15,6 +15,8 @@ import java.awt.FileDialog;
 import java.awt.Frame;
 import javax.xml.bind.JAXBException;
 import com.shoppingsans.Chart.*;
+import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -26,8 +28,10 @@ public class Settings extends javax.swing.JPanel {
     /**
      * Creates new form Settings
      */
-    public Settings() {
+    DataStore ds;
+    public Settings() throws JAXBException, IOException, ClassNotFoundException {
         initComponents();
+        ds = new DataStore();
     }
 
     /**
@@ -47,6 +51,7 @@ public class Settings extends javax.swing.JPanel {
         jComboBox3 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(45, 43, 74));
         setPreferredSize(new java.awt.Dimension(1268, 685));
@@ -73,12 +78,7 @@ public class Settings extends javax.swing.JPanel {
         jButton1.setText("Upload Plugin");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    jButton1ActionPerformed(evt);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -111,6 +111,15 @@ public class Settings extends javax.swing.JPanel {
             }
         });
 
+        jButton4.setBackground(new java.awt.Color(242, 198, 111));
+        jButton4.setFont(new java.awt.Font("Myanmar Text", 1, 14)); // NOI18N
+        jButton4.setText("Change Path");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,8 +148,10 @@ public class Settings extends javax.swing.JPanel {
                         .addGap(0, 401, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(450, 450, 450)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(452, 452, 452)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -160,7 +171,9 @@ public class Settings extends javax.swing.JPanel {
                     .addComponent(jButton3))
                 .addGap(51, 51, 51)
                 .addComponent(jButton1)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jButton4)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -168,7 +181,7 @@ public class Settings extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws Exception {
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         // create a file dialog for opening .jar files
         FileDialog dialog = new FileDialog((Frame) null, "Open JAR file", FileDialog.LOAD);
         dialog.setFilenameFilter((dir, name) -> name.toLowerCase().endsWith(".jar"));
@@ -179,15 +192,19 @@ public class Settings extends javax.swing.JPanel {
         // get the selected file and create a JarClassLoader
         String filename = dialog.getFile();
         if (filename != null) {
-            String path = dialog.getDirectory() + filename;
-            System.out.println("You chose to open this file: " + path);
-            jcl = new JarClassLoader(path);
-            // System.out.println(path);
-            String name = filename.substring(0, filename.lastIndexOf("."));
-            // System.out.println(name);
-            // jcl.loadClass(name);
-            Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
-            frame.addTab("Chart", jcl.loadClassObject("ChartPanelCustom"));
+            try {
+                String path = dialog.getDirectory() + filename;
+                System.out.println("You chose to open this file: " + path);
+                jcl = new JarClassLoader(path);
+                // System.out.println(path);
+                String name = filename.substring(0, filename.lastIndexOf("."));
+                // System.out.println(name);
+                // jcl.loadClass(name);
+                Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
+                frame.addTab("Chart", jcl.loadClassObject("ChartPanelCustom"));
+            } catch (Exception ex) {
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -198,16 +215,11 @@ public class Settings extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
-            DataStore ds = new DataStore();
             String temp = (String) jComboBox2.getSelectedItem();
             temp = temp.toLowerCase();
             ds.getConfig().setSaveas(temp);
             ds.saveAs();
-        } catch (JAXBException ex) {
-            Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (JAXBException | IOException ex) {
             Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -217,11 +229,37 @@ public class Settings extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        // Show the file chooser dialog
+        int result = fileChooser.showOpenDialog(this);
+
+        // Check if the user clicked the "Open" button
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                // Get the selected file path
+                String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
+                
+                // Display the selected file path in a message dialog
+                JOptionPane.showMessageDialog(this, "Selected folder: " + path);
+                
+                ds.getConfig().setPath(path);
+                ds.saveAs();
+            } catch (JAXBException | FileNotFoundException ex) {
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;

@@ -35,36 +35,36 @@ public class DataStore {
         /* Baca file xml users dan inventory barang */
         config = xa.load(Config.class, "./src/main/java/com/shoppingsans/Datastore/Config.xml");
         if(config.getSaveas().equals("xml")){
-            users = xa.load(User.class, "./src/main/java/com/shoppingsans/Datastore/Customers.xml");
-            inventoryBarang = xa.load(InventoryBarang.class, "./src/main/java/com/shoppingsans/Datastore/Barang.xml");
-            history = xa.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.xml");
+            users = xa.load(User.class, config.getPath()+"Customers.xml");
+            inventoryBarang = xa.load(InventoryBarang.class, config.getPath()+"Barang.xml");
+            history = xa.load(History.class, config.getPath()+"History.xml");
             history.createMapFixedBill();
         }else if (config.getSaveas().equals("json")){
-            users = ja.load(User.class, "./src/main/java/com/shoppingsans/Datastore/Customers.json");
-            inventoryBarang = ja.load(InventoryBarang.class, "./src/main/java/com/shoppingsans/Datastore/Barang.json");
-            history = ja.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.json");
+            users = ja.load(User.class, config.getPath()+"Customers.json");
+            inventoryBarang = ja.load(InventoryBarang.class, config.getPath()+"Barang.json");
+            history = ja.load(History.class, config.getPath()+"History.json");
             history.createMapFixedBill();
         }else if(config.getSaveas().equals("obj")){
-            users = oa.load(User.class, "./src/main/java/com/shoppingsans/Datastore/Customers.OBJ");
-            inventoryBarang = oa.load(InventoryBarang.class, "./src/main/java/com/shoppingsans/Datastore/Barang.OBJ");
-            history = oa.load(History.class, "./src/main/java/com/shoppingsans/Datastore/History.OBJ");
+            users = oa.load(User.class, config.getPath()+"Customers.OBJ");
+            inventoryBarang = oa.load(InventoryBarang.class, config.getPath()+"Barang.OBJ");
+            history = oa.load(History.class, config.getPath()+"History.OBJ");
             history.createMapFixedBill();
         }
     }
     
     public void saveAs() throws JAXBException, FileNotFoundException{
         if(config.getSaveas().equals("xml")){
-            xa.convert(users, "./src/main/java/com/shoppingsans/Datastore/Customers.xml");
-            xa.convert(inventoryBarang, "./src/main/java/com/shoppingsans/Datastore/Barang.xml");
-            xa.convert(history, "./src/main/java/com/shoppingsans/Datastore/History.xml");
+            xa.convert(users, config.getPath()+"Customers.xml");
+            xa.convert(inventoryBarang, config.getPath()+"Barang.xml");
+            xa.convert(history, config.getPath()+"History.xml");
         }else if(config.getSaveas().equals("json")){
-            ja.convert(users, "./src/main/java/com/shoppingsans/Datastore/Customers.json");
-            ja.convert(inventoryBarang, "./src/main/java/com/shoppingsans/Datastore/Barang.json");
-            ja.convert(history, "./src/main/java/com/shoppingsans/Datastore/History.json");
+            ja.convert(users, config.getPath()+"Customers.json");
+            ja.convert(inventoryBarang, config.getPath()+"Barang.json");
+            ja.convert(history, config.getPath()+"History.json");
         }else if(config.getSaveas().equals("obj")){
-            oa.convert(users, "./src/main/java/com/shoppingsans/Datastore/Customers.OBJ");
-            oa.convert(inventoryBarang, "./src/main/java/com/shoppingsans/Datastore/Barang.OBJ");
-            oa.convert(history, "./src/main/java/com/shoppingsans/Datastore/History.OBJ");
+            oa.convert(users, config.getPath()+"Customers.OBJ");
+            oa.convert(inventoryBarang, config.getPath()+"Barang.OBJ");
+            oa.convert(history, config.getPath()+"History.OBJ");
         }
         
         xa.convert(config, "./src/main/java/com/shoppingsans/Datastore/Config.xml");

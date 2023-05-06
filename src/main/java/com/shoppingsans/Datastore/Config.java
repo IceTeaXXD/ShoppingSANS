@@ -36,4 +36,6 @@ public class Config {
     private String appName;
     @XmlElement
     private String saveas;
+    @XmlElement
+    private String path;
 }

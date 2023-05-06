@@ -8,15 +8,14 @@ import com.shoppingsans.Plugins.JarClassLoader;
 
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import javax.xml.bind.JAXBException;
-import com.shoppingsans.Plugins.*;
+import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -192,12 +191,16 @@ public class Settings extends javax.swing.JPanel {
         // get the selected file and create a JarClassLoader
         String filename = dialog.getFile();
         if (filename != null) {
-            String path = dialog.getDirectory() + filename;
-            System.out.println("You chose to open this file: " + path);
-            jcl = new JarClassLoader(path);
-            String name = filename.substring(0, filename.lastIndexOf("."));
-            Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
-            frame.addTab(name, jcl.loadClassObject(name));
+            try {
+                String path = dialog.getDirectory() + filename;
+                System.out.println("You chose to open this file: " + path);
+                jcl = new JarClassLoader(path);
+                String name = filename.substring(0, filename.lastIndexOf("."));
+                Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
+                frame.addTab(name, jcl.loadClassObject(name));
+            } catch (Exception ex) {
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

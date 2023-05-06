@@ -31,6 +31,21 @@ public class Settings extends javax.swing.JPanel {
     public Settings() throws JAXBException, IOException, ClassNotFoundException {
         initComponents();
         ds = new DataStore();
+        
+        switch (ds.getConfig().getSaveas()) {
+            case "xml":
+                jComboBox2.setSelectedIndex(1);
+                break;
+            case "json":
+                jComboBox2.setSelectedIndex(0);
+                break;
+            case "obj":
+                jComboBox2.setSelectedIndex(2);
+                break;
+            default:
+                jComboBox2.setSelectedIndex(3);
+                break;
+        }
     }
 
     /**
@@ -66,11 +81,6 @@ public class Settings extends javax.swing.JPanel {
         jLabel5.setText("Tipe Data Penyimpanan");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "JSON", "XML", "OBJ", "SQL" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
 
         jButton1.setBackground(new java.awt.Color(242, 198, 111));
         jButton1.setFont(new java.awt.Font("Myanmar Text", 1, 14)); // NOI18N
@@ -86,11 +96,6 @@ public class Settings extends javax.swing.JPanel {
         jLabel6.setText("Pilih Plugin Untuk Dihapus");
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Plugin 1", "Plugin 2", "Plugin 3", "Plugin 4", " ", " " }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
-            }
-        });
 
         jButton2.setBackground(new java.awt.Color(242, 198, 111));
         jButton2.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
@@ -176,10 +181,6 @@ public class Settings extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         // create a file dialog for opening .jar files
         FileDialog dialog = new FileDialog((Frame) null, "Open JAR file", FileDialog.LOAD);
@@ -203,10 +204,6 @@ public class Settings extends javax.swing.JPanel {
             }
         }
     }
-
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {

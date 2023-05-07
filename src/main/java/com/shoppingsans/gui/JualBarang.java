@@ -42,6 +42,13 @@ public class JualBarang extends javax.swing.JPanel {
     protected DataStore ds;
     protected ArrayList<Customer> users;
     private int selectedUser;
+    private JTable tableToko;
+    private JTable tablePembeli; 
+    private ArrayList<ArrayList<Object>> data;
+    private ArrayList<ArrayList<Object>> pembeli;
+    private DefaultTableModel model;
+    private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
+
     public JualBarang() throws FileNotFoundException, ClassNotFoundException, JAXBException, IOException {
         initComponents();
         
@@ -206,6 +213,7 @@ public class JualBarang extends javax.swing.JPanel {
           button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
               if (category == 1) {
+                System.out.println("label:" + label);
                 // search di dalam data dengan id yang sama
                 int idx = 0;
                 Integer newStock = 0;
@@ -227,15 +235,35 @@ public class JualBarang extends javax.swing.JPanel {
                   System.out.println(" data yang diganti " + data.get(idx).get(1).toString());
                   pembeli.get(idx).set(1, Integer.parseInt(pembeli.get(idx).get(1).toString()) + 1);
                   System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+                  int idxPembeli = -1;
+                  System.out.println(tablePembeli.getRowCount());
+                
                   for (int i = 0 ; i< tablePembeli.getRowCount() ; i++)
                   {
+                    System.out.println(i +"aaaaaaaaa");
                     System.out.println(tablePembeli.getModel().getValueAt(i, 0).toString());
                     if (tablePembeli.getModel().getValueAt(i, 6).toString().equals(label))
                     {
                       tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
                       System.out.println("diganti " + pembeli.get(idx).get(1).toString());
+                      idxPembeli = i;
                       break;
                     }
+                  }
+
+                  if (idxPembeli == -1)
+                  {
+                    System.out.println("label:" + label);
+                    DefaultTableModel model = createTableModel(tablePembeli);
+                    model.addRow(pembeli.get(idx).subList(1, 8).toArray());
+                    // model.setValueAt(Integer.valueOf(1).toString(), tablePembeli.getRowCount(), 0);
+                    System.out.println("-=-=-=-=-=-=--=--=-=-=-");
+                    System.out.println(model.getDataVector());
+                    System.out.println("-=-=-=-=-=-=--=--=-=-=-");
+                    tablePembeli.setModel(model);
+                    tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+                    tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
+                    tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
                   }
                   System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
 
@@ -271,7 +299,13 @@ public class JualBarang extends javax.swing.JPanel {
                   }
                   System.out.println("====================");
                   // search data dg indeks = label di dalam tabel
-                  int idxPembeli = 0; 
+                  int idxPembeli = -1; 
+                  // for (int i = 0 ; i < tablePembeli.getRowCount() ; i++)
+                  // {
+                  //   System.out.println("888888888888888888888888888888888888888888888888888888888888888");
+                  //   System.out.println(tablePembeli.getModel().getValueAt(i, 6).toString());
+                  //   System.out.println("888888888888888888888888888888888888888888888888888888888888888");
+                  // }
                   for (int i = 0 ; i< tablePembeli.getRowCount() ; i++)
                   {
                     if (tablePembeli.getModel().getValueAt(i, 6).toString().equals(label))
@@ -281,7 +315,9 @@ public class JualBarang extends javax.swing.JPanel {
                       break;
                     }
                   }
-
+                  
+                  
+                  System.out.println("aaaaaaaaaaaaaaaaaaaaaaaa");
                   for (int i = 0 ; i< tableToko.getRowCount() ; i++)
                   {
                     if (tableToko.getModel().getValueAt(i, 6).toString().equals(label))
@@ -309,11 +345,14 @@ public class JualBarang extends javax.swing.JPanel {
                   //   tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
                   //   tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
                   // }
-                  for (int i = 0 ; i < tablePembeli.getRowCount() ; i++)
-                  {
-                    // print all of label in each row
-                    System.out.println(tablePembeli.getModel().getValueAt(i, 6).toString());
-                  }
+                  // System.out.println(tablePembeli.getRowCount());
+                  // for (int i = 0 ; i < tablePembeli.getRowCount() ; i++)
+                  // {
+                  //   // print all of label in each row
+                  //   System.out.println("bbbbbbbbbbbbbbbbbbbbbbb" + i);
+                  //   System.out.println(tablePembeli.getModel().getValueAt(i, 6).toString());
+                  //   System.out.println("cccccccccccccccccccc");
+                  // }
               }
             }
           });
@@ -358,6 +397,7 @@ public class JualBarang extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(45, 43, 74));
 
@@ -372,6 +412,13 @@ public class JualBarang extends javax.swing.JPanel {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jButton1.setText("Create Bill");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -379,10 +426,12 @@ public class JualBarang extends javax.swing.JPanel {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(36, 36, 36)
+                .addComponent(jButton1)
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,7 +440,8 @@ public class JualBarang extends javax.swing.JPanel {
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(0, 589, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -400,16 +450,14 @@ public class JualBarang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private JTable tableToko;
-    private JTable tablePembeli; 
-    private ArrayList<ArrayList<Object>> data;
-    private ArrayList<ArrayList<Object>> pembeli;
-    private DefaultTableModel model;
-    
-    private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
     // End of variables declaration//GEN-END:variables
 }

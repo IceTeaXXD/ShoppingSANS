@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 
+import com.shoppingsans.Datastore.*;
 /**
  *
  * @author ahmad
@@ -38,7 +39,7 @@ public class BasePlugin extends javax.swing.JPanel {
             .addGap(0, 685, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-    public void update(){
+    public void update(DataStore ds){
         System.out.println("To be implemented");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -19,7 +19,7 @@ import javax.xml.bind.JAXBException;
 public class Driver {
     public static void main(String[] args) throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException {
         DataStore ds = new DataStore();
-
+        ds.getConfig().setSaveas("xml");
         Barang b = new Barang();
         b.setNamaBarang("Mouse");
         b.setHargaBarang(900000);
@@ -29,14 +29,16 @@ public class Driver {
         b.setGambar("mouse.jpg");
         b.setIdBarang(ds.getInventoryBarang().getSize() + 1);
         
-        
+        ds.getConfig().getMapKurs().put("JPY", 100);
+
+        System.out.println(ds.getConfig());
         ds.getInventoryBarang().getInventory().add(b);
         ds.saveAs();
         
-        ds.getConfig().setSaveas("json");
-        ds.saveAs();
+        // ds.getConfig().setSaveas("json");
+        // ds.saveAs();
         
-        ds.getConfig().setSaveas("obj");
-        ds.saveAs();
+        // ds.getConfig().setSaveas("obj");
+        // ds.saveAs();
     }
 }

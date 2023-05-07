@@ -77,7 +77,7 @@
                 </descriptorRefs>
                 <archive>
                     <manifest>
-                        <mainClass>Plugin2</mainClass>
+                        <mainClass>AddKurs</mainClass>
                     </manifest>
                 </archive>
             </configuration>

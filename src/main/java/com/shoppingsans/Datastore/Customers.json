@@ -2,12 +2,16 @@
   "customers" : [ {
     "type" : "Member",
     "id" : 5,
-    "nama" : "Masukkan NamakontolMember",
-    "notelp" : "Masukkan No. Telepon",
+    "nama" : "Henry",
+    "notelp" : "696969669",
     "poin" : 0,
     "isActive" : true
   }, {
-    "type" : "Customer",
-    "id" : 7
+    "type" : "Member",
+    "id" : 7,
+    "nama" : "Nadil",
+    "notelp" : "01812",
+    "poin" : 0,
+    "isActive" : true
   } ]
 }

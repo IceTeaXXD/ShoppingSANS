@@ -10,6 +10,8 @@ import com.shoppingsans.User.User;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+
 import javax.xml.bind.JAXBException;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,20 +56,28 @@ public class DataStore {
     }
     
     public void saveAs() throws JAXBException, FileNotFoundException{
+        config.createKurs();
         if(config.getSaveas().equals("xml")){
+            HashMap<String, Integer> temp = config.getMapKurs();
+            config.setMapKurs(null);
+            xa.convert(config, config.getPath()+"Config.xml");
+            config.setMapKurs(temp);
+            // delete mapKurs from config
             xa.convert(users, config.getPath()+"Customers.xml");
             xa.convert(inventoryBarang, config.getPath()+"Barang.xml");
             xa.convert(history, config.getPath()+"History.xml");
         }else if(config.getSaveas().equals("json")){
+            ja.convert(config, config.getPath()+"Config.json");
             ja.convert(users, config.getPath()+"Customers.json");
             ja.convert(inventoryBarang, config.getPath()+"Barang.json");
             ja.convert(history, config.getPath()+"History.json");
         }else if(config.getSaveas().equals("obj")){
+            oa.convert(config, config.getPath()+"Config.OBJ");
             oa.convert(users, config.getPath()+"Customers.OBJ");
             oa.convert(inventoryBarang, config.getPath()+"Barang.OBJ");
             oa.convert(history, config.getPath()+"History.OBJ");
         }
         
-        xa.convert(config, "./src/main/java/com/shoppingsans/Datastore/Config.xml");
+        // xa.convert(config, "./src/main/java/com/shoppingsans/Datastore/Config.xml");
     }
 }

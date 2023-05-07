@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Config>
     <appName>ShoppingSans</appName>
-    <saveas>obj</saveas>
+    <saveas>xml</saveas>
     <path>./src/main/java/com/shoppingsans/Datastore/</path>
     <plugins>
-        <path>C:\Users\Matthew\Documents\Institut Teknologi Bandung\Semester 4\Object Oriented Programming\ShoppingSANS\plugins\Plugin1.jar</path>
+        <path>C:\File\Nadil\STEI ITB\Semester 4\OOP\ShoppingSANS\plugins\Plugin1.jar</path>
+        <path>C:\File\Nadil\STEI ITB\Semester 4\OOP\ShoppingSANS\plugins\AddKurs.jar</path>
+        <path>C:\File\Nadil\STEI ITB\Semester 4\OOP\ShoppingSANS\plugins\AddKurs.jar</path>
     </plugins>
-    <mapKurs>
-        <entry>
-            <key>EUR</key>
-            <value>16000</value>
-        </entry>
-        <entry>
-            <key>USD</key>
-            <value>14000</value>
-        </entry>
-    </mapKurs>
     <kurs>
         <Entry>
-            <key>USD</key>
-            <value>14000</value>
-        </Entry>
-        <Entry>
             <key>EUR</key>
             <value>16000</value>
         </Entry>
+        <Entry>
+            <key>IDR</key>
+            <value>1</value>
+        </Entry>
+        <Entry>
+            <key>USD</key>
+            <value>14000</value>
+        </Entry>
     </kurs>
+    <currentKurs>EUR</currentKurs>
 </Config>

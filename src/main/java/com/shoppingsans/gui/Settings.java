@@ -16,10 +16,13 @@ import java.awt.Frame;
 import javax.xml.bind.JAXBException;
 import javax.xml.crypto.Data;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 import java.awt.Component;
 import java.lang.reflect.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 
 /**
@@ -199,6 +202,27 @@ public class Settings extends javax.swing.JPanel {
             try {
                 String path = dialog.getDirectory() + filename;
                 System.out.println("You chose to open this file: " + path);
+                File input = new File(path);
+                File destFolder = new File(ds.getConfig().getPath());
+
+                if (!destFolder.exists()) {
+                    File parent = destFolder.getParentFile();
+                    if (parent != null && parent.exists() && parent.canWrite()) {
+                        boolean result = destFolder.mkdirs();
+                        if (!result) {
+                            System.err.println("Gagal buat folder: " + destFolder.getAbsolutePath());
+                        }
+                    } else {
+                        System.err.println("Gagal buat file " + destFolder.getAbsolutePath());
+                    }
+                }
+                try {
+                    Files.copy(input.toPath(), destFolder.toPath().resolve(input.getName()), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    // Print an error message if there is an exception copying the file
+                    System.err.println("Gagal memindahkan file ke plugin: " + e.getMessage());
+                }
+
                 jcl = new JarClassLoader(path);
                 String name = filename.substring(0, filename.lastIndexOf("."));
                 Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);

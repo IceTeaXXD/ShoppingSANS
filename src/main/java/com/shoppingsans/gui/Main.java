@@ -4,10 +4,14 @@
  */
 package com.shoppingsans.gui;
 
+import com.shoppingsans.Datastore.DataStore;
+import com.shoppingsans.Plugins.JarClassLoader;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Calendar;
@@ -25,8 +29,12 @@ public class Main extends javax.swing.JFrame {
 
     /**
      * Creates new form Main
+     * @throws IOException
+     * @throws JAXBException
+     * @throws ClassNotFoundException
+     * @throws FileNotFoundException
      */
-    public Main() {
+    public Main() throws FileNotFoundException, ClassNotFoundException, JAXBException, IOException {
         initComponents();
         Home h = new Home();
         addTab("Home", h);
@@ -98,6 +106,29 @@ public class Main extends javax.swing.JFrame {
         
         jPanel1.setVisible(false);
         jPanel3.setVisible(false);
+
+        /* Search through if there exists */
+        DataStore ds = new DataStore();
+        File pluginFolder = new File(ds.getConfig().getPath());
+        if (pluginFolder.exists()) {
+            File[] pluginFiles = pluginFolder.listFiles(new FilenameFilter() {
+                public boolean accept(File dir, String name) {
+                    return name.toLowerCase().endsWith(".jar");
+                }
+            });
+    
+            for (File pluginFile : pluginFiles) {
+                try {
+                    JarClassLoader jcl = new JarClassLoader(pluginFile.toPath().toString());
+                    System.out.println(pluginFile.getName());
+                    String name = pluginFile.getName().substring(0, pluginFile.getName().lastIndexOf("."));
+                    Component obj = jcl.loadClassObject(name);
+                    addTab(obj);
+                } catch (Exception ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
     
     public final void addTab(String title, Component page){
@@ -568,7 +599,11 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                try {
+                    new Main().setVisible(true);
+                } catch (ClassNotFoundException | JAXBException | IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

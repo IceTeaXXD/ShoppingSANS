@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Bills implements Serializable{
     @XmlElement (name = "Bill")
-    private ArrayList<Bill> listBill;
+    private ArrayList<Bill> listBill = new ArrayList<>();
 
     @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,

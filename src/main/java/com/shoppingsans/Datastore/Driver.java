@@ -20,7 +20,7 @@ public class Driver {
     public static void main(String[] args) throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException {
         DataStore ds = new DataStore();
         
-        System.out.println((ds.getBills().getListBill().get(0).getMapId()));
+        // System.out.println((ds.getBills().getListBill().get(0).getMapId()));
         for(int i = 0; i < ds.getBills().getListBill().size(); i++) {
             System.out.println((ds.getBills().getListBill().get(i).getMapId()));
         }

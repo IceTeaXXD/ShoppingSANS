@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Config>
     <appName>ShoppingSans</appName>
-    <saveas>json</saveas>
+    <saveas>xml</saveas>
     <path>./src/main/java/com/shoppingsans/Datastore/</path>
 </Config>

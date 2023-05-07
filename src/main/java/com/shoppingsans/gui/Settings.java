@@ -250,6 +250,8 @@ public class Settings extends javax.swing.JPanel {
                     try {
                         ds.getConfig().getPlugins().getPath().remove(i);
                         ds.saveAs();
+                        jComboBox3.removeItemAt(i);
+                        JOptionPane.showMessageDialog(this, "Plugin berhasil dihapus, silakan restart program agar perubahan dapat dilakukan!", "Delete Success", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     } catch (JAXBException ex) {
                         Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);

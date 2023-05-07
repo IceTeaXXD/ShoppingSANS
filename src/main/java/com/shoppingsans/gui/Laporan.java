@@ -95,16 +95,20 @@ public class Laporan extends javax.swing.JPanel {
 
         // Check if the user clicked the "Open" button
         if (result == JFileChooser.APPROVE_OPTION) {
-            try {
-                // Get the selected file path
-                String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
-                // Display the selected file path in a message dialog
-                JOptionPane.showMessageDialog(this, "Selected folder: " + path);
-                
-                ExportPDF.createLaporanBarang(ds, path);
-            } catch (FileNotFoundException | DocumentException ex) {
-                Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            // Get the selected file path
+            String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
+            // Display the selected file path in a message dialog
+            JOptionPane.showMessageDialog(this, "Selected folder: " + path);
+            Thread export = new Thread(() -> {
+                try {
+                    Thread.sleep(10000);
+                    ExportPDF.createLaporanBarang(ds, path);
+                    JOptionPane.showMessageDialog(this, "Sukses export ke PDF!");
+                } catch (FileNotFoundException | DocumentException | InterruptedException ex) {
+                    Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            export.start();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -119,17 +123,21 @@ public class Laporan extends javax.swing.JPanel {
         // Check if the user clicked the "Open" button
         if (result == JFileChooser.APPROVE_OPTION 
                 && jComboBox1.getSelectedItem() != null) {
-            try {
-                // Get the selected file path
-                String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
-                // Display the selected file path in a message dialog
-                JOptionPane.showMessageDialog(this, "Selected folder: " + path);
-                
-                Integer idCust = Integer.valueOf((String) jComboBox1.getSelectedItem());
-                ExportPDF.createHistoryTransaksi(ds, path, idCust);
-            } catch (FileNotFoundException | DocumentException ex) {
-                Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            // Get the selected file path
+            String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
+            // Display the selected file path in a message dialog
+            JOptionPane.showMessageDialog(this, "Selected folder: " + path);
+            Integer idCust = Integer.valueOf((String) jComboBox1.getSelectedItem());
+            Thread export = new Thread(() -> {
+                try {
+                    Thread.sleep(10000);
+                    ExportPDF.createHistoryTransaksi(ds, path, idCust);
+                    JOptionPane.showMessageDialog(this, "Sukses export ke PDF!");
+                } catch (FileNotFoundException | DocumentException | InterruptedException ex) {
+                    Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            export.start();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

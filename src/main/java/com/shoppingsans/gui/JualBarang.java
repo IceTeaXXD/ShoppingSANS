@@ -657,13 +657,15 @@ public class JualBarang extends javax.swing.JPanel {
       {
           fixed = true;
           // System.out.println(jComboBox1.getSelectedItem().toString());
-          ds.getBills().getListBill().add(new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString())));
-          billIdx = ds.getBills().getListBill().size()-1;
+          // ds.getBills().getListBill().add(new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString())));
+          // billIdx = ds.getBills().getListBill().size()-1;
           billedUserId = mapId.get(jComboBox1.getSelectedItem().toString());
-          System.out.println("billedUserId " + billedUserId);
+          // System.out.println("billedUserId " + billedUserId);
           // bill = new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString()));
           for (int i = 0; i < ds.getBills().getListBill().size(); i++)
           {
+            System.out.println("IDUSER:" + ds.getBills().getListBill().get(i).getIdUser());
+            System.out.println("BILLEDUSER:" + billedUserId);
             if (ds.getBills().getListBill().get(i).getIdUser().equals(billedUserId))
             {
               billIdx = i;
@@ -671,6 +673,11 @@ public class JualBarang extends javax.swing.JPanel {
               flag = false;
               break;
             }
+          }
+          if (billIdx==null)
+          {
+            ds.getBills().getListBill().add(new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString())));
+            billIdx = ds.getBills().getListBill().size()-1;
           }
           // reset matrix ke 0
           for (int i = 0 ; i < pembeli.size() ; i++)
@@ -725,39 +732,16 @@ public class JualBarang extends javax.swing.JPanel {
             }
           }
           jLabel3.setText((status + jComboBox1.getSelectedItem().toString()));
-          System.out.println("FLag: " + flag);
-          if (flag)
-          {
-            ds.getBills().createMapBill(ds.getInventoryBarang());
-            ds.getBills().createEntryLists();
-            System.out.println("jsfhioajsfopsapa");
-            System.out.println(ds.getBills());
-            System.out.println(ds.getBills().getListBill().get(0).getMapPembelian());
-            System.out.println("jsfhioajsfopsapa");
-          }
+          // System.out.println("FLag: " + flag);
+          ds.getBills().createMapBill(ds.getInventoryBarang());
+          ds.getBills().createEntryLists();
+          // System.out.println("jsfhioajsfopsapa");
+          // System.out.println(ds.getBills());
+          // System.out.println(ds.getBills().getListBill().get(0).getMapPembelian());
+          // System.out.println("jsfhioajsfopsapa");
+          
           saveDataStore();
-          System.out.println("-sa-d---sads-");
-          for (int i = tablePembeli.getRowCount() - 1; i >= 0; i--) 
-          {
-            DefaultTableModel model = createTableModel(tablePembeli);
-            model.removeRow(i);
-            tablePembeli.setModel(model);
-            tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-            tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
-            tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
-          }
-          for (int i = 0 ; i < pembeli.size() ; i++)
-          {
-            if (pembeli.get(i).get(1).toString().equals("0"))
-            {
-              DefaultTableModel model = createTableModel(tablePembeli);
-              model.addRow(pembeli.get(i).subList(1, 8).toArray());
-              tablePembeli.setModel(model);
-              tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-              tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
-              tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
-            }
-          }
+          // System.out.println("-sa-d---sads-");
        }
       //  else
       //  {
@@ -903,15 +887,46 @@ public class JualBarang extends javax.swing.JPanel {
       if (!fixed)
       {
         fixed = true;
-        System.out.println(ds.getUsers().getCustomers().get(ds.getUsers().getCustomers().size()-1).toString());
+        // System.out.println(ds.getUsers().getCustomers().get(ds.getUsers().getCustomers().size()-1).toString());
         Customer newCust = new Customer(ds.getUsers().getCustomers().size()==0 ? 1 : Integer.parseInt(ds.getUsers().getCustomers().get(ds.getUsers().getCustomers().size()-1).getId().toString())+1);
         ds.getUsers().getCustomers().add(newCust);
         
         System.out.println("-----------------------");
         saveDataStore();
         billedUserId = newCust.getId();
+        ds.getBills().getListBill().add(new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString())));
+        billIdx = ds.getBills().getListBill().size()-1;
+        // reset matrix ke 0
+        for (int i = 0 ; i < pembeli.size() ; i++)
+        {
+          pembeli.get(i).set(1, 0);
+        }
+        tablePembeli = createTable(convertToArray(pembeli), true);
+        // bikin dari bill ke matrix
+        for (Map.Entry<String,Integer> entry : ds.getBills().getListBill().get(billIdx).getMapPembelian().entrySet())
+        {
+          for (int i = 0 ; i < pembeli.size() ; i++)
+          {
+            if (pembeli.get(i).get(2).equals(entry.getKey()))
+            {
+              pembeli.get(i).set(1, entry.getValue());
+            }
+          } 
+        }
+        
         jLabel3.setText("Customer " + newCust.getId().toString());
-
+        ds.getBills().createMapBill(ds.getInventoryBarang());
+        ds.getBills().createEntryLists();
+        saveDataStore();
+        for (int i = tablePembeli.getRowCount() - 1; i >= 0; i--) 
+        {
+          DefaultTableModel model = createTableModel(tablePembeli);
+          model.removeRow(i);
+          tablePembeli.setModel(model);
+          tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+          tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
+          tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
+        }
       }
 
         

@@ -2,8 +2,9 @@
   "listHistory" : [ {
     "type" : "FixedBill",
     "id" : 1,
-    "idUser" : 1,
+    "idUser" : 5,
     "datetime" : "23-03-2023",
+    "total" : 100000,
     "pembelian" : {
       "type" : "Pembelian",
       "entry" : [ {
@@ -21,6 +22,7 @@
     "id" : 2,
     "idUser" : 3,
     "datetime" : "23-03-2023",
+    "total" : 50000,
     "pembelian" : {
       "type" : "Pembelian",
       "entry" : [ {

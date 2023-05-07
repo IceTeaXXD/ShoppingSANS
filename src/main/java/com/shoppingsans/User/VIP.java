@@ -42,7 +42,12 @@ public class VIP extends Customer implements Diskon {
     
     @Override
     public double calculateDiskon(int price){
-        return (int) price*0.1;
+        return (int) price*0.9;
+    }
+    
+    @Override
+    public Integer applyDiskon(int price){
+        return ((int) (price*0.9));
     }
     
     @Override

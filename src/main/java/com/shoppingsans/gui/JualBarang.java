@@ -25,6 +25,7 @@ import javax.swing.table.TableModel;
 import javax.xml.bind.JAXBException;
 
 import com.shoppingsans.Bill.Bill;
+import com.shoppingsans.Bill.FixedBill;
 import com.shoppingsans.Datastore.DataStore;
 import com.shoppingsans.JualBarang.Barang;
 import com.shoppingsans.JualBarang.ImageRenderer;
@@ -45,7 +46,6 @@ public class JualBarang extends javax.swing.JPanel {
      */
     protected DataStore ds;
     protected ArrayList<Customer> users;
-    private int selectedUser;
     private JTable tableToko;
     private JTable tablePembeli; 
     private ArrayList<ArrayList<Object>> data;
@@ -53,8 +53,10 @@ public class JualBarang extends javax.swing.JPanel {
     private DefaultTableModel model;
     private Integer billIdx;
     private Object billedUserId;
+    private Integer billedUserIndex;
     private HashMap<String, Integer> mapId;
-    private boolean fixed = false;;
+    private boolean fixed = false;
+    private Class custClass;
     
     private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
 
@@ -108,14 +110,23 @@ public class JualBarang extends javax.swing.JPanel {
                 {
                   jComboBox1.addItem(((Member) users.get(i)).getNama());
                   if (billedUserId==null)
-                  billedUserId = users.get(i).getId();
+                  {
+                    billedUserId = users.get(i).getId();
+                    billedUserIndex = i;
+                    custClass = Member.class;
+                  }
+
                   mapId.put(((Member) users.get(i)).getNama(), users.get(i).getId());
                 }
                 if (users.get(i) instanceof VIP)
                 {
                   jComboBox1.addItem(((VIP) users.get(i)).getNama());
                   if (billedUserId==null)
-                  billedUserId = users.get(i).getId();
+                  {
+                    billedUserId = users.get(i).getId();
+                    billedUserIndex = i;
+                    custClass = Member.class;
+                  }
                   mapId.put(((VIP) users.get(i)).getNama(), users.get(i).getId());
                 }
             }
@@ -267,7 +278,7 @@ public class JualBarang extends javax.swing.JPanel {
           button.setOpaque(true);
           button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-              if (category == 1 && ds.getBills().getListBill().get(billIdx) != null) {
+                  if (category == 1 && ds.getBills().getListBill().get(billIdx) != null) {
                 // System.out.println("label:" + label);
                 // search di dalam data dengan id yang sama
                 int idx = 0;
@@ -338,6 +349,10 @@ public class JualBarang extends javax.swing.JPanel {
                     // System.out.println(ds.getBills().getListBill().get(billIdx).getMapPembelian());
                     // System.out.println(ds.getBills().getListBill().get(billIdx).getMapId());
                     jLabel2.setText(ds.getBills().getListBill().get(billIdx).getTotal().toString());
+                    if (custClass == Member.class)
+                    jLabel2.setText(ds.getBills().getListBill().get(billIdx).getTotal().toString() + "  (" + ((Member) users.get(billedUserIndex)).applyDiskon(ds.getBills().getListBill().get(billIdx).getTotal())+")");
+                    if ( custClass == VIP.class)
+                    jLabel2.setText(ds.getBills().getListBill().get(billIdx).getTotal().toString() + "  (" + ((VIP) users.get(billedUserIndex)).applyDiskon(ds.getBills().getListBill().get(billIdx).getTotal())+")");
                   }
                   
                   
@@ -403,6 +418,10 @@ public class JualBarang extends javax.swing.JPanel {
                   
                   ds.getBills().getListBill().get(billIdx).removeBarang(pembeli.get(idx).get(2).toString(), 1, Integer.valueOf(pembeli.get(idx).get(3).toString()));
                   jLabel2.setText(ds.getBills().getListBill().get(billIdx).getTotal().toString());
+                  if (custClass == Member.class)
+                  jLabel2.setText(ds.getBills().getListBill().get(billIdx).getTotal().toString() + "  (" + ((Member) users.get(billedUserIndex)).applyDiskon(ds.getBills().getListBill().get(billIdx).getTotal())+")");
+                  if ( custClass == VIP.class)
+                  jLabel2.setText(ds.getBills().getListBill().get(billIdx).getTotal().toString() + "  (" + ((VIP) users.get(billedUserIndex)).applyDiskon(ds.getBills().getListBill().get(billIdx).getTotal())+")");
                   saveDataStore();
                   // if (Integer.parseInt(pembeli.get(idx).get(1).toString()) == 0) {
                   //   System.out.println(pembeli.get(idx).get(2));
@@ -582,11 +601,61 @@ public class JualBarang extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     protected void jButtonSubmitActionPerformed(ActionEvent evt) {
-      
+      boolean suficient = true;
+      HashMap<String, Integer> currBillMap = ds.getBills().getListBill().get(billIdx).getMapPembelian();
+      for (Barang barang : ds.getInventoryBarang().getInventory())
+      {
+        if (currBillMap.get(barang.getNamaBarang())!=null)
+        {
+          if (barang.getStokBarang() < currBillMap.get(barang.getNamaBarang()))
+          suficient = false;
+        }
+      }
+      if (suficient)
+      {
+  
+        FixedBill newFixedBill = new FixedBill(ds.getBills().getListBill().get(billIdx).getId(), ds.getBills().getListBill().get(billIdx).getIdUser());
+        newFixedBill.setPembelian(ds.getBills().getListBill().get(billIdx).getPembelian());
+        System.out.println(custClass);
+        if (custClass == Member.class)
+        newFixedBill.setTotal((int) ((Member) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal()));
+        else if (custClass == VIP.class)
+        newFixedBill.setTotal((int) ((VIP) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal()));
+        else
+        newFixedBill.setTotal(ds.getBills().getListBill().get(billIdx).getTotal());
+        ds.getBills().getListBill().remove((int)billIdx);
+        for (int i = 0; i < ds.getInventoryBarang().getInventory().size(); i++)
+        {
+          if (currBillMap.get(ds.getInventoryBarang().getInventory().get(i).getNamaBarang())!=null)
+          {
+            Integer oldStock = ds.getInventoryBarang().getInventory().get(i).getStokBarang();
+            ds.getInventoryBarang().getInventory().get(i).setStokBarang(oldStock-currBillMap.get(ds.getInventoryBarang().getInventory().get(i).getNamaBarang()));
+          }
+        }
+        ds.getHistory().getListHistory().add(newFixedBill);
+        saveDataStore();
+        JOptionPane.showMessageDialog(buttonSubmit, "FixedBill berhasil dibuat");
+        this.getParent().remove(this);
+      }
+      else 
+      {
+        JOptionPane.showMessageDialog(buttonSubmit, "FixedBill gagal dibuat, ada stok barang yang tidak cukup");
+      }
     }
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
       billedUserId = mapId.get(jComboBox1.getSelectedItem().toString());
+      for(int i = 0; i < users.size(); i++)
+      {
+        if (users.get(i).getId().equals(billedUserId))
+        {
+          billedUserIndex = i;
+          if(users.get(i) instanceof Member)
+          custClass = Member.class;
+          else
+          custClass = VIP.class;
+        }
+      }
       // if (jComboBox1.getSelectedItem()!=null && mapId.size()>0)
       // {
       //   if (bill != null)
@@ -889,6 +958,7 @@ public class JualBarang extends javax.swing.JPanel {
         fixed = true;
         // System.out.println(ds.getUsers().getCustomers().get(ds.getUsers().getCustomers().size()-1).toString());
         Customer newCust = new Customer(ds.getUsers().getCustomers().size()==0 ? 1 : Integer.parseInt(ds.getUsers().getCustomers().get(ds.getUsers().getCustomers().size()-1).getId().toString())+1);
+        billedUserIndex = ds.getUsers().getCustomers().size();
         ds.getUsers().getCustomers().add(newCust);
         
         System.out.println("-----------------------");

@@ -42,14 +42,21 @@ public class Member extends Customer implements Diskon {
     
     @Override
     public double calculateDiskon(int price){
-        return price - poin;
+        int temp = price >= poin ? poin : price;
+        this.poin = price >= poin ? 0 : poin - price;
+        return price - temp;
+    }
+
+    @Override
+    public Integer applyDiskon(int price){
+        return price>poin ? price : 0;
     }
     
     @Override
     public void setPoin(int price){
         double temp = price * 0.01;
         Integer pointtemp = (int) temp;
-        this.poin = pointtemp;
+        this.poin += pointtemp;
     }
     
     public void deactivate(){

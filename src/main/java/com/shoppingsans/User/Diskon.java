@@ -10,5 +10,6 @@ package com.shoppingsans.User;
  */
 public interface Diskon {
     public double calculateDiskon(int price);
+    public Integer applyDiskon(int price);
     public void setPoin(int price);
 }

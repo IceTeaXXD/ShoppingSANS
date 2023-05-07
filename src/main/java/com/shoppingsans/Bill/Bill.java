@@ -20,20 +20,22 @@ public class Bill extends FixedBill{
         super(id, userID);
     }
     
-    public void addBarang(String barang, Integer jumlah) {
+    public void addBarang(String barang, Integer jumlah, Integer hargaSatuan) {
         if (mapPembelian.containsKey(barang)) {
             Integer temp = mapPembelian.get(barang);
             temp += jumlah;
+            total += jumlah * hargaSatuan;
             mapPembelian.put(barang, temp);
         } else {
             mapPembelian.put(barang, jumlah);
         }
     }
 
-    public void removeBarang(String barang, Integer jumlah) {
+    public void removeBarang(String barang, Integer jumlah, Integer hargaSatuan) {
         if (mapPembelian.containsKey(barang)) {
             Integer temp = mapPembelian.get(barang);
             temp -= jumlah;
+            total -= jumlah * hargaSatuan;
             if (temp == 0) {
                 mapPembelian.remove(barang);
             } else {

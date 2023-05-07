@@ -19,6 +19,7 @@ import com.shoppingsans.JualBarang.Barang;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.Map;
 
 /**
  *
@@ -35,7 +36,7 @@ public class ExportPDF {
         }
     }
     
-    public static void createHistoryTransaksi(DataStore ds, String folder) throws FileNotFoundException, DocumentException{
+    public static void createHistoryTransaksi(DataStore ds, String folder, Integer idCust) throws FileNotFoundException, DocumentException{
         Document document = new Document();
         document.setPageSize(PageSize.A4);
         PdfWriter.getInstance(document, new FileOutputStream(folder + "Riwayat Transaksi.pdf"));
@@ -49,11 +50,52 @@ public class ExportPDF {
         /* Isi */
         Paragraph title = new Paragraph();
         
-        title.add(new Paragraph("Riwayat Transaksi", judul));
+        title.add(new Paragraph("Riwayat Transaksi User " + idCust, judul));
         title.add(new Paragraph("Dikeluarkan pada: " + new Date(), text));
         addLine(title, 2);
         
         document.add(title);
+        
+        
+        /* Fill in the Tables */
+        for(int i = 0; i < ds.getHistory().getListHistory().size(); i++){
+            if(ds.getHistory().getListHistory().get(i).getIdUser().equals(idCust)){
+                PdfPTable tabel = new PdfPTable(4);
+        
+                /* Make the headers */
+                PdfPCell header = new PdfPCell(new Phrase("ID Pembelian"));
+                header.setHorizontalAlignment(Element.ALIGN_CENTER);
+                tabel.addCell(header);
+
+                header = new PdfPCell(new Phrase("Tanggal Pembelian"));
+                header.setHorizontalAlignment(Element.ALIGN_CENTER);
+                tabel.addCell(header);
+
+                header = new PdfPCell(new Phrase("Nama Barang"));
+                header.setHorizontalAlignment(Element.ALIGN_CENTER);
+                tabel.addCell(header);
+
+                header = new PdfPCell(new Phrase("Jumlah"));
+                header.setHorizontalAlignment(Element.ALIGN_CENTER);
+                tabel.addCell(header);
+                for (Map.Entry<String, Integer> entry : ds.getHistory().getListHistory().get(i).getMapPembelian().entrySet()) {
+                    tabel.addCell(ds.getHistory().getListHistory().get(i).getId().toString());
+                    tabel.addCell(ds.getHistory().getListHistory().get(i).getDatetime());
+                    tabel.addCell(entry.getKey());
+                    tabel.addCell(entry.getValue().toString());
+                }
+                PdfPCell cell = new PdfPCell(new Phrase("Total: " + ds.getHistory().getListHistory().get(i).getTotal()));
+                cell.setColspan(4);
+                tabel.addCell(cell);
+                
+                document.add(tabel);
+                
+                document.add(new Paragraph(" "));       
+                
+                
+            }
+        }
+        
         document.close();
     }
 
@@ -67,6 +109,7 @@ public class ExportPDF {
         document.addAuthor("ShoppingSans");
         document.addTitle("Laporan Inventory Barang");
         document.addCreationDate();
+        
         /* Isi */
         Paragraph title = new Paragraph();
         

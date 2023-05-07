@@ -4,6 +4,7 @@
         <id>1</id>
         <idUser>5</idUser>
         <datetime>23-03-2023</datetime>
+        <total>100000</total>
         <pembelian>
             <entry>
                 <key>Daging</key>
@@ -17,8 +18,9 @@
     </FixedBill>
     <FixedBill>
         <id>2</id>
-        <idUser>3</idUser>
+        <idUser>5</idUser>
         <datetime>23-03-2023</datetime>
+        <total>50000</total>
         <pembelian>
             <entry>
                 <key>Daging</key>

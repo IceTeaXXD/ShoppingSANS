@@ -3,10 +3,100 @@
     "type" : "Barang",
     "idBarang" : 1,
     "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Alat Tulis",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 2,
+    "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
     "stokBarang" : 10,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 3,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Kontol",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 4,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Memek",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 5,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Kontol",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 6,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Memek",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 7,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 8,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 9,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Alat Tulis",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 10,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Kontol",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 11,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Alat Tulis",
     "gambar" : "mouse.jpg"
   } ]
 }

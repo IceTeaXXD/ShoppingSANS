@@ -5,6 +5,7 @@
 package com.shoppingsans.Datastore;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -38,4 +39,6 @@ public class Config {
     private String saveas;
     @XmlElement
     private String path;
+    @XmlElement
+    private PluginPath plugins;
 }

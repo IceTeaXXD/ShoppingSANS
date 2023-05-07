@@ -3,4 +3,7 @@
     <appName>ShoppingSans</appName>
     <saveas>json</saveas>
     <path>./src/main/java/com/shoppingsans/Datastore/</path>
+    <plugins>
+        <path>C:\Users\Matthew\Documents\Institut Teknologi Bandung\Semester 4\Object Oriented Programming\ShoppingSANS\plugins\Plugin1.jar</path>
+    </plugins>
 </Config>

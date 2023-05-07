@@ -109,26 +109,40 @@ public class Main extends javax.swing.JFrame {
 
         /* Search through if there exists */
         DataStore ds = new DataStore();
-        File pluginFolder = new File(ds.getConfig().getPath());
-        if (pluginFolder.exists()) {
-            File[] pluginFiles = pluginFolder.listFiles(new FilenameFilter() {
-                public boolean accept(File dir, String name) {
-                    return name.toLowerCase().endsWith(".jar");
-                }
-            });
-    
-            for (File pluginFile : pluginFiles) {
-                try {
-                    JarClassLoader jcl = new JarClassLoader(pluginFile.toPath().toString());
-                    System.out.println(pluginFile.getName());
-                    String name = pluginFile.getName().substring(0, pluginFile.getName().lastIndexOf("."));
-                    Component obj = jcl.loadClassObject(name);
-                    addTab(obj);
-                } catch (Exception ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        
+        for(int i = 0; i < ds.getConfig().getPlugins().getPath().size(); i++){
+            try {
+                JarClassLoader jcl = new JarClassLoader(ds.getConfig().getPlugins().getPath().get(i));
+                File f = new File(ds.getConfig().getPlugins().getPath().get(i));
+                String name = f.getName().substring(0, f.getName().lastIndexOf("."));
+                Component obj = jcl.loadClassObject(name);
+                addTab(obj);
+            } catch (Exception ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        
+//        File pluginFolder = new File(ds.getConfig().getPath());
+//        if (pluginFolder.exists()) {
+//            File[] pluginFiles = pluginFolder.listFiles(new FilenameFilter() {
+//                public boolean accept(File dir, String name) {
+//                    return name.toLowerCase().endsWith(".jar");
+//                }
+//            });
+//    
+//            for (File pluginFile : pluginFiles) {
+//                try {
+//                    JarClassLoader jcl = new JarClassLoader(pluginFile.toPath().toString());
+//                    System.out.println(pluginFile.getName());
+//                    String name = pluginFile.getName().substring(0, pluginFile.getName().lastIndexOf("."));
+//                    Component obj = jcl.loadClassObject(name);
+//                    addTab(obj);
+//                } catch (Exception ex) {
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        }
     }
     
     public final void addTab(String title, Component page){

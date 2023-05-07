@@ -57,22 +57,10 @@ public class Settings extends javax.swing.JPanel {
         
         /* Fill in the ComboBox */
         jComboBox3.removeAll();
-        File pluginFolder = new File(ds.getConfig().getPath());
-        if (pluginFolder.exists()) {
-            File[] pluginFiles = pluginFolder.listFiles(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    return name.toLowerCase().endsWith(".jar");
-                }
-            });
-    
-            for (File pluginFile : pluginFiles) {
-                try {
-                    jComboBox3.addItem(pluginFile.getName());
-                } catch (Exception ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        for(int i = 0; i < ds.getConfig().getPlugins().getPath().size(); i++){
+            File f = new File(ds.getConfig().getPlugins().getPath().get(i));
+            String name = f.getName().substring(0, f.getName().lastIndexOf("."));
+            jComboBox3.addItem(name);
         }
     }
 
@@ -227,27 +215,8 @@ public class Settings extends javax.swing.JPanel {
             try {
                 String path = dialog.getDirectory() + filename;
                 System.out.println("You chose to open this file: " + path);
-                File input = new File(path);
-                File destFolder = new File(ds.getConfig().getPath());
-
-                if (!destFolder.exists()) {
-                    File parent = destFolder.getParentFile();
-                    if (parent != null && parent.exists() && parent.canWrite()) {
-                        boolean result = destFolder.mkdirs();
-                        if (!result) {
-                            System.err.println("Gagal buat folder: " + destFolder.getAbsolutePath());
-                        }
-                    } else {
-                        System.err.println("Gagal buat file " + destFolder.getAbsolutePath());
-                    }
-                }
-                try {
-                    Files.copy(input.toPath(), destFolder.toPath().resolve(input.getName()), StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
-                    // Print an error message if there is an exception copying the file
-                    System.err.println("Gagal memindahkan file ke plugin: " + e.getMessage());
-                }
-
+                ds.getConfig().getPlugins().getPath().add(path);
+                ds.saveAs();
                 jcl = new JarClassLoader(path);
                 String name = filename.substring(0, filename.lastIndexOf("."));
                 Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
@@ -276,8 +245,21 @@ public class Settings extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         if(jComboBox3.getSelectedItem() != null){
-            File fileToDelete = new File(ds.getConfig().getPath() + jComboBox3.getSelectedItem().toString());
-            
+            for(int i = 0; i < ds.getConfig().getPlugins().getPath().size(); i++){
+                if(ds.getConfig().getPlugins().getPath().get(i).contains((String)jComboBox3.getSelectedItem())){
+                    try {
+                        ds.getConfig().getPlugins().getPath().remove(i);
+                        ds.saveAs();
+                        break;
+                    } catch (JAXBException ex) {
+                        Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else{
+                    System.out.println("WEH");
+                }
+            }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

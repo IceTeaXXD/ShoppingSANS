@@ -47,7 +47,7 @@ public class Plugin2 extends BasePlugin {
             public void run() {
                 while (true) {
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(1);
                         try {
                             DataStore ds = new DataStore();
                             System.out.println("Updating Pie Chart");
@@ -82,6 +82,8 @@ public class Plugin2 extends BasePlugin {
                             panel.removeAll();
                             panel.add(piePanel, BorderLayout.CENTER);
                             panel.validate();
+
+                            Thread.sleep(5000);
                         }
                         catch (Exception e) {
                             e.printStackTrace();

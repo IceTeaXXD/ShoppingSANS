@@ -54,7 +54,7 @@ public class Plugin1 extends BasePlugin {
             public void run() {
                 while (true) {
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(1);
                         try {
                             DataStore ds = new DataStore();
                             System.out.println("Updating Bar and Line Chart");
@@ -72,26 +72,28 @@ public class Plugin1 extends BasePlugin {
                             for (String key : map.keySet()){
                                 dataset.setValue(map.get(key), "Value", key);
                             }
-                            
+        
                             // Bar Chart
                             JFreeChart chart = ChartFactory.createBarChart("", "", "", dataset, PlotOrientation.VERTICAL, false, false, false);
                             CategoryPlot catPlot = chart.getCategoryPlot();
                             catPlot.setRangeGridlinePaint(Color.BLACK);
-                            
+        
                             ChartPanel chartPanel = new ChartPanel(chart);
                             barPanel.removeAll();
                             barPanel.add(chartPanel, BorderLayout.CENTER);
                             barPanel.validate();
-                            
+        
                             // Line Chart
                             JFreeChart chart2 = ChartFactory.createLineChart("", "", "", dataset, PlotOrientation.VERTICAL, false, false, false);
                             CategoryPlot catPlot2 = chart2.getCategoryPlot();
                             catPlot2.setRangeGridlinePaint(Color.BLACK);
-                            
+        
                             ChartPanel chartPanel2 = new ChartPanel(chart2);
                             linePanel.removeAll();
                             linePanel.add(chartPanel2, BorderLayout.CENTER);
                             linePanel.validate();
+                            
+                            Thread.sleep(5000); // add delay of 5 seconds after updating the chart
                         }
                         catch (Exception e) {
                             e.printStackTrace();
@@ -102,5 +104,6 @@ public class Plugin1 extends BasePlugin {
                 }
             }
         }).start();
+        
     }
 }

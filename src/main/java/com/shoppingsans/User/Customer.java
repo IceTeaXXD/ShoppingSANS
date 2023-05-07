@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -42,7 +43,7 @@ import lombok.Setter;
 })
 public class Customer implements Serializable{
     @XmlElement(name = "id")
-    protected Integer id;
+    @NonNull protected Integer id;
     
     /* Tester Class */
     public static void main(String[] args){

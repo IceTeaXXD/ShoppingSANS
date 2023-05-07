@@ -43,7 +43,8 @@ public class HistoryTransaksi extends javax.swing.JPanel {
             add it to the table
         */
         ArrayList<FixedBill> listFixedBills = ds.getHistory().getListHistory();
-        System.out.println("list fixed billnya " + listFixedBills.size());
+        // get currentkurs
+        int currentKurs = ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs());
         for (int i = 0 ; i < listFixedBills.size() ; i++)
         {
             FixedBill bill = listFixedBills.get(i);
@@ -51,14 +52,12 @@ public class HistoryTransaksi extends javax.swing.JPanel {
             list.add(bill.getId());
             list.add(bill.getIdUser());
             list.add(bill.getDatetime());
-            list.add(bill.getTotal());
-            System.out.println("masuk " + bill.getId() + " " + bill.getIdUser() + " " + bill.getDatetime() + " " + bill.getTotal());
+            list.add((float) bill.getTotal() / currentKurs);
             listHistory.add(list);
         }
 
         /* Masukkan ke Table */
         tableHistory = createTable(convertToArray(listHistory));
-        System.out.println("LIST HISTORY SATU " + listHistory.size());
 
         for (int i = tableHistory.getRowCount() - 1; i >= 0; i--) 
         {
@@ -85,7 +84,9 @@ public class HistoryTransaksi extends javax.swing.JPanel {
     }
     public JTable createTable(Object[][] data)
     {
-        JTable retTable = new JTable(data, new Object[]{"ID", "ID Customer", "Tanggal", "Total"});
+        // get key from datastore mapkurs
+        String key = ds.getConfig().getCurrentKurs();
+        JTable retTable = new JTable(data, new Object[]{"ID", "ID Customer", "Tanggal", "Total" + " (" + key + ")"});
         JScrollPane scrollPane = new JScrollPane(retTable);
         scrollPane.setBounds(100, 350, 1000, 300);
         this.add(scrollPane);
@@ -150,11 +151,8 @@ public class HistoryTransaksi extends javax.swing.JPanel {
                         tableHistory.setModel(model);
                     }
                 }
-                System.out.println("LIST HISTORY SIZE : " + listHistory.size());
                 for (int i = 0 ; i < listHistory.size() ; i++)
                 {
-                    System.out.println("Mau cek : " + jComboBox1.getSelectedItem().toString());
-                    System.out.println("dengan " + listHistory.get(i).get(1));
                     if (listHistory.get(i).get(1).toString().equals(jComboBox1.getSelectedItem().toString()))
                     {
                         DefaultTableModel model = createTableModel(tableHistory);

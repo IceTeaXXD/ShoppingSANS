@@ -4,8 +4,14 @@
  */
 package com.shoppingsans.Datastore;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import jakarta.xml.bind.annotation.XmlTransient;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -20,8 +26,6 @@ import lombok.Setter;
  * @author Matthew
  */
 @Data
-@Getter
-@Setter
 @XmlRootElement(name = "Config")
 @XmlAccessorType(XmlAccessType.FIELD)
 @NoArgsConstructor
@@ -41,4 +45,17 @@ public class Config {
     private String path;
     @XmlElement
     private PluginPath plugins;
+    
+    @XmlTransient
+    @JsonIgnore
+    private HashMap<String, Integer> mapKurs;
+
+    private Kurs kurs;
+
+    public void createMap() {
+        this.mapKurs = new HashMap<>();
+        for (kursEntry entry : kurs.getEntry()) {
+            this.mapKurs.put(entry.getKey(), entry.getValue());
+        }
+    }
 }

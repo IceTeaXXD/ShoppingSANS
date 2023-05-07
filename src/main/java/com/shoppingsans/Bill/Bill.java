@@ -5,10 +5,14 @@
 package com.shoppingsans.Bill;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,6 +33,8 @@ import lombok.Setter;
  * {@summary Bill yang dapat dimodify}
  */
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -38,7 +44,7 @@ import lombok.Setter;
         property = "type"
 )
 @JsonTypeName("Bill")
-public class Bill extends FixedBill implements Serializable{
+public class Bill extends FixedBill {
     
 
     @JsonIgnore
@@ -57,6 +63,16 @@ public class Bill extends FixedBill implements Serializable{
         mapId.put(barang.getIdBarang(), barang.getNamaBarang());
     }
 
+    public void createEntryList() {
+
+        this.getPembelian().setEntry(new ArrayList<>());
+        for (Map.Entry<String,Integer> entry : this.getMapPembelian().entrySet())
+        {
+            this.getPembelian().getEntry().add(new Entry(entry.getKey(), entry.getValue()));
+        }
+        // System.out.println(getPembelian());
+    }
+
     public void addBarang(String barang, Integer jumlah, Integer hargaSatuan) {
         if (mapPembelian.containsKey(barang)) {
             Integer temp = mapPembelian.get(barang);
@@ -65,6 +81,7 @@ public class Bill extends FixedBill implements Serializable{
             mapPembelian.put(barang, temp);
         } else {
             mapPembelian.put(barang, jumlah);
+            total += jumlah * hargaSatuan;
         }
     }
 

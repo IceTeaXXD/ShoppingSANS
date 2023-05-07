@@ -5,6 +5,7 @@
 package com.shoppingsans.Datastore;
 
 import com.shoppingsans.JualBarang.History;
+import com.shoppingsans.Bill.Bill;
 import com.shoppingsans.JualBarang.Bills;
 import com.shoppingsans.JualBarang.InventoryBarang;
 import com.shoppingsans.User.User;
@@ -48,14 +49,14 @@ public class DataStore {
         }else if (config.getSaveas().equals("json")){
             users = ja.load(User.class, config.getPath()+"Customers.json");
             inventoryBarang = ja.load(InventoryBarang.class, config.getPath()+"Barang.json");
-            bills = xa.load(Bills.class, config.getPath()+"Bills.json");
+            bills = ja.load(Bills.class, config.getPath()+"Bills.json");
             history = ja.load(History.class, config.getPath()+"History.json");
             bills.createMapBill(inventoryBarang);
             history.createMapFixedBill();
         }else if(config.getSaveas().equals("obj")){
             users = oa.load(User.class, config.getPath()+"Customers.OBJ");
             inventoryBarang = oa.load(InventoryBarang.class, config.getPath()+"Barang.OBJ");
-            bills = xa.load(Bills.class, config.getPath()+"Bills.OBJ");
+            bills = oa.load(Bills.class, config.getPath()+"Bills.OBJ");
             history = oa.load(History.class, config.getPath()+"History.OBJ");
             bills.createMapBill(inventoryBarang);
             history.createMapFixedBill();
@@ -63,6 +64,18 @@ public class DataStore {
     }
     
     public void saveAs() throws JAXBException, FileNotFoundException{
+        bills.createEntryLists();
+        // System.out.println("-------------aaaaaaaaaaa-----------");
+        // System.out.println(config.getSaveas());
+        // System.out.println(bills);
+        int i = 0;
+        // for (Bill bill : bills.getListBill())
+        // {
+        //     System.out.println("-----------" + i++);
+        //     System.out.println(bill.getMapPembelian());
+        //     System.out.println(bill.getPembelian());
+        // }
+        // System.out.println("-------------aaaaaaaaaaa-----------");
         if(config.getSaveas().equals("xml")){
             xa.convert(users, config.getPath()+"Customers.xml");
             xa.convert(inventoryBarang, config.getPath()+"Barang.xml");
@@ -80,7 +93,7 @@ public class DataStore {
             oa.convert(bills, config.getPath()+"Bills.OBJ");
         }
         
-        xa.convert(config, "./src/main/java/com/shoppingsans/Datastore/Config.xml");
+        // xa.convert(config, "./src/main/java/com/shoppingsans/Datastore/Config.xml");
     }
 
     @Override

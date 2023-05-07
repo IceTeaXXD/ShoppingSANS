@@ -49,15 +49,15 @@ public class FixedBill implements Serializable{
     protected String datetime;
     
     @NonNull
-    protected Integer total;
+    protected Integer total = 0;
 
     // @XmlJavaTypeAdapter(FixedBillAdapter.class)
     // @XmlElement(name = "pembelian")
+    private Pembelian pembelian;
     @JsonIgnore
     @XmlTransient
-    protected HashMap<String, Integer> mapPembelian;
+    protected HashMap<String, Integer> mapPembelian = new HashMap<>();
 
-    private Pembelian pembelian;
     
     public FixedBill(Integer id, Integer idUser) {
         this.id = id;

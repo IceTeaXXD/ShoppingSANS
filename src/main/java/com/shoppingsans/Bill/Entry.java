@@ -6,11 +6,13 @@ import javax.xml.bind.annotation.*;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -19,5 +21,5 @@ import lombok.NoArgsConstructor;
 )
 public class Entry implements Serializable{
     private String key;
-    private int value;
+    private Integer value;
 }

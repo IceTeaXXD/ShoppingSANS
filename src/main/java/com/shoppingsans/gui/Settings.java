@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 import java.awt.Component;
+import java.io.FilenameFilter;
 import java.lang.reflect.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -52,6 +53,26 @@ public class Settings extends javax.swing.JPanel {
             default:
                 jComboBox2.setSelectedIndex(3);
                 break;
+        }
+        
+        /* Fill in the ComboBox */
+        jComboBox3.removeAll();
+        File pluginFolder = new File(ds.getConfig().getPath());
+        if (pluginFolder.exists()) {
+            File[] pluginFiles = pluginFolder.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.toLowerCase().endsWith(".jar");
+                }
+            });
+    
+            for (File pluginFile : pluginFiles) {
+                try {
+                    jComboBox3.addItem(pluginFile.getName());
+                } catch (Exception ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
@@ -102,7 +123,11 @@ public class Settings extends javax.swing.JPanel {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Pilih Plugin Untuk Dihapus");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Plugin 1", "Plugin 2", "Plugin 3", "Plugin 4", " ", " " }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(242, 198, 111));
         jButton2.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
@@ -250,6 +275,10 @@ public class Settings extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        if(jComboBox3.getSelectedItem() != null){
+            File fileToDelete = new File(ds.getConfig().getPath() + jComboBox3.getSelectedItem().toString());
+            
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -276,6 +305,10 @@ public class Settings extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

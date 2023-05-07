@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
@@ -102,6 +103,14 @@ public class Main extends javax.swing.JFrame {
     public final void addTab(String title, Component page){
         jTabbedPane1.addTab(title, page);
         jTabbedPane1.setTabComponentAt(jTabbedPane1.getTabCount()-1, new CloseButton(jTabbedPane1));
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount()-1);
+    }
+
+    public final void addTab(Component plugin) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
+        Field windowname = plugin.getClass().getDeclaredField("windowname");
+        windowname.setAccessible(true);
+        String window = (String) windowname.get(plugin);        
+        jTabbedPane1.addTab(window, plugin);
         jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount()-1);
     }
 

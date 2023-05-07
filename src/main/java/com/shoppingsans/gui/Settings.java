@@ -201,10 +201,10 @@ public class Settings extends javax.swing.JPanel {
                 String name = filename.substring(0, filename.lastIndexOf("."));
                 Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
                 Component obj = jcl.loadClassObject(name);
-                Field windowname = obj.getClass().getDeclaredField("windowname");
-                windowname.setAccessible(true);
-                String window = (String) windowname.get(obj);
-                frame.addTab(window, obj);
+                // Method calling
+                Method methodcall1 = obj.getClass().getDeclaredMethod("update");
+                methodcall1.invoke(obj);
+                frame.addTab(obj);
             } catch (Exception ex) {
                 Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -83,7 +83,17 @@ public class JualBarang extends javax.swing.JPanel {
         Object[][] convertedData = convertToArray(data);
         this.model = new DefaultTableModel(convertedData, columnNames);
         tableToko = createTable(convertedData,false);
-        tablePembeli = createTable(convertToArray(pembeli), true);        
+        tablePembeli = createTable(convertToArray(pembeli), true); 
+        // remove all rows of tablePembeli
+        for (int i = tablePembeli.getRowCount() - 1; i >= 0; i--) 
+        {
+          DefaultTableModel model = createTableModel(tablePembeli);
+          model.removeRow(i);
+          tablePembeli.setModel(model);
+          tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+          tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
+          tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
+        }
       }
       
     public DefaultTableModel createTableModel(JTable table) {
@@ -206,47 +216,69 @@ public class JualBarang extends javax.swing.JPanel {
           button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
               if (category == 1) {
+                System.out.println("label:" + label);
                 // search di dalam data dengan id yang sama
                 int idx = 0;
                 Integer newStock = 0;
                 for (int i = 0 ; i < data.size() ; i++)
                 {
-                    if (data.get(i).get(0).toString().equals(label))
-                    {
-                      newStock = Integer.parseInt(data.get(i).get(1).toString()) - 1;
-                      idx = 0;
-                      break;
-                    }
+                  if (data.get(i).get(0).toString().equals(label))
+                  {
+                    newStock = Integer.parseInt(data.get(i).get(1).toString()) - 1;
+                    idx = i;
+                    break;
+                  }
                 }
                 System.out.println("======> " + data.get(idx).get(1).toString());
                 // Integer newStock = Integer.parseInt(data.get(Integer.parseInt(label)).get(1).toString()) - 1;
                 if (newStock < 0) {
                   JOptionPane.showMessageDialog(button, "Barang sudah habis");
                 } else {
-                    data.get(idx).set(1, newStock.toString());
-                    pembeli.get(idx).set(1, Integer.parseInt(pembeli.get(idx).get(1).toString()) + 1);
-                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
-                    for (int i = 0 ; i< tablePembeli.getRowCount() ; i++)
+                  data.get(idx).set(1, newStock.toString());
+                  System.out.println(" data yang diganti " + data.get(idx).get(1).toString());
+                  pembeli.get(idx).set(1, Integer.parseInt(pembeli.get(idx).get(1).toString()) + 1);
+                  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+                  int idxPembeli = -1;
+                  System.out.println(tablePembeli.getRowCount());
+                
+                  for (int i = 0 ; i< tablePembeli.getRowCount() ; i++)
+                  {
+                    System.out.println(i +"aaaaaaaaa");
+                    System.out.println(tablePembeli.getModel().getValueAt(i, 0).toString());
+                    if (tablePembeli.getModel().getValueAt(i, 6).toString().equals(label))
                     {
-                      System.out.println(tablePembeli.getModel().getValueAt(i, 0).toString());
-                      if (tablePembeli.getModel().getValueAt(i, 6).toString().equals(label))
-                      {
-                        tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
-                        System.out.println("diganti " + pembeli.get(idx).get(1).toString());
-                        break;
-                      }
+                      tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
+                      System.out.println("diganti " + pembeli.get(idx).get(1).toString());
+                      idxPembeli = i;
+                      break;
                     }
-                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+                  }
 
-                    for (int i = 0 ; i< tableToko.getRowCount() ; i++)
+                  if (idxPembeli == -1)
+                  {
+                    System.out.println("label:" + label);
+                    DefaultTableModel model = createTableModel(tablePembeli);
+                    model.addRow(pembeli.get(idx).subList(1, 8).toArray());
+                    // model.setValueAt(Integer.valueOf(1).toString(), tablePembeli.getRowCount(), 0);
+                    System.out.println("-=-=-=-=-=-=--=--=-=-=-");
+                    System.out.println(model.getDataVector());
+                    System.out.println("-=-=-=-=-=-=--=--=-=-=-");
+                    tablePembeli.setModel(model);
+                    tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+                    tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
+                    tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
+                  }
+                  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+                  for (int i = 0 ; i< tableToko.getRowCount() ; i++)
+                  {
+                    if (tableToko.getModel().getValueAt(i, 6).toString().equals(label))
                     {
-                      if (tableToko.getModel().getValueAt(i, 6).toString().equals(label))
-                      {
-                        tableToko.getModel().setValueAt(data.get(idx).get(1), i, 0);
-                        System.out.println("diganti" + data.get(idx).get(1).toString());
-                        break;
-                      }
+                      tableToko.getModel().setValueAt(data.get(idx).get(1), i, 0);
+                      System.out.println("diganti" + data.get(idx).get(1).toString());
+                      break;
                     }
+                  }
                     // tableToko.getModel().setValueAt(data.get(Integer.parseInt(label)).get(1), Integer.parseInt(label), 0);
                     // ini yang salah
                     // tablePembeli.getModel().setValueAt(pembeli.get(Integer.parseInt(label)).get(1), Integer.parseInt(label), 0);
@@ -270,15 +302,25 @@ public class JualBarang extends javax.swing.JPanel {
                   }
                   System.out.println("====================");
                   // search data dg indeks = label di dalam tabel
+                  int idxPembeli = -1; 
+                  // for (int i = 0 ; i < tablePembeli.getRowCount() ; i++)
+                  // {
+                  //   System.out.println("888888888888888888888888888888888888888888888888888888888888888");
+                  //   System.out.println(tablePembeli.getModel().getValueAt(i, 6).toString());
+                  //   System.out.println("888888888888888888888888888888888888888888888888888888888888888");
+                  // }
                   for (int i = 0 ; i< tablePembeli.getRowCount() ; i++)
                   {
                     if (tablePembeli.getModel().getValueAt(i, 6).toString().equals(label))
                     {
                       tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
+                      idxPembeli = i;
                       break;
                     }
                   }
-
+                  
+                  
+                  System.out.println("aaaaaaaaaaaaaaaaaaaaaaaa");
                   for (int i = 0 ; i< tableToko.getRowCount() ; i++)
                   {
                     if (tableToko.getModel().getValueAt(i, 6).toString().equals(label))
@@ -287,21 +329,33 @@ public class JualBarang extends javax.swing.JPanel {
                       break;
                     }
                   }
-                  if (Integer.parseInt(pembeli.get(Integer.parseInt(label)).get(1).toString()) == 0) {
+                  if ((int) tablePembeli.getModel().getValueAt(idxPembeli, 0) == 0)
+                  {
                     DefaultTableModel model = createTableModel(tablePembeli);
-                    System.out.println("label " + label);
-                    model.removeRow(Integer.parseInt(label));
+                    model.removeRow(idxPembeli);
                     tablePembeli.setModel(model);
                     tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-                    // tablePembeli.getColumnModel().getColumn(6).setPreferredWidth(100);
                     tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
                     tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
                   }
-                  for (int i = 0 ; i < tablePembeli.getRowCount() ; i++)
-                  {
-                    // print all of label in each row
-                    System.out.println(tablePembeli.getModel().getValueAt(i, 6).toString());
-                  }
+                  // if (Integer.parseInt(pembeli.get(idx).get(1).toString()) == 0) {
+                  //   System.out.println(pembeli.get(idx).get(2));
+                  //   DefaultTableModel model = createTableModel(tablePembeli);
+                  //   System.out.println("label " + label);
+                  //   model.removeRow(idx);
+                  //   tablePembeli.setModel(model);
+                  //   tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+                  //   tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
+                  //   tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
+                  // }
+                  // System.out.println(tablePembeli.getRowCount());
+                  // for (int i = 0 ; i < tablePembeli.getRowCount() ; i++)
+                  // {
+                  //   // print all of label in each row
+                  //   System.out.println("bbbbbbbbbbbbbbbbbbbbbbb" + i);
+                  //   System.out.println(tablePembeli.getModel().getValueAt(i, 6).toString());
+                  //   System.out.println("cccccccccccccccccccc");
+                  // }
               }
             }
           });

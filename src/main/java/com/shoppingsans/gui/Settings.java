@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import javax.xml.bind.JAXBException;
+import javax.xml.crypto.Data;
+
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 import java.awt.Component;
@@ -201,15 +203,28 @@ public class Settings extends javax.swing.JPanel {
                 String name = filename.substring(0, filename.lastIndexOf("."));
                 Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
                 Component obj = jcl.loadClassObject(name);
-                // Method calling
-                Method methodcall1 = obj.getClass().getDeclaredMethod("update");
-                methodcall1.invoke(obj);
+                
+                // start a new thread to update the object every 10 seconds
+                new Thread(() -> {
+                    while (true) {
+                        try {
+                            ds = new DataStore();
+                            Thread.sleep(1000);
+                            Method methodcall1 = obj.getClass().getDeclaredMethod("update", DataStore.class);
+                            methodcall1.invoke(obj, ds);
+                        } catch (Exception ex) {
+                            Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }).start();
+                
                 frame.addTab(obj);
             } catch (Exception ex) {
                 Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+    
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {

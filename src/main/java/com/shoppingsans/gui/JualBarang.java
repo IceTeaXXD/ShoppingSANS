@@ -20,6 +20,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 import javax.xml.bind.JAXBException;
 
 import com.shoppingsans.Datastore.DataStore;
@@ -53,34 +54,55 @@ public class JualBarang extends javax.swing.JPanel {
         pembeli = new ArrayList<>();
         
         for (int i = 0; i < barangList.size(); i++) {
-            Barang barang = barangList.get(i);
-            ArrayList<Object> listToko = new ArrayList<>();
-            ArrayList<Object> listPembeli = new ArrayList<>();
-            // JButton button = new JButton("Buy", leftButtonIcon);
-            listToko.add(barang.getStokBarang());
-            listToko.add(barang.getNamaBarang());
-            listToko.add(barang.getHargaBarang());
-            listToko.add(barang.getHargaBeli());
-            listToko.add(barang.getKategori());
-            listToko.add("images/" + barang.getGambar());
-            listToko.add(i);
-            data.add(listToko);
-
-            listPembeli.add(0);
-            listPembeli.add(barang.getNamaBarang());
-            listPembeli.add(barang.getHargaBarang());
-            listPembeli.add(barang.getHargaBeli());
-            listPembeli.add(barang.getKategori());
-            listPembeli.add("images/" + barang.getGambar());
-            listPembeli.add(i);
-            pembeli.add(listPembeli);
+          Barang barang = barangList.get(i);
+          ArrayList<Object> listToko = new ArrayList<>();
+          ArrayList<Object> listPembeli = new ArrayList<>();
+          // JButton button = new JButton("Buy", leftButtonIcon);
+          listToko.add(barang.getIdBarang());
+          listToko.add(barang.getStokBarang());
+          listToko.add(barang.getNamaBarang());
+          listToko.add(barang.getHargaBarang());
+          listToko.add(barang.getHargaBeli());
+          listToko.add(barang.getKategori());
+          listToko.add("images/" + barang.getGambar());
+          listToko.add(barang.getIdBarang());
+          data.add(listToko);
+          
+          listPembeli.add(barang.getIdBarang());
+          listPembeli.add(0);
+          listPembeli.add(barang.getNamaBarang());
+          listPembeli.add(barang.getHargaBarang());
+          listPembeli.add(barang.getHargaBeli());
+          listPembeli.add(barang.getKategori());
+          listPembeli.add("images/" + barang.getGambar());
+          listPembeli.add(barang.getIdBarang());
+          pembeli.add(listPembeli);
         }
-
+        
         // Create a new instance of JTable
-        tableToko = createTable(convertToArray(data),false);
-        tablePembeli = createTable(convertToArray(pembeli), true);
+        Object[][] convertedData = convertToArray(data);
+        this.model = new DefaultTableModel(convertedData, columnNames);
+        tableToko = createTable(convertedData,false);
+        tablePembeli = createTable(convertToArray(pembeli), true);        
       }
-
+      
+    public DefaultTableModel createTableModel(JTable table) {
+        DefaultTableModel model = new DefaultTableModel();
+        // add column names
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            model.addColumn(table.getColumnName(i));
+        }
+        // add row data
+        for (int i = 0; i < table.getRowCount(); i++) {
+            Object[] row = new Object[table.getColumnCount()];
+            for (int j = 0; j < table.getColumnCount(); j++) {
+                row[j] = table.getValueAt(i, j);
+            }
+            model.addRow(row);
+        }
+        return model;
+    }
+    
     public JTable createTable(Object[][] data, boolean flag)
     {
       
@@ -120,7 +142,6 @@ public class JualBarang extends javax.swing.JPanel {
             }
         }
         this.add(jComboBox1);
-      System.out.println("Table created");
       return retTable;
     }
 
@@ -129,13 +150,18 @@ public class JualBarang extends javax.swing.JPanel {
     }
 
     private Object[][] convertToArray(ArrayList<ArrayList<Object>> list) {
-        Object[][] arr = new Object[list.size()][list.get(0).size()];
-        for (int i = 0; i < list.size(); i++) {
+      Object[][] arr = new Object[list.size()][list.get(0).size() - 1];
+      for (int i = 0; i < list.size(); i++) {
           ArrayList<Object> row = list.get(i);
-          arr[i] = row.toArray(new Object[0]);
-        }
-        return arr; 
-    }
+          for (int j = 1; j < row.size(); j++) {
+              arr[i][j - 1] = row.get(j);
+              System.out.println(row.get(j));
+          }
+      }
+      return arr;
+  }
+  
+  
     class ButtonRenderer extends JButton implements TableCellRenderer {
         private int cat;
 
@@ -180,32 +206,103 @@ public class JualBarang extends javax.swing.JPanel {
           button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
               if (category == 1) {
-                Integer newStock = Integer.parseInt(data.get(Integer.parseInt(label)).get(0).toString()) - 1;
-                if (newStock < 0) {
-                    JOptionPane.showMessageDialog(button, "Barang sudah habis");
-                } else {
-                    data.get(Integer.parseInt(label)).set(0, newStock.toString());
-                    pembeli.get(Integer.parseInt(label)).set(0, Integer.parseInt(pembeli.get(Integer.parseInt(label)).get(0).toString()) + 1);
-                    tableToko.getModel().setValueAt(data.get(Integer.parseInt(label)).get(0), Integer.parseInt(label), 0);
-                    tablePembeli.getModel().setValueAt(pembeli.get(Integer.parseInt(label)).get(0), Integer.parseInt(label), 0);
-    
-                    if (newStock == 0) {
-                        DefaultTableModel model = (DefaultTableModel) tablePembeli.getModel();
-                        model.removeRow(Integer.parseInt(label));
+                // search di dalam data dengan id yang sama
+                int idx = 0;
+                Integer newStock = 0;
+                for (int i = 0 ; i < data.size() ; i++)
+                {
+                    if (data.get(i).get(0).toString().equals(label))
+                    {
+                      newStock = Integer.parseInt(data.get(i).get(1).toString()) - 1;
+                      idx = 0;
+                      break;
                     }
                 }
+                System.out.println("======> " + data.get(idx).get(1).toString());
+                // Integer newStock = Integer.parseInt(data.get(Integer.parseInt(label)).get(1).toString()) - 1;
+                if (newStock < 0) {
+                  JOptionPane.showMessageDialog(button, "Barang sudah habis");
+                } else {
+                    data.get(idx).set(1, newStock.toString());
+                    pembeli.get(idx).set(1, Integer.parseInt(pembeli.get(idx).get(1).toString()) + 1);
+                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+                    for (int i = 0 ; i< tablePembeli.getRowCount() ; i++)
+                    {
+                      System.out.println(tablePembeli.getModel().getValueAt(i, 0).toString());
+                      if (tablePembeli.getModel().getValueAt(i, 6).toString().equals(label))
+                      {
+                        tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
+                        System.out.println("diganti " + pembeli.get(idx).get(1).toString());
+                        break;
+                      }
+                    }
+                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+                    for (int i = 0 ; i< tableToko.getRowCount() ; i++)
+                    {
+                      if (tableToko.getModel().getValueAt(i, 6).toString().equals(label))
+                      {
+                        tableToko.getModel().setValueAt(data.get(idx).get(1), i, 0);
+                        System.out.println("diganti" + data.get(idx).get(1).toString());
+                        break;
+                      }
+                    }
+                    // tableToko.getModel().setValueAt(data.get(Integer.parseInt(label)).get(1), Integer.parseInt(label), 0);
+                    // ini yang salah
+                    // tablePembeli.getModel().setValueAt(pembeli.get(Integer.parseInt(label)).get(1), Integer.parseInt(label), 0);
+                }
               } else if (category == 2) {
-                  data.get(Integer.parseInt(label)).set(0, Integer.parseInt(data.get(Integer.parseInt(label)).get(0).toString()) + 1);
-                  pembeli.get(Integer.parseInt(label)).set(0, Integer.parseInt(pembeli.get(Integer.parseInt(label)).get(0).toString()) - 1);
-                  tableToko.getModel().setValueAt(data.get(Integer.parseInt(label)).get(0), Integer.parseInt(label), 0);
-                  tablePembeli.getModel().setValueAt(pembeli.get(Integer.parseInt(label)).get(0), Integer.parseInt(label), 0);
-      
-                  if (Integer.parseInt(pembeli.get(Integer.parseInt(label)).get(0).toString()) == 0) {
-                      DefaultTableModel model = (DefaultTableModel) tablePembeli.getModel();
-                      model.removeRow(Integer.parseInt(label));
+                  //get data dg indeks = label
+                  int idx = 0;
+                  for (int i = 0 ; i < data.size() ; i++)
+                  {
+                      if (data.get(i).get(0).toString().equals(label))
+                      {
+                        data.get(i).set(1, Integer.parseInt(data.get(i).get(1).toString()) + 1);
+                        pembeli.get(i).set(1, Integer.parseInt(pembeli.get(i).get(1).toString()) - 1);
+                        idx = i;
+                        break;
+                      }
+                  }
+                  System.out.println("PEMBELI ");
+                  for (int i = 0; i < pembeli.size(); i++) {
+                    System.out.println(pembeli.get(i).get(0));
+                  }
+                  System.out.println("====================");
+                  // search data dg indeks = label di dalam tabel
+                  for (int i = 0 ; i< tablePembeli.getRowCount() ; i++)
+                  {
+                    if (tablePembeli.getModel().getValueAt(i, 6).toString().equals(label))
+                    {
+                      tablePembeli.getModel().setValueAt(pembeli.get(idx).get(1), i, 0);
+                      break;
+                    }
+                  }
+
+                  for (int i = 0 ; i< tableToko.getRowCount() ; i++)
+                  {
+                    if (tableToko.getModel().getValueAt(i, 6).toString().equals(label))
+                    {
+                      tableToko.getModel().setValueAt(data.get(idx).get(1), i, 0);
+                      break;
+                    }
+                  }
+                  if (Integer.parseInt(pembeli.get(Integer.parseInt(label)).get(1).toString()) == 0) {
+                    DefaultTableModel model = createTableModel(tablePembeli);
+                    System.out.println("label " + label);
+                    model.removeRow(Integer.parseInt(label));
+                    tablePembeli.setModel(model);
+                    tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+                    // tablePembeli.getColumnModel().getColumn(6).setPreferredWidth(100);
+                    tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
+                    tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
+                  }
+                  for (int i = 0 ; i < tablePembeli.getRowCount() ; i++)
+                  {
+                    // print all of label in each row
+                    System.out.println(tablePembeli.getModel().getValueAt(i, 6).toString());
                   }
               }
-    
             }
           });
         }
@@ -299,6 +396,7 @@ public class JualBarang extends javax.swing.JPanel {
     private JTable tablePembeli; 
     private ArrayList<ArrayList<Object>> data;
     private ArrayList<ArrayList<Object>> pembeli;
+    private DefaultTableModel model;
     
     private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
     // End of variables declaration//GEN-END:variables

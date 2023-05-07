@@ -4,6 +4,17 @@
  */
 package com.shoppingsans.gui;
 
+import com.itextpdf.text.DocumentException;
+import com.shoppingsans.Datastore.DataStore;
+import com.shoppingsans.PDF.ExportPDF;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.xml.bind.JAXBException;
+
 /**
  *
  * @author Azmi Hasna Zahrani
@@ -13,8 +24,14 @@ public class Laporan extends javax.swing.JPanel {
     /**
      * Creates new form Laporan
      */
+    private DataStore ds;
     public Laporan() {
-        initComponents();
+        try {
+            initComponents();
+            ds = new DataStore();
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -64,10 +81,48 @@ public class Laporan extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        // Show the file chooser dialog
+        int result = fileChooser.showOpenDialog(this);
+
+        // Check if the user clicked the "Open" button
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                // Get the selected file path
+                String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
+                // Display the selected file path in a message dialog
+                JOptionPane.showMessageDialog(this, "Selected folder: " + path);
+                
+                ExportPDF.createLaporanBarang(ds, path);
+            } catch (FileNotFoundException | DocumentException ex) {
+                Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        // Show the file chooser dialog
+        int result = fileChooser.showOpenDialog(this);
+
+        // Check if the user clicked the "Open" button
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                // Get the selected file path
+                String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
+                // Display the selected file path in a message dialog
+                JOptionPane.showMessageDialog(this, "Selected folder: " + path);
+                
+                ExportPDF.createHistoryTransaksi(ds, path);
+            } catch (FileNotFoundException | DocumentException ex) {
+                Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

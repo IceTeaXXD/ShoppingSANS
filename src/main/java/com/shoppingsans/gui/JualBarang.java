@@ -42,13 +42,6 @@ public class JualBarang extends javax.swing.JPanel {
     protected DataStore ds;
     protected ArrayList<Customer> users;
     private int selectedUser;
-    private JTable tableToko;
-    private JTable tablePembeli; 
-    private ArrayList<ArrayList<Object>> data;
-    private ArrayList<ArrayList<Object>> pembeli;
-    private DefaultTableModel model;
-    private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
-
     public JualBarang() throws FileNotFoundException, ClassNotFoundException, JAXBException, IOException {
         initComponents();
         
@@ -90,7 +83,17 @@ public class JualBarang extends javax.swing.JPanel {
         Object[][] convertedData = convertToArray(data);
         this.model = new DefaultTableModel(convertedData, columnNames);
         tableToko = createTable(convertedData,false);
-        tablePembeli = createTable(convertToArray(pembeli), true);        
+        tablePembeli = createTable(convertToArray(pembeli), true); 
+        // remove all rows of tablePembeli
+        for (int i = tablePembeli.getRowCount() - 1; i >= 0; i--) 
+        {
+          DefaultTableModel model = createTableModel(tablePembeli);
+          model.removeRow(i);
+          tablePembeli.setModel(model);
+          tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+          tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
+          tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
+        }
       }
       
     public DefaultTableModel createTableModel(JTable table) {
@@ -397,7 +400,6 @@ public class JualBarang extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(45, 43, 74));
 
@@ -412,13 +414,6 @@ public class JualBarang extends javax.swing.JPanel {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setText("Create Bill");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -426,12 +421,10 @@ public class JualBarang extends javax.swing.JPanel {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jButton1)
-                .addGap(35, 35, 35))
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,8 +433,7 @@ public class JualBarang extends javax.swing.JPanel {
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 589, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -450,14 +442,16 @@ public class JualBarang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private JTable tableToko;
+    private JTable tablePembeli; 
+    private ArrayList<ArrayList<Object>> data;
+    private ArrayList<ArrayList<Object>> pembeli;
+    private DefaultTableModel model;
+    
+    private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
     // End of variables declaration//GEN-END:variables
 }

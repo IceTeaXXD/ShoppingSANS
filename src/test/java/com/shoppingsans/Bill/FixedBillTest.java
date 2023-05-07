@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  */
 public class FixedBillTest {
     
-    FixedBill fb;
+    private FixedBill fb;
     
     @Before
     public void setUp() {

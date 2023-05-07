@@ -142,6 +142,28 @@ public class HistoryTransaksi extends javax.swing.JPanel {
                 // resetTable();
                 // System.out.println("22222");
                 // panggil fungsi untuk menampilkan tabelnya
+                if (ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs()) != null)
+                {
+                    try {
+                        ds = new DataStore();
+                        listHistory = new ArrayList<>();
+                        ArrayList<FixedBill> listFixedBills = ds.getHistory().getListHistory();
+                        int currentKurs = ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs());
+                        for (int i = 0 ; i < listFixedBills.size() ; i++)
+                        {
+                            FixedBill bill = listFixedBills.get(i);
+                            ArrayList<Object> list = new ArrayList<>();
+                            list.add(bill.getId());
+                            list.add(bill.getIdUser());
+                            list.add(bill.getDatetime());
+                            list.add((float) bill.getTotal() / currentKurs);
+                            listHistory.add(list);
+                        }
+                    } catch (ClassNotFoundException | JAXBException | IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
                 if (tableHistory !=null)
                 {
                     for (int i = tableHistory.getRowCount() - 1; i >= 0; i--) 
@@ -150,15 +172,19 @@ public class HistoryTransaksi extends javax.swing.JPanel {
                         model.removeRow(i);
                         tableHistory.setModel(model);
                     }
-                }
-                for (int i = 0 ; i < listHistory.size() ; i++)
-                {
-                    if (listHistory.get(i).get(1).toString().equals(jComboBox1.getSelectedItem().toString()))
+                    for (int i = 0 ; i < listHistory.size() ; i++)
                     {
-                        DefaultTableModel model = createTableModel(tableHistory);
-                        model.addRow(listHistory.get(i).toArray());
-                        tableHistory.setModel(model);
+                        if (listHistory.get(i).get(1).toString().equals(jComboBox1.getSelectedItem().toString()))
+                        {
+                            DefaultTableModel model = createTableModel(tableHistory);
+                            model.addRow(listHistory.get(i).toArray());
+                            tableHistory.setModel(model);
+                        }
                     }
+                    String key = ds.getConfig().getCurrentKurs();
+                    DefaultTableModel model = createTableModel(tableHistory);
+                    model.setColumnIdentifiers(new String[] { "ID", "ID Customer", "Tanggal", "Total" + " (" + key + ")"});
+                    tableHistory.setModel(model);
                 }
             }
         });

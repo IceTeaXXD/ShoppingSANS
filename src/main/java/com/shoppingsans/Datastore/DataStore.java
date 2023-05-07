@@ -34,6 +34,7 @@ public class DataStore {
     public DataStore() throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException{
         /* Baca file xml users dan inventory barang */
         config = xa.load(Config.class, "./src/main/java/com/shoppingsans/Datastore/Config.xml");
+        config.createMap();
         if(config.getSaveas().equals("xml")){
             users = xa.load(User.class, config.getPath()+"Customers.xml");
             inventoryBarang = xa.load(InventoryBarang.class, config.getPath()+"Barang.xml");

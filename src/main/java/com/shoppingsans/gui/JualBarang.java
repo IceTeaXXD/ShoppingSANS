@@ -23,6 +23,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.xml.bind.JAXBException;
 
+import com.shoppingsans.Bill.Bill;
 import com.shoppingsans.Datastore.DataStore;
 import com.shoppingsans.JualBarang.Barang;
 import com.shoppingsans.JualBarang.ImageRenderer;
@@ -42,6 +43,16 @@ public class JualBarang extends javax.swing.JPanel {
     protected DataStore ds;
     protected ArrayList<Customer> users;
     private int selectedUser;
+    private JTable tableToko;
+    private JTable tablePembeli; 
+    private ArrayList<ArrayList<Object>> data;
+    private ArrayList<ArrayList<Object>> pembeli;
+    private DefaultTableModel model;
+    private Bill bill;
+    
+    private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
+
+
     public JualBarang() throws FileNotFoundException, ClassNotFoundException, JAXBException, IOException {
         initComponents();
         
@@ -78,6 +89,18 @@ public class JualBarang extends javax.swing.JPanel {
           listPembeli.add(barang.getIdBarang());
           pembeli.add(listPembeli);
         }
+
+        this.users = ds.getUsers().getCustomers();
+        if (users.size() != 0)
+        {
+            //clear item in combobox
+            jComboBox1.removeAllItems();
+            for (int i = 0 ; i < users.size() ; i++)
+            {
+                jComboBox1.addItem(users.get(i).getId().toString());
+            }
+        }
+        this.add(jComboBox1);
         
         // Create a new instance of JTable
         Object[][] convertedData = convertToArray(data);
@@ -141,17 +164,7 @@ public class JualBarang extends javax.swing.JPanel {
         scrollPane.setBounds(100, 100, 480, 480);
       }
       this.add(scrollPane);
-        this.users = ds.getUsers().getCustomers();
-        if (users.size() != 0)
-        {
-            //clear item in combobox
-            jComboBox1.removeAllItems();
-            for (int i = 0 ; i < users.size() ; i++)
-            {
-                jComboBox1.addItem(users.get(i).getId().toString());
-            }
-        }
-        this.add(jComboBox1);
+        
       return retTable;
     }
 
@@ -400,6 +413,7 @@ public class JualBarang extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(45, 43, 74));
 
@@ -410,9 +424,18 @@ public class JualBarang extends javax.swing.JPanel {
         jLabel1.setText("Jual Barang");
         jLabel1.setToolTipText("");
 
-        jButton2.setText("+");
+        jButton2.setText("jButton2");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        // jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+              System.out.println(jComboBox1.getSelectedItem().toString());
+              bill = new Bill(ds.getBills().getSize(), Integer.parseInt(jComboBox1.getSelectedItem().toString()));
+              
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -421,10 +444,12 @@ public class JualBarang extends javax.swing.JPanel {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(53, 53, 53))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,7 +458,8 @@ public class JualBarang extends javax.swing.JPanel {
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(0, 589, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -443,15 +469,9 @@ public class JualBarang extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private JTable tableToko;
-    private JTable tablePembeli; 
-    private ArrayList<ArrayList<Object>> data;
-    private ArrayList<ArrayList<Object>> pembeli;
-    private DefaultTableModel model;
-    
-    private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
     // End of variables declaration//GEN-END:variables
 }

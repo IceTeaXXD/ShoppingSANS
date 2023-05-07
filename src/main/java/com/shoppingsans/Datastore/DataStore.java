@@ -5,12 +5,15 @@
 package com.shoppingsans.Datastore;
 
 import com.shoppingsans.JualBarang.History;
+import com.shoppingsans.JualBarang.Bills;
 import com.shoppingsans.JualBarang.InventoryBarang;
 import com.shoppingsans.User.User;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.xml.bind.JAXBException;
+import javax.xml.crypto.Data;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +28,7 @@ public class DataStore {
     private User users;
     private InventoryBarang inventoryBarang;
     private History history;
+    private Bills bills;
     
     /* Converters */
     private final JSONAdapter ja = new JSONAdapter();
@@ -37,17 +41,23 @@ public class DataStore {
         if(config.getSaveas().equals("xml")){
             users = xa.load(User.class, config.getPath()+"Customers.xml");
             inventoryBarang = xa.load(InventoryBarang.class, config.getPath()+"Barang.xml");
+            bills = xa.load(Bills.class, config.getPath()+"Bills.xml");
             history = xa.load(History.class, config.getPath()+"History.xml");
+            bills.createMapBill(inventoryBarang);
             history.createMapFixedBill();
         }else if (config.getSaveas().equals("json")){
             users = ja.load(User.class, config.getPath()+"Customers.json");
             inventoryBarang = ja.load(InventoryBarang.class, config.getPath()+"Barang.json");
+            bills = xa.load(Bills.class, config.getPath()+"Bills.json");
             history = ja.load(History.class, config.getPath()+"History.json");
+            bills.createMapBill(inventoryBarang);
             history.createMapFixedBill();
         }else if(config.getSaveas().equals("obj")){
             users = oa.load(User.class, config.getPath()+"Customers.OBJ");
             inventoryBarang = oa.load(InventoryBarang.class, config.getPath()+"Barang.OBJ");
+            bills = xa.load(Bills.class, config.getPath()+"Bills.OBJ");
             history = oa.load(History.class, config.getPath()+"History.OBJ");
+            bills.createMapBill(inventoryBarang);
             history.createMapFixedBill();
         }
     }
@@ -57,16 +67,33 @@ public class DataStore {
             xa.convert(users, config.getPath()+"Customers.xml");
             xa.convert(inventoryBarang, config.getPath()+"Barang.xml");
             xa.convert(history, config.getPath()+"History.xml");
+            xa.convert(bills, config.getPath()+"Bills.xml");
         }else if(config.getSaveas().equals("json")){
             ja.convert(users, config.getPath()+"Customers.json");
             ja.convert(inventoryBarang, config.getPath()+"Barang.json");
             ja.convert(history, config.getPath()+"History.json");
+            ja.convert(bills, config.getPath()+"Bills.json");
         }else if(config.getSaveas().equals("obj")){
             oa.convert(users, config.getPath()+"Customers.OBJ");
             oa.convert(inventoryBarang, config.getPath()+"Barang.OBJ");
             oa.convert(history, config.getPath()+"History.OBJ");
+            oa.convert(bills, config.getPath()+"Bills.OBJ");
         }
         
         xa.convert(config, "./src/main/java/com/shoppingsans/Datastore/Config.xml");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        DataStore other = (DataStore) obj;
+        return inventoryBarang.equals(other.getInventoryBarang());
     }
 }

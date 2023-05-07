@@ -19,24 +19,31 @@ import javax.xml.bind.JAXBException;
 public class Driver {
     public static void main(String[] args) throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException {
         DataStore ds = new DataStore();
-
-        Barang b = new Barang();
-        b.setNamaBarang("Mouse");
-        b.setHargaBarang(900000);
-        b.setHargaBeli(50000);
-        b.setKategori("Elektronik");
-        b.setStokBarang(10);
-        b.setGambar("mouse.jpg");
-        b.setIdBarang(ds.getInventoryBarang().getSize() + 1);
+        
+        System.out.println((ds.getBills().getListBill().get(0).getMapId()));
+        for(int i = 0; i < ds.getBills().getListBill().size(); i++) {
+            System.out.println((ds.getBills().getListBill().get(i).getMapId()));
+        }
+        // Barang b = new Barang();
+        // b.setNamaBarang("Mouse");
+        // b.setHargaBarang(900000);
+        // b.setHargaBeli(50000);
+        // b.setKategori("Elektronik");
+        // b.setStokBarang(10);
+        // b.setGambar("mouse.jpg");
+        // b.setIdBarang(ds.getInventoryBarang().getSize() + 1);
         
         
-        ds.getInventoryBarang().getInventory().add(b);
-        ds.saveAs();
+        // ds.getInventoryBarang().getInventory().add(b);
+        // ds.saveAs();
         
         ds.getConfig().setSaveas("json");
         ds.saveAs();
         
         ds.getConfig().setSaveas("obj");
+        ds.saveAs();
+
+        ds.getConfig().setSaveas("xml");
         ds.saveAs();
     }
 }

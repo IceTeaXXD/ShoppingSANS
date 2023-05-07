@@ -4,6 +4,17 @@
  */
 package com.shoppingsans.gui;
 
+import com.itextpdf.text.DocumentException;
+import com.shoppingsans.Datastore.DataStore;
+import com.shoppingsans.PDF.ExportPDF;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.xml.bind.JAXBException;
+
 /**
  *
  * @author Azmi Hasna Zahrani
@@ -13,8 +24,17 @@ public class Laporan extends javax.swing.JPanel {
     /**
      * Creates new form Laporan
      */
+    private DataStore ds;
     public Laporan() {
-        initComponents();
+        try {
+            initComponents();
+            ds = new DataStore();
+            for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
+                jComboBox1.addItem(ds.getUsers().getCustomers().get(i).getId().toString());
+            }
+        } catch (JAXBException | IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -29,6 +49,7 @@ public class Laporan extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(45, 43, 74));
         setPreferredSize(new java.awt.Dimension(1268, 685));
@@ -50,7 +71,7 @@ public class Laporan extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 210, 40));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 320, 210, 40));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoppingsans/img/fixedbill.png"))); // NOI18N
         jButton2.setOpaque(true);
@@ -59,21 +80,64 @@ public class Laporan extends javax.swing.JPanel {
                 jButton2ActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 380, 210, 40));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, 210, 40));
+
+        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, 210, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        // Show the file chooser dialog
+        int result = fileChooser.showOpenDialog(this);
+
+        // Check if the user clicked the "Open" button
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                // Get the selected file path
+                String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
+                // Display the selected file path in a message dialog
+                JOptionPane.showMessageDialog(this, "Selected folder: " + path);
+                
+                ExportPDF.createLaporanBarang(ds, path);
+            } catch (FileNotFoundException | DocumentException ex) {
+                Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        // Show the file chooser dialog
+        int result = fileChooser.showOpenDialog(this);
+
+        // Check if the user clicked the "Open" button
+        if (result == JFileChooser.APPROVE_OPTION 
+                && jComboBox1.getSelectedItem() != null) {
+            try {
+                // Get the selected file path
+                String path = fileChooser.getSelectedFile().getAbsolutePath()+"\\";
+                // Display the selected file path in a message dialog
+                JOptionPane.showMessageDialog(this, "Selected folder: " + path);
+                
+                Integer idCust = Integer.valueOf((String) jComboBox1.getSelectedItem());
+                ExportPDF.createHistoryTransaksi(ds, path, idCust);
+            } catch (FileNotFoundException | DocumentException ex) {
+                Logger.getLogger(Laporan.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

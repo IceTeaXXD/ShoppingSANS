@@ -47,6 +47,9 @@ public class FixedBill implements Serializable{
 
     @NonNull
     protected String datetime;
+    
+    @NonNull
+    protected Integer total;
 
     // @XmlJavaTypeAdapter(FixedBillAdapter.class)
     // @XmlElement(name = "pembelian")

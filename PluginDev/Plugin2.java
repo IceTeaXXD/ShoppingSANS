@@ -41,42 +41,57 @@ public class Plugin2 extends BasePlugin {
 
         add(jLabel1, BorderLayout.NORTH);
         add(panel, BorderLayout.CENTER);
-    }
 
-    @Override
-    public void update(DataStore ds){
-        System.out.println("Updating Pie Chart");
-        InventoryBarang ib = ds.getInventoryBarang();
-        ArrayList<Barang> inv = ib.getInventory();
-        Map <String, Integer> map = new HashMap<String, Integer>();
-        for (Barang b : inv){
-            String category = b.getKategori();
-            if (map.containsKey(category)){
-                map.put(category, map.get(category) + 1);
-            } else {
-                map.put(category, 1);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(5000);
+                        try {
+                            DataStore ds = new DataStore();
+                            System.out.println("Updating Pie Chart");
+                            InventoryBarang ib = ds.getInventoryBarang();
+                            ArrayList<Barang> inv = ib.getInventory();
+                            Map <String, Integer> map = new HashMap<String, Integer>();
+                            for (Barang b : inv){
+                                String category = b.getKategori();
+                                if (map.containsKey(category)){
+                                    map.put(category, map.get(category) + 1);
+                                } else {
+                                    map.put(category, 1);
+                                }
+                            }
+                            // update the pie chart
+                            DefaultPieDataset pieDataset = new DefaultPieDataset();
+                            for (String key : map.keySet()){
+                                pieDataset.setValue(key, map.get(key));
+                            }
+                            JFreeChart chart = ChartFactory.createPieChart("", pieDataset, true, true, true);
+                            PiePlot p = (PiePlot) chart.getPlot();
+                            p.setSectionPaint("S1", Color.RED);
+                            p.setSectionPaint("S2", Color.BLUE);
+                            p.setSectionPaint("S3", Color.GREEN);
+                            p.setSectionPaint("S4", Color.YELLOW);
+                            p.setExplodePercent("S1", 0.10);
+                            p.setExplodePercent("S2", 0.10);
+                            p.setExplodePercent("S3", 0.10);
+                            p.setExplodePercent("S4", 0.10);
+                    
+                            ChartPanel piePanel = new ChartPanel(chart);
+                            panel.removeAll();
+                            panel.add(piePanel, BorderLayout.CENTER);
+                            panel.validate();
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
-        // update the pie chart
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-        for (String key : map.keySet()){
-            pieDataset.setValue(key, map.get(key));
-        }
-        JFreeChart chart = ChartFactory.createPieChart("", pieDataset, true, true, true);
-        PiePlot p = (PiePlot) chart.getPlot();
-        p.setSectionPaint("S1", Color.RED);
-        p.setSectionPaint("S2", Color.BLUE);
-        p.setSectionPaint("S3", Color.GREEN);
-        p.setSectionPaint("S4", Color.YELLOW);
-        p.setExplodePercent("S1", 0.10);
-        p.setExplodePercent("S2", 0.10);
-        p.setExplodePercent("S3", 0.10);
-        p.setExplodePercent("S4", 0.10);
-
-        ChartPanel piePanel = new ChartPanel(chart);
-        panel.removeAll();
-        panel.add(piePanel, BorderLayout.CENTER);
-        panel.validate();
+        }).start();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

@@ -72,4 +72,18 @@ public class InventoryBarang implements Serializable{
     public Barang[] getBarang() {
         return Inventory.toArray(new Barang[0]);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        InventoryBarang other = (InventoryBarang) obj;
+        return Inventory.equals(other.getInventory());
+    }
 }

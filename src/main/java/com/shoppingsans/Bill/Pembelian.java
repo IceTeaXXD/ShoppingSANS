@@ -9,9 +9,12 @@ package com.shoppingsans.Bill;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.Data;
+import lombok.Getter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 // @Data
 // @AllArgsConstructor
@@ -28,6 +31,8 @@ import javax.xml.bind.annotation.*;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -37,5 +42,5 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         property = "type"
 )
 public class Pembelian implements Serializable{
-    private List<Entry> entry;
+    private List<Entry> entry = new ArrayList<>();
 }

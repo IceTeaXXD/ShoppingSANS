@@ -43,4 +43,18 @@ public class Barang implements Serializable{
     @NonNull private String kategori;
     @XmlElement(name = "gambar")
     @NonNull private String gambar;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Barang other = (Barang) obj;
+        return idBarang == other.idBarang && namaBarang.equals(other.namaBarang);
+    }
 }

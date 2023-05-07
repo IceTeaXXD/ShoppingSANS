@@ -98,5 +98,32 @@
     "hargaBeli" : 50000,
     "kategori" : "Alat Tulis",
     "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 12,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "Kontol",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 13,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "eh",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 14,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 50000,
+    "stokBarang" : 10,
+    "hargaBeli" : 50000,
+    "kategori" : "metiw",
+    "gambar" : "mouse.jpg"
   } ]
 }

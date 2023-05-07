@@ -1,9 +1,17 @@
 {
   "customers" : [ {
-    "type" : "Customer",
-    "id" : 5
+    "type" : "Member",
+    "id" : 5,
+    "nama" : "Henry",
+    "notelp" : "696969669",
+    "poin" : 0,
+    "isActive" : true
   }, {
-    "type" : "Customer",
-    "id" : 7
+    "type" : "Member",
+    "id" : 7,
+    "nama" : "Nadil",
+    "notelp" : "01812",
+    "poin" : 0,
+    "isActive" : true
   } ]
 }

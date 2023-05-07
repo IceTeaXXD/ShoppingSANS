@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Users>
-    <Customer>
+    <Member>
         <id>5</id>
-    </Customer>
-    <Customer>
+        <nama>Henry</nama>
+        <notelp>696969669</notelp>
+        <poin>0</poin>
+        <isActive>true</isActive>
+    </Member>
+    <Member>
         <id>7</id>
-    </Customer>
+        <nama>Nadil</nama>
+        <notelp>01812</notelp>
+        <poin>0</poin>
+        <isActive>true</isActive>
+    </Member>
 </Users>

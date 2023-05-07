@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -24,13 +25,13 @@ import lombok.Setter;
 @JsonTypeName("Member")
 public class Member extends Customer implements Diskon {
     @XmlElement(name = "nama")
-    protected String nama;
+    @NonNull protected String nama;
     @XmlElement(name = "notelp")
-    protected String notelp;
+    @NonNull protected String notelp;
     @XmlElement(name = "poin")
-    protected Integer poin;
+    @NonNull protected Integer poin;
     @XmlElement(name = "isActive")
-    protected Boolean isActive;
+    @NonNull protected Boolean isActive;
     
     public Member(Integer id, String nama, String notelp, Integer poin){
         super(id);

@@ -4,15 +4,22 @@
  */
 package com.shoppingsans.gui;
 
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
+import com.shoppingsans.Bill.FixedBill;
 import com.shoppingsans.Datastore.DataStore;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBException;
 
 /**
  *
  * @author Matthew
+ * @author Henry
  */
 public class HistoryTransaksi extends javax.swing.JPanel {
 
@@ -20,6 +27,9 @@ public class HistoryTransaksi extends javax.swing.JPanel {
      * Creates new form HistoryTransaksi
      */
     DataStore ds;
+    private JTable tableHistory;
+    private ArrayList<ArrayList<Object>> listHistory = new ArrayList<>();
+    private ArrayList<ArrayList<Object>> tempList = new ArrayList<>();
     public HistoryTransaksi() throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException {
         initComponents();
         ds = new DataStore();
@@ -32,12 +42,77 @@ public class HistoryTransaksi extends javax.swing.JPanel {
         /* Search through history, for every fixed bill that the selected user has made,
             add it to the table
         */
-        ArrayList<Object> temp = new ArrayList<>();
-        for(int i = 0; i < ds.getHistory().getListHistory().size(); i++){
-//            if(temp)
+        ArrayList<FixedBill> listFixedBills = ds.getHistory().getListHistory();
+        // get currentkurs
+        int currentKurs = ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs());
+        for (int i = 0 ; i < listFixedBills.size() ; i++)
+        {
+            FixedBill bill = listFixedBills.get(i);
+            ArrayList<Object> list = new ArrayList<>();
+            list.add(bill.getId());
+            list.add(bill.getIdUser());
+            list.add(bill.getDatetime());
+            list.add((float) bill.getTotal() / currentKurs);
+            listHistory.add(list);
+        }
+
+        /* Masukkan ke Table */
+        tableHistory = createTable(convertToArray(listHistory));
+
+        for (int i = tableHistory.getRowCount() - 1; i >= 0; i--) 
+        {
+            DefaultTableModel model = createTableModel(tableHistory);
+            model.removeRow(i);
+            tableHistory.setModel(model);
         }
     }
-
+    public DefaultTableModel createTableModel(JTable table) {
+        DefaultTableModel model = new DefaultTableModel();
+        // add column names
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            model.addColumn(table.getColumnName(i));
+        }
+        // add row data
+        for (int i = 0; i < table.getRowCount(); i++) {
+            Object[] row = new Object[table.getColumnCount()];
+            for (int j = 0; j < table.getColumnCount(); j++) {
+                row[j] = table.getValueAt(i, j);
+            }
+            model.addRow(row);
+        }
+        return model;
+    }
+    public JTable createTable(Object[][] data)
+    {
+        // get key from datastore mapkurs
+        String key = ds.getConfig().getCurrentKurs();
+        JTable retTable = new JTable(data, new Object[]{"ID", "ID Customer", "Tanggal", "Total" + " (" + key + ")"});
+        JScrollPane scrollPane = new JScrollPane(retTable);
+        scrollPane.setBounds(100, 350, 1000, 300);
+        this.add(scrollPane);
+        return retTable;
+    }
+    private Object[][] convertToArray(ArrayList<ArrayList<Object>> list) {
+        Object[][] arr = new Object[list.size()][list.get(0).size()];
+        for (int i = 0; i < list.size(); i++) 
+        {
+            ArrayList<Object> row = list.get(i);
+            for (int j = 0; j < row.size(); j++) 
+            {
+                arr[i][j] = row.get(j);
+            }
+        }
+        return arr;
+    }
+    public void resetTable()
+    {
+        for (int i = 0 ; i < tableHistory.getRowCount() ; i++)
+        {
+            DefaultTableModel model = createTableModel(tableHistory);
+            model.removeRow(i);
+            tableHistory.setModel(model);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,8 +124,6 @@ public class HistoryTransaksi extends javax.swing.JPanel {
 
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(45, 43, 74));
@@ -64,18 +137,57 @@ public class HistoryTransaksi extends javax.swing.JPanel {
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
+                // panggil fungsi untuk reset tabelnya
+                // System.out.println("11111");
+                // resetTable();
+                // System.out.println("22222");
+                // panggil fungsi untuk menampilkan tabelnya
+                if (ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs()) != null)
+                {
+                    try {
+                        ds = new DataStore();
+                        listHistory = new ArrayList<>();
+                        ArrayList<FixedBill> listFixedBills = ds.getHistory().getListHistory();
+                        int currentKurs = ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs());
+                        for (int i = 0 ; i < listFixedBills.size() ; i++)
+                        {
+                            FixedBill bill = listFixedBills.get(i);
+                            ArrayList<Object> list = new ArrayList<>();
+                            list.add(bill.getId());
+                            list.add(bill.getIdUser());
+                            list.add(bill.getDatetime());
+                            list.add((float) bill.getTotal() / currentKurs);
+                            listHistory.add(list);
+                        }
+                    } catch (ClassNotFoundException | JAXBException | IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                if (tableHistory !=null)
+                {
+                    for (int i = tableHistory.getRowCount() - 1; i >= 0; i--) 
+                    {
+                        DefaultTableModel model = createTableModel(tableHistory);
+                        model.removeRow(i);
+                        tableHistory.setModel(model);
+                    }
+                    for (int i = 0 ; i < listHistory.size() ; i++)
+                    {
+                        if (listHistory.get(i).get(1).toString().equals(jComboBox1.getSelectedItem().toString()))
+                        {
+                            DefaultTableModel model = createTableModel(tableHistory);
+                            model.addRow(listHistory.get(i).toArray());
+                            tableHistory.setModel(model);
+                        }
+                    }
+                    String key = ds.getConfig().getCurrentKurs();
+                    DefaultTableModel model = createTableModel(tableHistory);
+                    model.setColumnIdentifiers(new String[] { "ID", "ID Customer", "Tanggal", "Total" + " (" + key + ")"});
+                    tableHistory.setModel(model);
+                }
             }
         });
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Myanmar Text", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(242, 198, 111));
@@ -91,12 +203,10 @@ public class HistoryTransaksi extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(64, 64, 64)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(475, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1256, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -108,9 +218,7 @@ public class HistoryTransaksi extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGap(378, 378, 378))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -123,7 +231,5 @@ public class HistoryTransaksi extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

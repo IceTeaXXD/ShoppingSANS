@@ -9,13 +9,22 @@ import com.shoppingsans.Plugins.JarClassLoader;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import java.io.IOException;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import javax.xml.bind.JAXBException;
+import javax.xml.crypto.Data;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
+import java.awt.Component;
+import java.io.FilenameFilter;
+import java.lang.reflect.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 
 /**
@@ -46,6 +55,14 @@ public class Settings extends javax.swing.JPanel {
                 jComboBox2.setSelectedIndex(3);
                 break;
         }
+        
+        /* Fill in the ComboBox */
+        jComboBox3.removeAll();
+        for(int i = 0; i < ds.getConfig().getPlugins().getPath().size(); i++){
+            File f = new File(ds.getConfig().getPlugins().getPath().get(i));
+            String name = f.getName().substring(0, f.getName().lastIndexOf("."));
+            jComboBox3.addItem(name);
+        }
     }
 
     /**
@@ -66,6 +83,10 @@ public class Settings extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        KursButton = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        MataUangField = new javax.swing.JComboBox<>();
+        MataUangField.addItem("IDR");
 
         setBackground(new java.awt.Color(45, 43, 74));
         setPreferredSize(new java.awt.Dimension(1268, 685));
@@ -95,7 +116,11 @@ public class Settings extends javax.swing.JPanel {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Pilih Plugin Untuk Dihapus");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Plugin 1", "Plugin 2", "Plugin 3", "Plugin 4", " ", " " }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(242, 198, 111));
         jButton2.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
@@ -124,6 +149,25 @@ public class Settings extends javax.swing.JPanel {
             }
         });
 
+        KursButton.setBackground(new java.awt.Color(242, 198, 111));
+        KursButton.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        KursButton.setText("Simpan");
+        KursButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KursButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Mata Uang");
+
+        MataUangField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MataUangFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,18 +181,24 @@ public class Settings extends javax.swing.JPanel {
                         .addGap(325, 325, 325)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton2)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(KursButton))
                         .addGap(63, 63, 63)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(MataUangField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 401, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -168,7 +218,12 @@ public class Settings extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
-                .addGap(74, 74, 74)
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(KursButton)
+                    .addComponent(jLabel7)
+                    .addComponent(MataUangField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
@@ -195,15 +250,29 @@ public class Settings extends javax.swing.JPanel {
             try {
                 String path = dialog.getDirectory() + filename;
                 System.out.println("You chose to open this file: " + path);
+                ds.getConfig().getPlugins().getPath().add(path);
+                ds.saveAs();
                 jcl = new JarClassLoader(path);
                 String name = filename.substring(0, filename.lastIndexOf("."));
                 Main frame = (Main)SwingUtilities.getAncestorOfClass(Main.class, this);
-                frame.addTab(name, jcl.loadClassObject(name));
+                try{
+                    Component obj = jcl.loadClassObject(name);
+                    frame.addTab(obj);
+                }
+                catch(Exception e){
+                    Class<?> c = jcl.getClassLoader().loadClass(name);
+                    Set <String> keys = ds.getConfig().getMapKurs().keySet();
+                    MataUangField.removeAllItems();
+                    for(String key : keys){
+                        MataUangField.addItem(key);
+                    }
+                }
             } catch (Exception ex) {
                 Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+    
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
@@ -220,6 +289,25 @@ public class Settings extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        if(jComboBox3.getSelectedItem() != null){
+            for(int i = 0; i < ds.getConfig().getPlugins().getPath().size(); i++){
+                if(ds.getConfig().getPlugins().getPath().get(i).contains((String)jComboBox3.getSelectedItem())){
+                    try {
+                        ds.getConfig().getPlugins().getPath().remove(i);
+                        ds.saveAs();
+                        jComboBox3.removeItemAt(i);
+                        JOptionPane.showMessageDialog(this, "Plugin berhasil dihapus, silakan restart program agar perubahan dapat dilakukan!", "Delete Success", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    } catch (JAXBException ex) {
+                        Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else{
+                    System.out.println("WEH");
+                }
+            }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -247,8 +335,27 @@ public class Settings extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void KursButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KursButtonActionPerformed
+        ds.getConfig().setCurrentKurs((String) MataUangField.getSelectedItem());
+        try {
+            ds.saveAs();
+        } catch (FileNotFoundException | JAXBException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_KursButtonActionPerformed
+
+    private void MataUangFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MataUangFieldActionPerformed
+    
+    }//GEN-LAST:event_MataUangFieldActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton KursButton;
+    private javax.swing.JComboBox<String> MataUangField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -258,5 +365,6 @@ public class Settings extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }

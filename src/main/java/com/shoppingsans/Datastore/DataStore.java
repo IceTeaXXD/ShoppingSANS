@@ -12,6 +12,8 @@ import com.shoppingsans.User.User;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+
 import javax.xml.bind.JAXBException;
 import javax.xml.crypto.Data;
 
@@ -39,6 +41,7 @@ public class DataStore {
     public DataStore() throws JAXBException, IOException, FileNotFoundException, ClassNotFoundException{
         /* Baca file xml users dan inventory barang */
         config = xa.load(Config.class, "./src/main/java/com/shoppingsans/Datastore/Config.xml");
+        config.createMap();
         if(config.getSaveas().equals("xml")){
             users = xa.load(User.class, config.getPath()+"Customers.xml");
             inventoryBarang = xa.load(InventoryBarang.class, config.getPath()+"Barang.xml");
@@ -65,28 +68,25 @@ public class DataStore {
     
     public void saveAs() throws JAXBException, FileNotFoundException{
         bills.createEntryLists();
-        // System.out.println("-------------aaaaaaaaaaa-----------");
-        // System.out.println(config.getSaveas());
-        // System.out.println(bills);
-        int i = 0;
-        // for (Bill bill : bills.getListBill())
-        // {
-        //     System.out.println("-----------" + i++);
-        //     System.out.println(bill.getMapPembelian());
-        //     System.out.println(bill.getPembelian());
-        // }
-        // System.out.println("-------------aaaaaaaaaaa-----------");
+        config.createKurs();
         if(config.getSaveas().equals("xml")){
+            HashMap<String, Integer> temp = config.getMapKurs();
+            config.setMapKurs(null);
+            xa.convert(config, config.getPath()+"Config.xml");
+            config.setMapKurs(temp);
+            // delete mapKurs from config
             xa.convert(users, config.getPath()+"Customers.xml");
             xa.convert(inventoryBarang, config.getPath()+"Barang.xml");
             xa.convert(history, config.getPath()+"History.xml");
             xa.convert(bills, config.getPath()+"Bills.xml");
         }else if(config.getSaveas().equals("json")){
+            ja.convert(config, config.getPath()+"Config.json");
             ja.convert(users, config.getPath()+"Customers.json");
             ja.convert(inventoryBarang, config.getPath()+"Barang.json");
             ja.convert(history, config.getPath()+"History.json");
             ja.convert(bills, config.getPath()+"Bills.json");
         }else if(config.getSaveas().equals("obj")){
+            oa.convert(config, config.getPath()+"Config.OBJ");
             oa.convert(users, config.getPath()+"Customers.OBJ");
             oa.convert(inventoryBarang, config.getPath()+"Barang.OBJ");
             oa.convert(history, config.getPath()+"History.OBJ");

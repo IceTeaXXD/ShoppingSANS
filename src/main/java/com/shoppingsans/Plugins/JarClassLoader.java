@@ -6,7 +6,9 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.jar.JarFile;
+import lombok.Getter;
 
+@Getter
 public class JarClassLoader {
     private URLClassLoader classLoader;
     JarFile jarFile;

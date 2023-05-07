@@ -33,12 +33,14 @@ public class Driver {
         // b.setGambar("mouse.jpg");
         // b.setIdBarang(ds.getInventoryBarang().getSize() + 1);
         
-        
-        // ds.getInventoryBarang().getInventory().add(b);
-        // ds.saveAs();
-        
-        ds.getConfig().setSaveas("json");
+        ds.getConfig().getMapKurs().put("JPY", 100);
+
+        System.out.println(ds.getConfig());
+        ds.getInventoryBarang().getInventory().add(b);
         ds.saveAs();
+        
+        // ds.getConfig().setSaveas("json");
+        // ds.saveAs();
         
         ds.getConfig().setSaveas("obj");
         ds.saveAs();

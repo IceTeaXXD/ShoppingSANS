@@ -1,7 +1,11 @@
 {
   "customers" : [ {
-    "type" : "Customer",
-    "id" : 5
+    "type" : "Member",
+    "id" : 5,
+    "nama" : "Masukkan NamakontolMember",
+    "notelp" : "Masukkan No. Telepon",
+    "poin" : 0,
+    "isActive" : true
   }, {
     "type" : "Customer",
     "id" : 7

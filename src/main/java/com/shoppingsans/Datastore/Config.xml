@@ -4,23 +4,12 @@
     <saveas>xml</saveas>
     <path>./src/main/java/com/shoppingsans/Datastore/</path>
     <plugins>
-        <path>C:\File\Nadil\STEI ITB\Semester 4\OOP\ShoppingSANS\plugins\Plugin1.jar</path>
-        <path>C:\File\Nadil\STEI ITB\Semester 4\OOP\ShoppingSANS\plugins\AddKurs.jar</path>
-        <path>C:\File\Nadil\STEI ITB\Semester 4\OOP\ShoppingSANS\plugins\AddKurs.jar</path>
     </plugins>
     <kurs>
-        <Entry>
-            <key>EUR</key>
-            <value>16000</value>
-        </Entry>
         <Entry>
             <key>IDR</key>
             <value>1</value>
         </Entry>
-        <Entry>
-            <key>USD</key>
-            <value>14000</value>
-        </Entry>
     </kurs>
-    <currentKurs>EUR</currentKurs>
+    <currentKurs>IDR</currentKurs>
 </Config>

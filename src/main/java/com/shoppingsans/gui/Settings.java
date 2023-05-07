@@ -9,7 +9,9 @@ import com.shoppingsans.Plugins.JarClassLoader;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.FileDialog;
@@ -36,7 +38,7 @@ public class Settings extends javax.swing.JPanel {
     /**
      * Creates new form Settings
      */
-    DataStore ds;
+    DataStore ds = new DataStore();
     public Settings() throws JAXBException, IOException, ClassNotFoundException {
         initComponents();
         ds = new DataStore();
@@ -87,6 +89,22 @@ public class Settings extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         MataUangField = new javax.swing.JComboBox<>();
         MataUangField.addItem("IDR");
+         /* Search through if there exists */        
+        for(int i = 0; i < ds.getConfig().getPlugins().getPath().size(); i++){
+            try {
+                JarClassLoader jcl = new JarClassLoader(ds.getConfig().getPlugins().getPath().get(i));
+                File f = new File(ds.getConfig().getPlugins().getPath().get(i));
+                String name = f.getName().substring(0, f.getName().lastIndexOf("."));
+                Class<?> c = jcl.getClassLoader().loadClass(name);
+                Set <String> keys = ds.getConfig().getMapKurs().keySet();
+                MataUangField.removeAllItems();
+                for(String key: keys){
+                    MataUangField.addItem(key);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         setBackground(new java.awt.Color(45, 43, 74));
         setPreferredSize(new java.awt.Dimension(1268, 685));
@@ -288,14 +306,20 @@ public class Settings extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
         if(jComboBox3.getSelectedItem() != null){
             for(int i = 0; i < ds.getConfig().getPlugins().getPath().size(); i++){
                 if(ds.getConfig().getPlugins().getPath().get(i).contains((String)jComboBox3.getSelectedItem())){
                     try {
+                        if (ds.getConfig().getPlugins().getPath().get(i).contains("Kurs")){
+                            MataUangField.removeAllItems();
+                            MataUangField.addItem("IDR");
+                            ds.getConfig().getMapKurs().clear();
+                            ds.getConfig().getMapKurs().put("IDR", 1);
+                            ds.getConfig().setCurrentKurs("IDR");
+                        }
+                        jComboBox3.removeItemAt(i);
                         ds.getConfig().getPlugins().getPath().remove(i);
                         ds.saveAs();
-                        jComboBox3.removeItemAt(i);
                         JOptionPane.showMessageDialog(this, "Plugin berhasil dihapus, silakan restart program agar perubahan dapat dilakukan!", "Delete Success", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     } catch (JAXBException ex) {
@@ -311,7 +335,6 @@ public class Settings extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -336,7 +359,6 @@ public class Settings extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void KursButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KursButtonActionPerformed

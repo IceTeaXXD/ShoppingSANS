@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -31,7 +32,7 @@ public class Barang implements Serializable{
     @XmlElement(name = "idBarang")
     private int idBarang;
     @XmlElement(name = "namaBarang")
-    private String namaBarang;
+    @NonNull private String namaBarang;
     @XmlElement(name = "hargaBarang")
     private int hargaBarang;
     @XmlElement(name = "stokBarang")
@@ -39,7 +40,7 @@ public class Barang implements Serializable{
     @XmlElement(name = "hargaBeli")
     private int hargaBeli;
     @XmlElement(name = "kategori")
-    private String kategori;
+    @NonNull private String kategori;
     @XmlElement(name = "gambar")
-    private String gambar;
+    @NonNull private String gambar;
 }

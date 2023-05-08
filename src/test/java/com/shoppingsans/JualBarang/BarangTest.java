@@ -51,4 +51,34 @@ public class BarangTest {
     public void testgetGambar(){
         assertEquals((String)"Gula.jpg", b.getGambar());
     }
+
+    @Test
+    public void testsetNamaBarang(){
+        b.setNamaBarang("Gula");
+        assertEquals((String)"Gula", b.getNamaBarang());
+    }
+
+    @Test
+    public void testsetHargaBarang(){
+        b.setHargaBarang(15000);
+        assertEquals(15000, b.getHargaBarang());
+    }
+
+    @Test
+    public void testsetStokBarang(){
+        b.setStokBarang(10);
+        assertEquals(10, b.getStokBarang());
+    }
+
+    @Test
+    public void testsetKategori(){
+        b.setKategori("Makanan");
+        assertEquals((String)"Makanan", b.getKategori());
+    }
+
+    @Test
+    public void testsetGambar(){
+        b.setGambar("Gula.jpg");
+        assertEquals((String)"Gula.jpg", b.getGambar());
+    }
 }

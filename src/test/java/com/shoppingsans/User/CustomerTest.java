@@ -25,5 +25,11 @@ public class CustomerTest {
     public void testID(){
         assertEquals((Integer)3, this.c.getId());
     }
+
+    @Test
+    public void testSetID(){
+        this.c.setId(4);
+        assertEquals((Integer)4, this.c.getId());
+    }
     
 }

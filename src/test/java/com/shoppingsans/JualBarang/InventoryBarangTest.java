@@ -69,4 +69,10 @@ public class InventoryBarangTest {
         Inventory.addBarang(a);
         assertEquals(false, Inventory.equals(a));
     }
+
+    @Test
+    public void testgetInventory(){
+        Inventory.addBarang(a);
+        assertEquals((String)"[Barang(idBarang=2, namaBarang=Teh, hargaBarang=5000, stokBarang=5, hargaBeli=10000, kategori=Makanan, gambar=teh.jpg)]", Inventory.getInventory().toString());
+    }
 }

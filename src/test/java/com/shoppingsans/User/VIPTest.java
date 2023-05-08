@@ -44,5 +44,34 @@ public class VIPTest {
     public void testPoin(){
         assertEquals((Integer)0, this.v.getPoin());
     }
-    
+
+    @Test
+    public void testSetID(){
+        this.v.setId(4);
+        assertEquals((Integer)4, this.v.getId());
+    }
+
+    @Test
+    public void testSetNama(){
+        this.v.setNama("Metiw");
+        assertEquals((String)"Metiw", this.v.getNama());
+    }
+
+    @Test
+    public void testSetNoTelp(){
+        this.v.setNotelp("0889");
+        assertEquals((String)"0889", this.v.getNotelp());
+    }
+
+    @Test
+    public void testSetPoin(){
+        this.v.setPoin(0);
+        assertEquals((Integer)0, this.v.getPoin());
+    }
+
+    @Test
+    public void setIsActive(){
+        this.v.setIsActive(true);
+        assertEquals((Boolean)true, this.v.getIsActive());
+    }
 }

@@ -4,7 +4,7 @@
     "idBarang" : 1,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -13,7 +13,7 @@
     "idBarang" : 2,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -22,7 +22,7 @@
     "idBarang" : 3,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -31,7 +31,7 @@
     "idBarang" : 4,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -40,7 +40,7 @@
     "idBarang" : 5,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -49,7 +49,7 @@
     "idBarang" : 6,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -58,7 +58,7 @@
     "idBarang" : 7,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -67,7 +67,7 @@
     "idBarang" : 8,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -76,7 +76,7 @@
     "idBarang" : 9,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -85,7 +85,7 @@
     "idBarang" : 10,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -94,7 +94,7 @@
     "idBarang" : 11,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -103,7 +103,7 @@
     "idBarang" : 12,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -112,7 +112,7 @@
     "idBarang" : 13,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -121,7 +121,7 @@
     "idBarang" : 14,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -130,7 +130,7 @@
     "idBarang" : 15,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -139,7 +139,7 @@
     "idBarang" : 16,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -148,7 +148,7 @@
     "idBarang" : 17,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -157,7 +157,7 @@
     "idBarang" : 18,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -166,7 +166,7 @@
     "idBarang" : 19,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -175,7 +175,7 @@
     "idBarang" : 20,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -184,7 +184,7 @@
     "idBarang" : 21,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"
@@ -193,7 +193,61 @@
     "idBarang" : 22,
     "namaBarang" : "Mouse",
     "hargaBarang" : 900000,
-    "stokBarang" : 10,
+    "stokBarang" : 5,
+    "hargaBeli" : 50000,
+    "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 23,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 5,
+    "hargaBeli" : 50000,
+    "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 24,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 5,
+    "hargaBeli" : 50000,
+    "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 25,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 5,
+    "hargaBeli" : 50000,
+    "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 26,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 5,
+    "hargaBeli" : 50000,
+    "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 27,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 5,
+    "hargaBeli" : 50000,
+    "kategori" : "Elektronik",
+    "gambar" : "mouse.jpg"
+  }, {
+    "type" : "Barang",
+    "idBarang" : 28,
+    "namaBarang" : "Mouse",
+    "hargaBarang" : 900000,
+    "stokBarang" : 5,
     "hargaBeli" : 50000,
     "kategori" : "Elektronik",
     "gambar" : "mouse.jpg"

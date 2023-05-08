@@ -656,66 +656,6 @@ public class JualBarang extends javax.swing.JPanel {
           custClass = VIP.class;
         }
       }
-      // if (jComboBox1.getSelectedItem()!=null && mapId.size()>0)
-      // {
-      //   if (bill != null)
-      //   {
-      //     System.out.println("-----------------");
-      //     System.out.println(bill.getMapPembelian());
-      //     System.out.println("-----------------");
-      //     System.out.println(bill);
-      //   }
-      //   billedUserId = mapId.get(jComboBox1.getSelectedItem().toString());
-      //   System.out.println("billedUserId " + billedUserId);
-      //   // bill = new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString()));
-      //   for (int i = 0; i < ds.getBills().getListBill().size(); i++)
-      //   {
-      //     if (ds.getBills().getListBill().get(i).getIdUser().equals(billedUserId))
-      //     {
-      //       bill = ds.getBills().getListBill().get(i);
-      //       System.out.println("Billlll: " + bill.getMapPembelian());
-      //       break;
-      //     }
-      //   }
-      //   // reset matrix ke 0
-      //   for (int i = 0 ; i < pembeli.size() ; i++)
-      //   {
-      //     pembeli.get(i).set(1, 0);
-      //   }
-      //   // bikin dari bill ke matrix
-      //   for (Map.Entry<String,Integer> entry : bill.getMapPembelian().entrySet())
-      //   {
-      //     for (int i = 0 ; i < pembeli.size() ; i++)
-      //     {
-      //       if (pembeli.get(i).get(2).equals(entry.getKey()))
-      //       {
-      //         pembeli.get(i).set(1, entry.getValue());
-      //       }
-      //     } 
-      //   }
-      //   for (int i = tablePembeli.getRowCount() - 1; i >= 0; i--) 
-      //   {
-      //     DefaultTableModel model = createTableModel(tablePembeli);
-      //     model.removeRow(i);
-      //     tablePembeli.setModel(model);
-      //     tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-      //     tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
-      //     tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
-      //   }
-      //   for (int i = 0 ; i < pembeli.size() ; i++)
-      //   {
-      //     if (pembeli.get(i).get(1).toString().equals("0"))
-      //     {
-      //       DefaultTableModel model = createTableModel(tablePembeli);
-      //       model.addRow(pembeli.get(i).subList(1, 8).toArray());
-      //       tablePembeli.setModel(model);
-      //       tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-      //       tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
-      //       tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
-      //     }
-      //   }
-      // }
-      
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
@@ -959,6 +899,7 @@ public class JualBarang extends javax.swing.JPanel {
         // System.out.println(ds.getUsers().getCustomers().get(ds.getUsers().getCustomers().size()-1).toString());
         Customer newCust = new Customer(ds.getUsers().getCustomers().size()==0 ? 1 : Integer.parseInt(ds.getUsers().getCustomers().get(ds.getUsers().getCustomers().size()-1).getId().toString())+1);
         billedUserIndex = ds.getUsers().getCustomers().size();
+        custClass = Customer.class;
         ds.getUsers().getCustomers().add(newCust);
         
         System.out.println("-----------------------");

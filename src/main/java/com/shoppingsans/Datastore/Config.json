@@ -5,28 +5,18 @@
   "path" : "./src/main/java/com/shoppingsans/Datastore/",
   "plugins" : {
     "type" : "PluginPath",
-    "path" : [ "C:\\Users\\Matthew\\Documents\\Institut Teknologi Bandung\\Semester 4\\Object Oriented Programming\\ShoppingSANS\\plugins\\Plugin1.jar" ]
+    "path" : [ ]
   },
   "mapKurs" : {
-    "JPY" : 100,
-    "EUR" : 16000,
-    "USD" : 14000
+    "IDR" : 1
   },
   "kurs" : {
     "type" : "Kurs",
     "entry" : [ {
       "type" : "kursEntry",
-      "key" : "JPY",
-      "value" : 100
-    }, {
-      "type" : "kursEntry",
-      "key" : "EUR",
-      "value" : 16000
-    }, {
-      "type" : "kursEntry",
-      "key" : "USD",
-      "value" : 14000
+      "key" : "IDR",
+      "value" : 1
     } ]
   },
-  "currentKurs" : "\n        USD\n    "
+  "currentKurs" : "IDR"
 }

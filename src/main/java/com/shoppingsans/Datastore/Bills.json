@@ -1,3 +1,21 @@
 {
-  "listBill" : [ ]
+  "listBill" : [ {
+    "type" : "Bill",
+    "id" : 0,
+    "idUser" : 8,
+    "total" : 0,
+    "pembelian" : {
+      "type" : "Pembelian",
+      "entry" : [ ]
+    }
+  }, {
+    "type" : "Bill",
+    "id" : 1,
+    "idUser" : 8,
+    "total" : 0,
+    "pembelian" : {
+      "type" : "Pembelian",
+      "entry" : [ ]
+    }
+  } ]
 }

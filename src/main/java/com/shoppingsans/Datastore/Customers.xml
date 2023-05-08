@@ -14,4 +14,14 @@
         <poin>0</poin>
         <isActive>true</isActive>
     </Member>
+    <Customer>
+        <id>8</id>
+    </Customer>
+    <Member>
+        <id>9</id>
+        <nama>Masukkan Nama Member</nama>
+        <notelp>Masukkan No. Telepon</notelp>
+        <poin>0</poin>
+        <isActive>true</isActive>
+    </Member>
 </Users>

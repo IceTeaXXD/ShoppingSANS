@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Config>
     <appName>ShoppingSans</appName>
-    <saveas>xml</saveas>
+    <saveas>obj</saveas>
     <path>./src/main/java/com/shoppingsans/Datastore/</path>
-    <plugins>
-    </plugins>
+    <plugins/>
+    <mapKurs>
+        <entry>
+            <key>IDR</key>
+            <value>1</value>
+        </entry>
+    </mapKurs>
     <kurs>
         <Entry>
             <key>IDR</key>

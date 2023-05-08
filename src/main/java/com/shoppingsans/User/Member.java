@@ -29,7 +29,7 @@ public class Member extends Customer implements Diskon {
     @XmlElement(name = "notelp")
     @NonNull protected String notelp;
     @XmlElement(name = "poin")
-    @NonNull protected Integer poin;
+    @NonNull protected Integer poin = 0;
     @XmlElement(name = "isActive")
     @NonNull protected Boolean isActive;
     

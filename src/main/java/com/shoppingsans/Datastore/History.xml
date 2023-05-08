@@ -32,4 +32,28 @@
             </entry>
         </pembelian>
     </FixedBill>
+    <FixedBill>
+        <id>2</id>
+        <idUser>9</idUser>
+        <datetime>Mon May 08 06:58:49 WIB 2023</datetime>
+        <total>1800000</total>
+        <pembelian>
+            <entry>
+                <key>Mouse</key>
+                <value>2</value>
+            </entry>
+        </pembelian>
+    </FixedBill>
+    <FixedBill>
+        <id>2</id>
+        <idUser>9</idUser>
+        <datetime>Mon May 08 07:01:09 WIB 2023</datetime>
+        <total>2700000</total>
+        <pembelian>
+            <entry>
+                <key>Mouse</key>
+                <value>3</value>
+            </entry>
+        </pembelian>
+    </FixedBill>
 </History>

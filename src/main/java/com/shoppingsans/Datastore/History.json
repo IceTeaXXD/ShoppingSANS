@@ -35,5 +35,33 @@
         "value" : 200
       } ]
     }
+  }, {
+    "type" : "FixedBill",
+    "id" : 2,
+    "idUser" : 9,
+    "datetime" : "Mon May 08 06:58:49 WIB 2023",
+    "total" : 1800000,
+    "pembelian" : {
+      "type" : "Pembelian",
+      "entry" : [ {
+        "type" : "Entry",
+        "key" : "Mouse",
+        "value" : 2
+      } ]
+    }
+  }, {
+    "type" : "FixedBill",
+    "id" : 2,
+    "idUser" : 9,
+    "datetime" : "Mon May 08 07:01:09 WIB 2023",
+    "total" : 2700000,
+    "pembelian" : {
+      "type" : "Pembelian",
+      "entry" : [ {
+        "type" : "Entry",
+        "key" : "Mouse",
+        "value" : 3
+      } ]
+    }
   } ]
 }

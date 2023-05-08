@@ -13,5 +13,15 @@
     "notelp" : "01812",
     "poin" : 0,
     "isActive" : true
+  }, {
+    "type" : "Customer",
+    "id" : 8
+  }, {
+    "type" : "Member",
+    "id" : 9,
+    "nama" : "Masukkan Nama Member",
+    "notelp" : "Masukkan No. Telepon",
+    "poin" : 0,
+    "isActive" : true
   } ]
 }

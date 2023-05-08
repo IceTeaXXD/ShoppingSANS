@@ -36,7 +36,7 @@ public class Driver {
         ds.getConfig().getMapKurs().put("JPY", 100);
 
         System.out.println(ds.getConfig());
-        ds.getInventoryBarang().getInventory().add(b);
+//        ds.getInventoryBarang().getInventory().add(b);
         ds.saveAs();
         
         // ds.getConfig().setSaveas("json");

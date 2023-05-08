@@ -50,7 +50,7 @@ public class Member extends Customer implements Diskon {
 
     @Override
     public Integer applyDiskon(int price){
-        return price>poin ? price : 0;
+        return price>poin ? price-poin : 0;
     }
     
     @Override

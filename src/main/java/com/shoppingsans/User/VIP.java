@@ -43,7 +43,9 @@ public class VIP extends Customer implements Diskon {
     
     @Override
     public double calculateDiskon(int price){
-        return (int) price*0.9;
+        int temp = (int) ((price*0.9) >= poin ? poin : (price*0.9));
+        this.poin = price >= poin ? 0 : poin - price;
+        return ((int) price*0.9) - temp;
     }
     
     @Override

@@ -423,31 +423,8 @@ public class JualBarang extends javax.swing.JPanel {
                   if ( custClass == VIP.class)
                   jLabel2.setText(ds.getBills().getListBill().get(billIdx).getTotal().toString() + "  (" + ((VIP) users.get(billedUserIndex)).applyDiskon(ds.getBills().getListBill().get(billIdx).getTotal())+")");
                   saveDataStore();
-                  // if (Integer.parseInt(pembeli.get(idx).get(1).toString()) == 0) {
-                  //   System.out.println(pembeli.get(idx).get(2));
-                  //   DefaultTableModel model = createTableModel(tablePembeli);
-                  //   System.out.println("label " + label);
-                  //   model.removeRow(idx);
-                  //   tablePembeli.setModel(model);
-                  //   tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-                  //   tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
-                  //   tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
-                  // }
-                  // System.out.println(tablePembeli.getRowCount());
-                  // for (int i = 0 ; i < tablePembeli.getRowCount() ; i++)
-                  // {
-                  //   // print all of label in each row
-                  //   System.out.println("bbbbbbbbbbbbbbbbbbbbbbb" + i);
-                  //   System.out.println(tablePembeli.getModel().getValueAt(i, 6).toString());
-                  //   System.out.println("cccccccccccccccccccc");
-                  // }
               }
               ds.getBills().getListBill().get(billIdx).createEntryList();
-
-              // System.out.println("BILL: " + ds.getBills().getListBill().get(billIdx));
-              // System.out.println("MAP PEMBELIAN: " + ds.getBills().getListBill().get(billIdx).getMapPembelian());
-              // System.out.println("PEMBELIAN: " + ds.getBills().getListBill().get(billIdx).getPembelian());
-              // System.out.println(ds.getBills().getListBill().get(0).getMapPembelian());
 
               saveDataStore();
 
@@ -613,14 +590,19 @@ public class JualBarang extends javax.swing.JPanel {
       }
       if (suficient)
       {
-  
         FixedBill newFixedBill = new FixedBill(ds.getBills().getListBill().get(billIdx).getId(), ds.getBills().getListBill().get(billIdx).getIdUser());
         newFixedBill.setPembelian(ds.getBills().getListBill().get(billIdx).getPembelian());
         System.out.println(custClass);
         if (custClass == Member.class)
-        newFixedBill.setTotal((int) ((Member) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal()));
+        {
+          newFixedBill.setTotal((int) ((Member) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal()));
+          ((Member) ds.getUsers().getCustomers().get(billedUserIndex)).setPoin(ds.getBills().getListBill().get(billIdx).getTotal());
+        }
         else if (custClass == VIP.class)
-        newFixedBill.setTotal((int) ((VIP) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal()));
+        {
+          newFixedBill.setTotal((int) ((VIP) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal()));
+          ((VIP) ds.getUsers().getCustomers().get(billedUserIndex)).setPoin(ds.getBills().getListBill().get(billIdx).getTotal());
+        }
         else
         newFixedBill.setTotal(ds.getBills().getListBill().get(billIdx).getTotal());
         ds.getBills().getListBill().remove((int)billIdx);
@@ -665,12 +647,7 @@ public class JualBarang extends javax.swing.JPanel {
       if (!fixed)
       {
           fixed = true;
-          // System.out.println(jComboBox1.getSelectedItem().toString());
-          // ds.getBills().getListBill().add(new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString())));
-          // billIdx = ds.getBills().getListBill().size()-1;
           billedUserId = mapId.get(jComboBox1.getSelectedItem().toString());
-          // System.out.println("billedUserId " + billedUserId);
-          // bill = new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString()));
           for (int i = 0; i < ds.getBills().getListBill().size(); i++)
           {
             System.out.println("IDUSER:" + ds.getBills().getListBill().get(i).getIdUser());
@@ -685,7 +662,8 @@ public class JualBarang extends javax.swing.JPanel {
           }
           if (billIdx==null)
           {
-            ds.getBills().getListBill().add(new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString())));
+            ds.getBills().getListBill().add(new Bill(ds.getHistory().getListHistory().get(ds.getHistory().getListHistory().size()-1).getId()+1, Integer.valueOf(billedUserId.toString())));
+
             billIdx = ds.getBills().getListBill().size()-1;
           }
           // reset matrix ke 0
@@ -741,154 +719,12 @@ public class JualBarang extends javax.swing.JPanel {
             }
           }
           jLabel3.setText((status + jComboBox1.getSelectedItem().toString()));
-          // System.out.println("FLag: " + flag);
           ds.getBills().createMapBill(ds.getInventoryBarang());
           ds.getBills().createEntryLists();
-          // System.out.println("jsfhioajsfopsapa");
-          // System.out.println(ds.getBills());
-          // System.out.println(ds.getBills().getListBill().get(0).getMapPembelian());
-          // System.out.println("jsfhioajsfopsapa");
           
           saveDataStore();
           // System.out.println("-sa-d---sads-");
        }
-      //  else
-      //  {
-      //    // DataStore tempDs = ds;
-      //    try {
-           
-      //      ds = new DataStore();
-      //      ArrayList<Barang> barangList = ds.getInventoryBarang().getInventory();
-      //  // // Create data for the table
-      //      ImageIcon leftButtonIcon = createImage("images/mouse.jpg");
-      //      data = new ArrayList<>();
-      //      pembeli = new ArrayList<>();
-           
-      //      for (int i = 0; i < barangList.size(); i++) {
-      //        Barang barang = barangList.get(i);
-      //        ArrayList<Object> listToko = new ArrayList<>();
-      //        ArrayList<Object> listPembeli = new ArrayList<>();
-      //        // JButton button = new JButton("Buy", leftButtonIcon);
-      //        listToko.add(barang.getIdBarang());
-      //        listToko.add(barang.getStokBarang());
-      //        listToko.add(barang.getNamaBarang());
-      //        listToko.add(barang.getHargaBarang());
-      //        listToko.add(barang.getHargaBeli());
-      //        listToko.add(barang.getKategori());
-      //        listToko.add("images/" + barang.getGambar());
-      //        listToko.add(barang.getIdBarang());
-      //        data.add(listToko);
-             
-      //        listPembeli.add(barang.getIdBarang());
-      //        listPembeli.add(0);
-      //        listPembeli.add(barang.getNamaBarang());
-      //        listPembeli.add(barang.getHargaBarang());
-      //        listPembeli.add(barang.getHargaBeli());
-      //        listPembeli.add(barang.getKategori());
-      //        listPembeli.add("images/" + barang.getGambar());
-      //        listPembeli.add(barang.getIdBarang());
-      //        pembeli.add(listPembeli);
-      //      }
-           
-      //      System.out.println("ukuran data: " + data.size());
-      //      // Create a new instance of JTable
- 
-      //      // Ganti jadi ubah tabel, bukan create table
-      //      // Object[][] convertedData = convertToArray(data);
-      //      // model = new DefaultTableModel(convertedData, columnNames);
-      //      // tableToko = createTable(convertedData,false);
-      //      DefaultTableModel model = createTableModel(tableToko);
-      //      for (int i = 0; i < tableToko.getRowCount(); i++)
-      //      {
-      //        model.removeRow(0);
-      //      }
-      //      tableToko.setModel(model);
-           
-      //      System.out.println("ukuran table toko: " + tableToko.getRowCount());
- 
-      //      for (int i = 0; i < data.size(); i++)
-      //      {
-      //        model.addRow(data.get(i).subList(1, 8).toArray());
-      //        tableToko.setModel(model);
-      //        tableToko.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-      //        tableToko.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(1));
-      //        tableToko.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 1));
-      //      }
- 
-      //      bill = new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString()));
-      //      boolean flagg = true;
-      //      for (int i = 0; i < ds.getBills().getListBill().size(); i++)
-      //      {
-      //        if (ds.getBills().getListBill().get(i).getIdUser().equals(billedUserId))
-      //        {
-      //          bill = ds.getBills().getListBill().get(i);
-      //          System.out.println("billlsss:" + bill.getMapPembelian());
-      //          flagg = false;
-      //          break;
-      //        }
-      //      }
- 
-      //      String status = "Customer ";
-      //      for(int i = 0; i < ds.getUsers().getCustomers().size(); i++){
-      //        if(ds.getUsers().getCustomers().get(i).getId().equals(Integer.valueOf(billedUserId.toString()))){
-      //            if(ds.getUsers().getCustomers().get(i) instanceof Member){
-      //              status = "Member ";
-      //              break;
-      //            }else if (ds.getUsers().getCustomers().get(i) instanceof VIP){
-      //              status = "VIP ";
-      //              break;
-      //            }
-      //        }
-      //      }
-           
-      //      jLabel3.setText((status + jComboBox1.getSelectedItem().toString()));
-      //      if (flagg)
-      //      {
-      //        ds.getBills().addBill(bill);
-      //        ds.getBills().createMapBill(ds.getInventoryBarang());
-      //      }
-      //      try {
-      //        String og = ds.getConfig().getSaveas();
-      //        ds.getConfig().setSaveas("xml");
-      //        ds.saveAs();
-     
-      //        ds.getConfig().setSaveas("json");
-      //        ds.saveAs();
-     
-      //        ds.getConfig().setSaveas("obj");
-      //        ds.saveAs();
-     
-      //        ds.getConfig().setSaveas(og);
-     
-      //        ds = new DataStore();
-      //      } catch (FileNotFoundException | JAXBException e) {
-      //        // TODO Auto-generated catch block
-      //        e.printStackTrace();
-      //      } catch (ClassNotFoundException e) {
-      //        // TODO Auto-generated catch block
-      //        e.printStackTrace();
-      //      } catch (IOException e) {
-      //        // TODO Auto-generated catch block
-      //        e.printStackTrace();
-      //      }
-      //      System.out.println("-sa-d---sads-");
-           
-      //      model = createTableModel(tablePembeli);
-      //      for (int i = 0; i < tablePembeli.getRowCount(); i++)
-      //      {
-      //        model.removeRow(0);
-      //      }
-      //      tablePembeli.setModel(model);
-      //      tablePembeli.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-      //      tablePembeli.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
-      //      tablePembeli.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
-      //      System.out.println("row pembeli:" + tablePembeli.getRowCount());
-      //    } catch (ClassNotFoundException | JAXBException | IOException e) {
-      //      // TODO Auto-generated catch block
-      //      e.printStackTrace();
-      //    }
-       
-      // }
        
     }
 
@@ -905,7 +741,7 @@ public class JualBarang extends javax.swing.JPanel {
         System.out.println("-----------------------");
         saveDataStore();
         billedUserId = newCust.getId();
-        ds.getBills().getListBill().add(new Bill(ds.getBills().getSize(), Integer.valueOf(billedUserId.toString())));
+        ds.getBills().getListBill().add(new Bill(ds.getHistory().getListHistory().get(ds.getHistory().getListHistory().size()-1).getId()+1, Integer.valueOf(billedUserId.toString())));
         billIdx = ds.getBills().getListBill().size()-1;
         // reset matrix ke 0
         for (int i = 0 ; i < pembeli.size() ; i++)

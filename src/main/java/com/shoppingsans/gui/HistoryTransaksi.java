@@ -57,13 +57,15 @@ public class HistoryTransaksi extends javax.swing.JPanel {
         }
 
         /* Masukkan ke Table */
-        tableHistory = createTable(convertToArray(listHistory));
+        if(!ds.getHistory().getListHistory().isEmpty()){
+            tableHistory = createTable(convertToArray(listHistory));
 
-        for (int i = tableHistory.getRowCount() - 1; i >= 0; i--) 
-        {
-            DefaultTableModel model = createTableModel(tableHistory);
-            model.removeRow(i);
-            tableHistory.setModel(model);
+            for (int i = tableHistory.getRowCount() - 1; i >= 0; i--) 
+            {
+                DefaultTableModel model = createTableModel(tableHistory);
+                model.removeRow(i);
+                tableHistory.setModel(model);
+            }
         }
     }
     public DefaultTableModel createTableModel(JTable table) {

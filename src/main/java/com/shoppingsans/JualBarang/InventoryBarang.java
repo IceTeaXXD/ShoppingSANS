@@ -69,8 +69,8 @@ public class InventoryBarang implements Serializable{
     }
 
     @JsonIgnore
-    public Barang[] getBarang() {
-        return Inventory.toArray(new Barang[0]);
+    public ArrayList<Barang> getBarang() {
+        return Inventory;
     }
 
     @Override

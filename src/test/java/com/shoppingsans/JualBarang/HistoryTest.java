@@ -5,9 +5,6 @@
 package com.shoppingsans.JualBarang;
 
 import com.shoppingsans.Bill.FixedBill;
-import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -20,21 +17,12 @@ public class HistoryTest {
     private History listHistory;
     private FixedBill a;
     private FixedBill b;
-
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
     
     @Before
     public void setUp() {
         a = new FixedBill(1, 3);
         b = new FixedBill(2,3);
         listHistory = new History();
-    }
-    
-    @After
-    public void tearDown() {
     }
 
     @Test
@@ -45,6 +33,13 @@ public class HistoryTest {
     
     @Test
     public void testgetSize(){
+        listHistory.addHistory(b);
         assertEquals(1, listHistory.getSize());
+    }
+    
+    @Test
+    public void testremoveHistory(){
+        listHistory.removeHistory(b);
+        assertEquals(0,listHistory.getSize());
     }
 }

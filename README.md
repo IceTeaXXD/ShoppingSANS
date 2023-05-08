@@ -25,7 +25,7 @@ Fitur yang digunakan pada program ini adalah:
 - Update Barang -> Melakukan update terhadap barang pada Inventory
 - Create Barang -> Melakukan penambahan sebuah barang ke dalam Inventory
 - Jual Barang -> Melakukan penjualan kepada customer
-- Settings -> Melakukan pengaturan plug in
+- Settings -> Melakukan pengaturan kurs, plug in, dan format file penyimpanan.
 
 ## Technologies USed
 - Java versi 8

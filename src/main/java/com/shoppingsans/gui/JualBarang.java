@@ -232,17 +232,17 @@ public class JualBarang extends javax.swing.JPanel {
 
     private void saveDataStore() {
       try {
-        String og = ds.getConfig().getSaveas();
-        ds.getConfig().setSaveas("xml");
+        // String og = ds.getConfig().getSaveas();
+        // ds.getConfig().setSaveas("xml");
         ds.saveAs();
-
-        ds.getConfig().setSaveas("json");
-        ds.saveAs();
-
-        ds.getConfig().setSaveas("obj");
-        ds.saveAs();
-
-        ds.getConfig().setSaveas(og);
+        
+        // ds.getConfig().setSaveas("json");
+        // ds.saveAs();
+        
+        // ds.getConfig().setSaveas("obj");
+        // ds.saveAs();
+        
+        // ds.getConfig().setSaveas(og);
 
         ds = new DataStore();
       } catch (FileNotFoundException | JAXBException g) {

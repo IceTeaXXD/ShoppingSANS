@@ -77,7 +77,7 @@
                 </descriptorRefs>
                 <archive>
                     <manifest>
-                        <mainClass>AddKurs</mainClass>
+                        <mainClass>ModifyPrice</mainClass>
                     </manifest>
                 </archive>
             </configuration>

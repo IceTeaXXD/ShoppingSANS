@@ -13,6 +13,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.junit.experimental.categories.Category;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +50,18 @@ public class Config {
     
     @XmlElement
     private String currentKurs;
+
+    @XmlElement
+    private Integer diskon = 0;
+
+    @XmlElement
+    private Integer tax = 0;
+
+    @XmlElement
+    private Integer service = 0; 
+
+    @XmlElement
+    private Boolean show;
 
     public void createMap() {
         this.mapKurs = new HashMap<>();

@@ -17,4 +17,8 @@
         </Entry>
     </kurs>
     <currentKurs>IDR</currentKurs>
+    <diskon>0</diskon>
+    <tax>0</tax>
+    <service>0</service>
+    <show>false</show>
 </Config>

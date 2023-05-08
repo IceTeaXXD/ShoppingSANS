@@ -35,6 +35,7 @@ import java.nio.file.StandardCopyOption;
  */
 public class Settings extends javax.swing.JPanel {
     JarClassLoader jcl;
+    public static boolean show = false;
     /**
      * Creates new form Settings
      */
@@ -79,15 +80,37 @@ public class Settings extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        UploadPluginButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        KursButton = new javax.swing.JButton();
+        SimpanService = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         MataUangField = new javax.swing.JComboBox<>();
+
+        // HIDE DIS
+        ServiceLabel = new javax.swing.JLabel();
+        DiskonLabel = new javax.swing.JLabel();
+        TextLabel = new javax.swing.JLabel();
+        KursButton1 = new javax.swing.JButton();
+        SimpanTax = new javax.swing.JButton();
+        SimpanDiskon = new javax.swing.JButton();
+        ServiceField = new javax.swing.JTextField();
+        DiskonField = new javax.swing.JTextField();
+        TaxField = new javax.swing.JTextField();
+
+        ServiceLabel.setVisible(false);
+        DiskonLabel.setVisible(false);
+        TextLabel.setVisible(false);
+        SimpanTax.setVisible(false);
+        SimpanDiskon.setVisible(false);
+        ServiceField.setVisible(false);
+        DiskonField.setVisible(false);
+        TaxField.setVisible(false);
+        SimpanService.setVisible(false);
+
         MataUangField.addItem("IDR");
          /* Search through if there exists */        
         for(int i = 0; i < ds.getConfig().getPlugins().getPath().size(); i++){
@@ -105,6 +128,9 @@ public class Settings extends javax.swing.JPanel {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        if (ds.getConfig().getShow() || show){
+            magic();
+        }
 
         setBackground(new java.awt.Color(45, 43, 74));
         setPreferredSize(new java.awt.Dimension(1268, 685));
@@ -121,12 +147,12 @@ public class Settings extends javax.swing.JPanel {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "JSON", "XML", "OBJ", "SQL" }));
 
-        jButton1.setBackground(new java.awt.Color(242, 198, 111));
-        jButton1.setFont(new java.awt.Font("Myanmar Text", 1, 14)); // NOI18N
-        jButton1.setText("Upload Plugin");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        UploadPluginButton.setBackground(new java.awt.Color(242, 198, 111));
+        UploadPluginButton.setFont(new java.awt.Font("Myanmar Text", 1, 14)); // NOI18N
+        UploadPluginButton.setText("Upload Plugin");
+        UploadPluginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                UploadPluginButtonActionPerformed(evt);
             }
         });
 
@@ -167,12 +193,12 @@ public class Settings extends javax.swing.JPanel {
             }
         });
 
-        KursButton.setBackground(new java.awt.Color(242, 198, 111));
-        KursButton.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
-        KursButton.setText("Simpan");
-        KursButton.addActionListener(new java.awt.event.ActionListener() {
+        SimpanService.setBackground(new java.awt.Color(242, 198, 111));
+        SimpanService.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        SimpanService.setText("Simpan");
+        SimpanService.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KursButtonActionPerformed(evt);
+                SimpanServiceActionPerformed(evt);
             }
         });
 
@@ -186,6 +212,45 @@ public class Settings extends javax.swing.JPanel {
             }
         });
 
+        ServiceLabel.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        ServiceLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ServiceLabel.setText("Service Charge");
+
+        DiskonLabel.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        DiskonLabel.setForeground(new java.awt.Color(255, 255, 255));
+        DiskonLabel.setText("Diskon");
+
+        TextLabel.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        TextLabel.setForeground(new java.awt.Color(255, 255, 255));
+        TextLabel.setText("Tax");
+
+        KursButton1.setBackground(new java.awt.Color(242, 198, 111));
+        KursButton1.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        KursButton1.setText("Simpan");
+        KursButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KursButton1ActionPerformed(evt);
+            }
+        });
+
+        SimpanTax.setBackground(new java.awt.Color(242, 198, 111));
+        SimpanTax.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        SimpanTax.setText("Simpan");
+        SimpanTax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SimpanTaxActionPerformed(evt);
+            }
+        });
+
+        SimpanDiskon.setBackground(new java.awt.Color(242, 198, 111));
+        SimpanDiskon.setFont(new java.awt.Font("Myanmar Text", 1, 18)); // NOI18N
+        SimpanDiskon.setText("Simpan");
+        SimpanDiskon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SimpanDiskonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,68 +258,107 @@ public class Settings extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(325, 325, 325)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(KursButton))
-                        .addGap(63, 63, 63)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(326, 326, 326)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(19, 19, 19)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(MataUangField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 401, Short.MAX_VALUE)))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(KursButton1)
+                                                .addGap(62, 62, 62))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(SimpanDiskon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(DiskonField))
+                                                .addGap(63, 63, 63)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(56, 56, 56)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                            .addComponent(TaxField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(SimpanTax))))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(19, 19, 19)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(MataUangField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(18, 18, 18)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(ServiceField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(SimpanService, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(344, 344, 344)
+                                .addComponent(DiskonLabel)
+                                .addGap(164, 164, 164)
+                                .addComponent(TextLabel)
+                                .addGap(154, 154, 154)
+                                .addComponent(ServiceLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(443, 443, 443)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(UploadPluginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 385, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(452, 452, 452)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(198, 198, 198)
+                .addGap(105, 105, 105)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(KursButton)
-                    .addComponent(jLabel7)
-                    .addComponent(MataUangField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(MataUangField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(KursButton1))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
                     .addComponent(jLabel6)
-                    .addComponent(jButton3))
-                .addGap(51, 51, 51)
-                .addComponent(jButton1)
-                .addGap(32, 32, 32)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DiskonLabel)
+                    .addComponent(TextLabel)
+                    .addComponent(ServiceLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ServiceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TaxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DiskonField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SimpanService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SimpanTax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SimpanDiskon))
+                .addGap(18, 18, 18)
+                .addComponent(UploadPluginButton)
+                .addGap(28, 28, 28)
                 .addComponent(jButton4)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void UploadPluginButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // create a file dialog for opening .jar files
         FileDialog dialog = new FileDialog((Frame) null, "Open JAR file", FileDialog.LOAD);
         dialog.setFilenameFilter((dir, name) -> name.toLowerCase().endsWith(".jar"));
@@ -283,6 +387,12 @@ public class Settings extends javax.swing.JPanel {
                     MataUangField.removeAllItems();
                     for(String key : keys){
                         MataUangField.addItem(key);
+                    }
+                    String temp = "ModifyPrice";
+                    if(name.equals(temp)){
+                        System.out.println("Masuk");
+                        ds.getConfig().setShow(true);
+                        ds.saveAs();
                     }
                 }
             } catch (Exception ex) {
@@ -317,8 +427,14 @@ public class Settings extends javax.swing.JPanel {
                             ds.getConfig().getMapKurs().put("IDR", 1);
                             ds.getConfig().setCurrentKurs("IDR");
                         }
-                        jComboBox3.removeItemAt(i);
+                        if(ds.getConfig().getPlugins().getPath().get(i).contains("ModifyPrice")){
+                            ds.getConfig().setShow(false);
+                            ds.getConfig().setDiskon(0);
+                            ds.getConfig().setService(0);
+                            ds.getConfig().setTax(0);
+                        }
                         ds.getConfig().getPlugins().getPath().remove(i);
+                        jComboBox3.removeItemAt(i);
                         ds.saveAs();
                         JOptionPane.showMessageDialog(this, "Plugin berhasil dihapus, silakan restart program agar perubahan dapat dilakukan!", "Delete Success", JOptionPane.INFORMATION_MESSAGE);
                         break;
@@ -361,24 +477,90 @@ public class Settings extends javax.swing.JPanel {
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
-    private void KursButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KursButtonActionPerformed
+    private void SimpanServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanServiceActionPerformed
+        int service = Integer.parseInt(ServiceField.getText());
+        if (service > 100){
+            service = 100;
+        } else if (service < 0){
+            service = 0;
+        }
+        ds.getConfig().setService(service);
+        try {
+            ds.saveAs();
+        } catch (FileNotFoundException | JAXBException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_SimpanServiceActionPerformed
+
+    private void MataUangFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MataUangFieldActionPerformed
+    
+    }//GEN-LAST:event_MataUangFieldActionPerformed
+
+    private void KursButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KursButton1ActionPerformed
         ds.getConfig().setCurrentKurs((String) MataUangField.getSelectedItem());
         try {
             ds.saveAs();
         } catch (FileNotFoundException | JAXBException e) {
             e.printStackTrace();
         }
-    }//GEN-LAST:event_KursButtonActionPerformed
+    }//GEN-LAST:event_KursButton1ActionPerformed
 
-    private void MataUangFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MataUangFieldActionPerformed
-    
-    }//GEN-LAST:event_MataUangFieldActionPerformed
+    private void SimpanTaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanTaxActionPerformed
+        int tax = Integer.parseInt(TaxField.getText());
+        if (tax > 100){
+            tax = 100;
+        } else if (tax < 0){
+            tax = 0;
+        }
+        ds.getConfig().setTax(tax);
+        try {
+            ds.saveAs();
+        } catch (FileNotFoundException | JAXBException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_SimpanTaxActionPerformed
 
+    private void SimpanDiskonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanDiskonActionPerformed
+        int diskon = Integer.parseInt(DiskonField.getText());
+        if (diskon > 100){
+            diskon = 100;
+        } else if (diskon < 0){
+            diskon = 0;
+        }
+        ds.getConfig().setDiskon(diskon);
+        try {
+            ds.saveAs();
+        } catch (FileNotFoundException | JAXBException e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_SimpanDiskonActionPerformed
+
+    public static void magic(){
+        ServiceLabel.setVisible(true);
+        DiskonLabel.setVisible(true);
+        TextLabel.setVisible(true);
+        SimpanTax.setVisible(true);
+        SimpanDiskon.setVisible(true);
+        ServiceField.setVisible(true);
+        DiskonField.setVisible(true);
+        TaxField.setVisible(true);
+        SimpanService.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton KursButton;
+    private static javax.swing.JTextField DiskonField;
+    private static javax.swing.JLabel DiskonLabel;
+    private static javax.swing.JButton KursButton1;
     private javax.swing.JComboBox<String> MataUangField;
-    private javax.swing.JButton jButton1;
+    private static javax.swing.JTextField ServiceField;
+    private static javax.swing.JLabel ServiceLabel;
+    private static javax.swing.JButton SimpanDiskon;
+    private static javax.swing.JButton SimpanService;
+    private static javax.swing.JButton SimpanTax;
+    private static javax.swing.JTextField TaxField;
+    private static javax.swing.JLabel TextLabel;
+    private javax.swing.JButton UploadPluginButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

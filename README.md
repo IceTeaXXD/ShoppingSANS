@@ -27,7 +27,7 @@ Fitur yang digunakan pada program ini adalah:
 - Jual Barang -> Melakukan penjualan kepada customer
 - Settings -> Melakukan pengaturan kurs, plug in, dan format file penyimpanan.
 
-## Technologies USed
+## Technologies Used
 - Java versi 8
 - Gson 2.10.1
 - Java Swing

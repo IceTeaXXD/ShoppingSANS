@@ -36,7 +36,7 @@ import lombok.Setter;
 
 public class History implements Serializable{
     @XmlElement (name = "FixedBill")
-    private ArrayList<FixedBill> listHistory;
+    private ArrayList<FixedBill> listHistory = new ArrayList<>();
 
     @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,

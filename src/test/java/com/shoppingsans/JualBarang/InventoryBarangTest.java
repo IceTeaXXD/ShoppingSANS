@@ -4,11 +4,7 @@
  */
 package com.shoppingsans.JualBarang;
 
-import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -63,7 +59,7 @@ public class InventoryBarangTest {
         Inventory.addBarang(a);
         assertEquals((String)"[Barang(idBarang=2, namaBarang=Teh, hargaBarang=5000, stokBarang=5, hargaBeli=10000, kategori=Makanan, gambar=teh.jpg)]", Inventory.getBarang().toString());
     }
-    
+
     @Test
     public void testequals(){
         Inventory.addBarang(a);

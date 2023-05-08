@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.xml.bind.JAXBException;
 
@@ -58,8 +59,7 @@ public class JualBarang extends javax.swing.JPanel {
     private boolean fixed = false;
     private Class custClass;
     
-    private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image","Buy"};
-
+    private final String[] columnNames = {"Qty", "Nama Barang", "Harga Barang","Harga Beli","Kategori", "Image",""};
 
     public JualBarang() throws FileNotFoundException, ClassNotFoundException, JAXBException, IOException {
         initComponents();
@@ -72,6 +72,7 @@ public class JualBarang extends javax.swing.JPanel {
         data = new ArrayList<>();
         pembeli = new ArrayList<>();
         mapId = new HashMap<>();
+        System.out.println("diskoooon: "+ds.getConfig().getDiskon());
         
         for (int i = 0; i < barangList.size(); i++) {
           Barang barang = barangList.get(i);
@@ -81,8 +82,8 @@ public class JualBarang extends javax.swing.JPanel {
           listToko.add(barang.getIdBarang());
           listToko.add(barang.getStokBarang());
           listToko.add(barang.getNamaBarang());
-          listToko.add(barang.getHargaBarang());
-          listToko.add(barang.getHargaBeli());
+          listToko.add(barang.getHargaBarang()/ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs()));
+          listToko.add(barang.getHargaBeli()/ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs()));
           listToko.add(barang.getKategori());
           listToko.add("images/" + barang.getGambar());
           listToko.add(barang.getIdBarang());
@@ -91,8 +92,8 @@ public class JualBarang extends javax.swing.JPanel {
           listPembeli.add(barang.getIdBarang());
           listPembeli.add(0);
           listPembeli.add(barang.getNamaBarang());
-          listPembeli.add(barang.getHargaBarang());
-          listPembeli.add(barang.getHargaBeli());
+          listPembeli.add(barang.getHargaBarang()/ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs()));
+          listPembeli.add(barang.getHargaBeli()/ds.getConfig().getMapKurs().get(ds.getConfig().getCurrentKurs()));
           listPembeli.add(barang.getKategori());
           listPembeli.add("images/" + barang.getGambar());
           listPembeli.add(barang.getIdBarang());
@@ -168,7 +169,7 @@ public class JualBarang extends javax.swing.JPanel {
       retTable.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
       retTable.getColumnModel().getColumn(6).setPreferredWidth(100);
 
-      retTable.setRowHeight(100);
+      retTable.setRowHeight(50);
 
       JScrollPane scrollPane = new JScrollPane(retTable);
       // Create a new instance of JScrollPane and add the table to it
@@ -179,14 +180,35 @@ public class JualBarang extends javax.swing.JPanel {
         scrollPane = new JScrollPane(retTable);
         retTable.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(2));
         retTable.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 2));
-        scrollPane.setBounds(650, 200, 480, 480);        
+        scrollPane.setBounds(620, 200, 550, 480);        
       }
       else{ 
         scrollPane = new JScrollPane(retTable);
         retTable.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(1));
         retTable.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 1));
-        scrollPane.setBounds(100, 100, 480, 480);
+        scrollPane.setBounds(50, 85, 550, 595);
       }
+      TableColumn column = retTable.getColumnModel().getColumn(0);  // Column index
+      column.setPreferredWidth(35);
+      column = retTable.getColumnModel().getColumn(1);  // Column index
+      column.setPreferredWidth(70);
+      // column = retTable.getColumnModel().getColumn(2);  // Column index
+      // column.setPreferredWidth(150);
+      column = retTable.getColumnModel().getColumn(3);  // Column index
+      column.setPreferredWidth(60);
+      column = retTable.getColumnModel().getColumn(4);  // Column index
+      column.setPreferredWidth(50);
+      column = retTable.getColumnModel().getColumn(5);  // Column index
+      column.setPreferredWidth(50);
+      column = retTable.getColumnModel().getColumn(6);  // Column index
+      column.setPreferredWidth(50);
+      DefaultTableModel model = createTableModel(retTable);
+      model.setColumnIdentifiers(new String[] {"Qty", "Nama Barang", "Harga Barang (" + ds.getConfig().getCurrentKurs()+")","Harga Beli ("+ ds.getConfig().getCurrentKurs()+")","Kategori", "Image",""});
+      retTable.setModel(model);
+      retTable.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+      
+      retTable.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer(1));
+      retTable.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), 1));
       this.add(scrollPane);
         
       return retTable;
@@ -590,21 +612,25 @@ public class JualBarang extends javax.swing.JPanel {
       }
       if (suficient)
       {
+        double discount = (double) (100-ds.getConfig().getDiskon())/ (double) 100;
+        double tax = (double) (100+ds.getConfig().getTax())/ (double) 100;
+        double serviceCharge = (double) (100+ds.getConfig().getService())/ (double) 100;
+        System.out.println(discount + " " + tax + " " + serviceCharge);
         FixedBill newFixedBill = new FixedBill(ds.getBills().getListBill().get(billIdx).getId(), ds.getBills().getListBill().get(billIdx).getIdUser());
         newFixedBill.setPembelian(ds.getBills().getListBill().get(billIdx).getPembelian());
         System.out.println(custClass);
         if (custClass == Member.class)
         {
-          newFixedBill.setTotal((int) ((Member) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal()));
+          newFixedBill.setTotal((int) (((Member) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal())*discount*tax*serviceCharge));
           ((Member) ds.getUsers().getCustomers().get(billedUserIndex)).setPoin(ds.getBills().getListBill().get(billIdx).getTotal());
         }
         else if (custClass == VIP.class)
         {
-          newFixedBill.setTotal((int) ((VIP) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal()));
+          newFixedBill.setTotal((int) (((VIP) users.get(billedUserIndex)).calculateDiskon(ds.getBills().getListBill().get(billIdx).getTotal())*discount*tax*serviceCharge));
           ((VIP) ds.getUsers().getCustomers().get(billedUserIndex)).setPoin(ds.getBills().getListBill().get(billIdx).getTotal());
         }
         else
-        newFixedBill.setTotal(ds.getBills().getListBill().get(billIdx).getTotal());
+        newFixedBill.setTotal((int) (ds.getBills().getListBill().get(billIdx).getTotal()*discount*tax*serviceCharge));
         ds.getBills().getListBill().remove((int)billIdx);
         for (int i = 0; i < ds.getInventoryBarang().getInventory().size(); i++)
         {
@@ -719,6 +745,7 @@ public class JualBarang extends javax.swing.JPanel {
             }
           }
           jLabel3.setText((status + jComboBox1.getSelectedItem().toString()));
+          jLabel2.setText(ds.getBills().getListBill().get(billIdx).getTotal().toString());
           ds.getBills().createMapBill(ds.getInventoryBarang());
           ds.getBills().createEntryLists();
           

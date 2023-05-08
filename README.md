@@ -24,12 +24,21 @@ Fitur yang digunakan pada program ini adalah:
 - Delete Barang -> Melakukan penghapusan terhadap barang pada Inventory
 - Update Barang -> Melakukan update terhadap barang pada Inventory
 - Create Barang -> Melakukan penambahan sebuah barang ke dalam Inventory
-- Jual Barang
-- Settings
+- Jual Barang -> Melakukan penjualan kepada customer
+- Settings -> Melakukan pengaturan plug in
 
 ## Technologies USed
 - Java versi 8
+- Gson 2.10.1
 - Java Swing
+- JUnit 4.10
+- Jacoco 0.8.10
+- Maven Compiler 3.6.1
+- Javax
+- Lombok 1.18.26
+- Jfree 1.0.13
+- Jackson-databind 2.15.0
+- itextpdf 5.5.13
 - NetBeans IDE
 
 ## Usage
@@ -37,7 +46,7 @@ Untuk menjalankan program:
 - Ketik `make uff` pada terminal
 
 ## Project Status
-On Going
+Completed
 
 ## Acknowledgements
 - Program ini dibuat untuk memenuhi Tugas Besar 2 IF2210 Pemrograman Berorientai Objek
